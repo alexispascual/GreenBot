@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/knguye/catkin_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/knguye/catkin_ws/src/barcode_functions/include",
+                "/home/knguye/catkin_ws/src/beginner_tutorials/include",
+                "/home/knguye/catkin_ws/src/custom_msgs/include",
+                "/home/knguye/catkin_ws/src/gazebo_ros_pkgs/gazebo_plugins/include",
+                "/home/knguye/catkin_ws/src/gazebo_ros_pkgs/gazebo_ros/include",
+                "/home/knguye/catkin_ws/src/husky/husky_base/include",
+                "/home/knguye/catkin_ws/src/gazebo_ros_pkgs/gazebo_ros_control/include",
+                "/home/knguye/catkin_ws/src/qdude/include",
+                "/home/knguye/catkin_ws/src/qr_detector/include",
+                "/home/knguye/catkin_ws/src/qr_scanner/include",
+                "/home/knguye/catkin_ws/src/qtros/include",
+                "/home/knguye/catkin_ws/src/robot_setup_tf/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,8 @@
+prefix=/home/greenbot/catkin_ws/devel
+
+Name: GreenBot
+Description: Description of GreenBot
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/greenbot/catkin_ws/devel/lib 
+Requires: 

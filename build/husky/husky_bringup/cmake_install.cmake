@@ -1,8 +1,8 @@
-# Install script for directory: /home/greenbot/catkin_ws/src/husky/husky_bringup
+# Install script for directory: /home/fenrir/GreenBot/src/husky/husky_bringup
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/greenbot/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/fenrir/GreenBot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,38 +32,47 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/greenbot/catkin_ws/build/husky/husky_bringup/catkin_generated/installspace/husky_bringup.pc")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/fenrir/GreenBot/build/husky/husky_bringup/catkin_generated/installspace/husky_bringup.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/husky_bringup/cmake" TYPE FILE FILES
-    "/home/greenbot/catkin_ws/build/husky/husky_bringup/catkin_generated/installspace/husky_bringupConfig.cmake"
-    "/home/greenbot/catkin_ws/build/husky/husky_bringup/catkin_generated/installspace/husky_bringupConfig-version.cmake"
+    "/home/fenrir/GreenBot/build/husky/husky_bringup/catkin_generated/installspace/husky_bringupConfig.cmake"
+    "/home/fenrir/GreenBot/build/husky/husky_bringup/catkin_generated/installspace/husky_bringupConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/husky_bringup" TYPE FILE FILES "/home/greenbot/catkin_ws/src/husky/husky_bringup/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/husky_bringup" TYPE FILE FILES "/home/fenrir/GreenBot/src/husky/husky_bringup/package.xml")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/catkin/profile.d" TYPE FILE FILES "/home/greenbot/catkin_ws/src/husky/husky_bringup/env-hooks/50.husky_find_mag_config.sh")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/catkin/profile.d" TYPE FILE FILES "/home/fenrir/GreenBot/src/husky/husky_bringup/env-hooks/50.husky_find_mag_config.sh")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/husky_bringup/catkin_env_hook" TYPE FILE FILES "/home/fenrir/GreenBot/src/husky/husky_bringup/env-hooks/50.husky_find_mag_config.sh")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/husky_bringup" TYPE PROGRAM FILES
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/scripts/install"
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/scripts/calibrate_compass"
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/scripts/compute_calibration"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/scripts/install"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/scripts/calibrate_compass"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/scripts/compute_calibration"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/husky_bringup" TYPE DIRECTORY FILES
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/launch"
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/udev"
-    "/home/greenbot/catkin_ws/src/husky/husky_bringup/config"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/launch"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/udev"
+    "/home/fenrir/GreenBot/src/husky/husky_bringup/config"
     )
 endif()
 

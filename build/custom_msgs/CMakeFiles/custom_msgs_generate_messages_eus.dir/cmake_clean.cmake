@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "/home/fenrir/GreenBot/devel/share/roseus/ros/custom_msgs/manifest.l"
+  "/home/fenrir/GreenBot/devel/share/roseus/ros/custom_msgs/msg/IntList.l"
   "CMakeFiles/custom_msgs_generate_messages_eus"
-  "/home/greenbot/catkin_ws/devel/share/roseus/ros/custom_msgs/msg/IntList.l"
-  "/home/greenbot/catkin_ws/devel/share/roseus/ros/custom_msgs/manifest.l"
 )
 
 # Per-language clean rules from dependency scanning.

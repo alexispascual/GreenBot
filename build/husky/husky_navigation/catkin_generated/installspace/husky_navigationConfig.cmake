@@ -67,14 +67,14 @@ set(husky_navigation_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(husky_navigation_SOURCE_PREFIX /home/greenbot/catkin_ws/src/husky/husky_navigation)
-  set(husky_navigation_DEVEL_PREFIX /home/greenbot/catkin_ws/devel)
+  set(husky_navigation_SOURCE_PREFIX /home/fenrir/GreenBot/src/husky/husky_navigation)
+  set(husky_navigation_DEVEL_PREFIX /home/fenrir/GreenBot/devel)
   set(husky_navigation_INSTALL_PREFIX "")
   set(husky_navigation_PREFIX ${husky_navigation_DEVEL_PREFIX})
 else()
   set(husky_navigation_SOURCE_PREFIX "")
   set(husky_navigation_DEVEL_PREFIX "")
-  set(husky_navigation_INSTALL_PREFIX /home/greenbot/catkin_ws/install)
+  set(husky_navigation_INSTALL_PREFIX /home/fenrir/GreenBot/install)
   set(husky_navigation_PREFIX ${husky_navigation_INSTALL_PREFIX})
 endif()
 
@@ -110,7 +110,7 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'husky_navigation' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'husky_navigation' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/greenbot/catkin_ws/install/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'husky_navigation' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '\${prefix}/${idir}'.  ${_report}")
     endif()
     _list_append_unique(husky_navigation_INCLUDE_DIRS ${include})
   endforeach()
@@ -121,6 +121,31 @@ foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
     list(APPEND husky_navigation_LIBRARIES ${library})
+  elseif(${library} MATCHES "^-l")
+    list(APPEND husky_navigation_LIBRARIES ${library})
+  elseif(${library} MATCHES "^-")
+    # This is a linker flag/option (like -pthread)
+    # There's no standard variable for these, so create an interface library to hold it
+    if(NOT husky_navigation_NUM_DUMMY_TARGETS)
+      set(husky_navigation_NUM_DUMMY_TARGETS 0)
+    endif()
+    # Make sure the target name is unique
+    set(interface_target_name "catkin::husky_navigation::wrapped-linker-option${husky_navigation_NUM_DUMMY_TARGETS}")
+    while(TARGET "${interface_target_name}")
+      math(EXPR husky_navigation_NUM_DUMMY_TARGETS "${husky_navigation_NUM_DUMMY_TARGETS}+1")
+      set(interface_target_name "catkin::husky_navigation::wrapped-linker-option${husky_navigation_NUM_DUMMY_TARGETS}")
+    endwhile()
+    add_library("${interface_target_name}" INTERFACE IMPORTED)
+    if("${CMAKE_VERSION}" VERSION_LESS "3.13.0")
+      set_property(
+        TARGET
+        "${interface_target_name}"
+        APPEND PROPERTY
+        INTERFACE_LINK_LIBRARIES "${library}")
+    else()
+      target_link_options("${interface_target_name}" INTERFACE "${library}")
+    endif()
+    list(APPEND husky_navigation_LIBRARIES "${interface_target_name}")
   elseif(TARGET ${library})
     list(APPEND husky_navigation_LIBRARIES ${library})
   elseif(IS_ABSOLUTE ${library})
@@ -129,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/greenbot/catkin_ws/install/lib;/home/greenbot/catkin_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/fenrir/GreenBot/install/lib;/home/fenrir/GreenBot/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

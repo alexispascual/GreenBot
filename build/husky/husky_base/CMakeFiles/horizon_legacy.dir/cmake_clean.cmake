@@ -1,15 +1,15 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/crc.cpp.o"
+  "/home/fenrir/GreenBot/devel/lib/libhorizon_legacy.pdb"
+  "/home/fenrir/GreenBot/devel/lib/libhorizon_legacy.so"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Logger.cpp.o"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Message.cpp.o"
+  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Message_cmd.cpp.o"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Message_data.cpp.o"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Message_request.cpp.o"
-  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Message_cmd.cpp.o"
-  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Transport.cpp.o"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Number.cpp.o"
+  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/Transport.cpp.o"
+  "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/crc.cpp.o"
   "CMakeFiles/horizon_legacy.dir/src/horizon_legacy/linux_serial.cpp.o"
-  "/home/greenbot/catkin_ws/devel/lib/libhorizon_legacy.pdb"
-  "/home/greenbot/catkin_ws/devel/lib/libhorizon_legacy.so"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,8 +1,8 @@
-# Install script for directory: /home/greenbot/catkin_ws/src
+# Install script for directory: /home/fenrir/GreenBot/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/greenbot/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/fenrir/GreenBot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,7 +32,12 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   
       if (NOT EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}")
         file(MAKE_DIRECTORY "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}")
@@ -42,95 +47,104 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
       endif()
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/_setup_util.py")
+   "/home/fenrir/GreenBot/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE PROGRAM FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE PROGRAM FILES "/home/fenrir/GreenBot/build/catkin_generated/installspace/_setup_util.py")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/env.sh")
+   "/home/fenrir/GreenBot/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE PROGRAM FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE PROGRAM FILES "/home/fenrir/GreenBot/build/catkin_generated/installspace/env.sh")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/setup.bash")
+   "/home/fenrir/GreenBot/install/setup.bash;/home/fenrir/GreenBot/install/local_setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE FILE FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/setup.bash")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE FILE FILES
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/setup.bash"
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/local_setup.bash"
+    )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/setup.sh")
+   "/home/fenrir/GreenBot/install/setup.sh;/home/fenrir/GreenBot/install/local_setup.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE FILE FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/setup.sh")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE FILE FILES
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/setup.sh"
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/local_setup.sh"
+    )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/setup.zsh")
+   "/home/fenrir/GreenBot/install/setup.zsh;/home/fenrir/GreenBot/install/local_setup.zsh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE FILE FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/setup.zsh")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE FILE FILES
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/setup.zsh"
+    "/home/fenrir/GreenBot/build/catkin_generated/installspace/local_setup.zsh"
+    )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/greenbot/catkin_ws/install/.rosinstall")
+   "/home/fenrir/GreenBot/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/greenbot/catkin_ws/install" TYPE FILE FILES "/home/greenbot/catkin_ws/build/catkin_generated/installspace/.rosinstall")
+file(INSTALL DESTINATION "/home/fenrir/GreenBot/install" TYPE FILE FILES "/home/fenrir/GreenBot/build/catkin_generated/installspace/.rosinstall")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/greenbot/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_desktop/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_robot/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_simulator/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_msgs/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/barcode_functions/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/custom_msgs/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_bringup/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_control/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_description/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_gazebo/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_navigation/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_viz/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/husky/husky_base/cmake_install.cmake")
-  include("/home/greenbot/catkin_ws/build/greenbot/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/gtest/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_desktop/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_robot/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_simulator/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_msgs/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/barcode_functions/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/custom_msgs/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_bringup/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_control/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_description/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_gazebo/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_navigation/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_viz/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/husky/husky_base/cmake_install.cmake")
+  include("/home/fenrir/GreenBot/build/greenbot/cmake_install.cmake")
 
 endif()
 
@@ -142,5 +156,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/greenbot/catkin_ws/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/fenrir/GreenBot/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

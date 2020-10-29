@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/fenrir/GreenBot/devel/include/custom_msgs/IntList.h"
   "CMakeFiles/custom_msgs_generate_messages_cpp"
-  "/home/greenbot/catkin_ws/devel/include/custom_msgs/IntList.h"
 )
 
 # Per-language clean rules from dependency scanning.

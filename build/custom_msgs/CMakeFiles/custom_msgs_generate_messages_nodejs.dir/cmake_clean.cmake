@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/fenrir/GreenBot/devel/share/gennodejs/ros/custom_msgs/msg/IntList.js"
   "CMakeFiles/custom_msgs_generate_messages_nodejs"
-  "/home/greenbot/catkin_ws/devel/share/gennodejs/ros/custom_msgs/msg/IntList.js"
 )
 
 # Per-language clean rules from dependency scanning.

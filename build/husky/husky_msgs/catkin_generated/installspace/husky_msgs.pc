@@ -1,8 +1,8 @@
-prefix=/home/greenbot/catkin_ws/install
+prefix=/home/fenrir/GreenBot/install
 
 Name: husky_msgs
 Description: Description of husky_msgs
 Version: 0.3.1
-Cflags: -I/home/greenbot/catkin_ws/install/include
-Libs: -L/home/greenbot/catkin_ws/install/lib 
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
 Requires: std_msgs message_runtime

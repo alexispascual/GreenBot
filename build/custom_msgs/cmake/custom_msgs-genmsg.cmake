@@ -2,7 +2,7 @@
 
 message(STATUS "custom_msgs: 1 messages, 0 services")
 
-set(MSG_I_FLAGS "-Icustom_msgs:/home/greenbot/catkin_ws/src/custom_msgs/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Icustom_msgs:/home/fenrir/GreenBot/src/custom_msgs/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,9 +17,9 @@ add_custom_target(custom_msgs_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" ""
 )
 
 #
@@ -29,7 +29,7 @@ add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(custom_msgs
-  "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg"
+  "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
@@ -49,7 +49,7 @@ add_custom_target(custom_msgs_generate_messages_cpp
 add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -62,7 +62,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS custom_msgs_generate_messages_cpp)
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(custom_msgs
-  "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg"
+  "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
@@ -82,7 +82,7 @@ add_custom_target(custom_msgs_generate_messages_eus
 add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -95,7 +95,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS custom_msgs_generate_messages_eus)
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(custom_msgs
-  "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg"
+  "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
@@ -115,7 +115,7 @@ add_custom_target(custom_msgs_generate_messages_lisp
 add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -128,7 +128,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS custom_msgs_generate_messages_lisp)
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(custom_msgs
-  "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg"
+  "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
@@ -148,7 +148,7 @@ add_custom_target(custom_msgs_generate_messages_nodejs
 add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -161,7 +161,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS custom_msgs_generate_messages_nodej
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(custom_msgs
-  "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg"
+  "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
@@ -181,7 +181,7 @@ add_custom_target(custom_msgs_generate_messages_py
 add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/greenbot/catkin_ws/src/custom_msgs/msg/IntList.msg" NAME_WE)
+get_filename_component(_filename "/home/fenrir/GreenBot/src/custom_msgs/msg/IntList.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -238,7 +238,7 @@ if(TARGET std_msgs_generate_messages_nodejs)
 endif()
 
 if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs)
-  install(CODE "execute_process(COMMAND \"/usr/bin/python\" -m compileall \"${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs\")")
+  install(CODE "execute_process(COMMAND \"/usr/bin/python3\" -m compileall \"${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs\")")
   # install generated code
   install(
     DIRECTORY ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs

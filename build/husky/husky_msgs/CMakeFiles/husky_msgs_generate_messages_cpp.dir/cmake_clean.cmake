@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/fenrir/GreenBot/devel/include/husky_msgs/HuskyStatus.h"
   "CMakeFiles/husky_msgs_generate_messages_cpp"
-  "/home/greenbot/catkin_ws/devel/include/husky_msgs/HuskyStatus.h"
 )
 
 # Per-language clean rules from dependency scanning.

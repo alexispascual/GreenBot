@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/fenrir/GreenBot/devel/share/common-lisp/ros/custom_msgs/msg/IntList.lisp"
   "CMakeFiles/custom_msgs_generate_messages_lisp"
-  "/home/greenbot/catkin_ws/devel/share/common-lisp/ros/custom_msgs/msg/IntList.lisp"
 )
 
 # Per-language clean rules from dependency scanning.

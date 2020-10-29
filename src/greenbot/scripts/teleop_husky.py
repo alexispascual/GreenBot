@@ -153,7 +153,7 @@ class TeleOpHusky:
     def start(self):
         rate = rospy.Rate(10)
         while not rospy.is_shutdown():
-            #vel_command = self.compute_motion_cmd()
+            vel_command = self.compute_motion_cmd()
             vel = Twist()
             if self.joy_data is not None and self.joy_data.buttons[0] == 1:
                 valx = self.joy_data.axes[1]
@@ -307,7 +307,7 @@ class TeleOpHusky:
                 writer = csv.writer(nav, delimiter=',')
                 writer.writerow('')  # Write empty row
         else:
-            with open('nav_data.csv', 'wb') as nav:
+            with open('nav_data.csv', 'w') as nav:
                 writer = csv.writer(nav, delimiter=',')
                 writer.writerow(['Time', 'Data Type', 'FR', 'FL', 'BR', 'BL'])  # Create headers
 

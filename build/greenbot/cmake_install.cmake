@@ -1,8 +1,8 @@
-# Install script for directory: /home/greenbot/catkin_ws/src/greenbot
+# Install script for directory: /home/fenrir/GreenBot/src/greenbot
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/greenbot/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/fenrir/GreenBot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -32,18 +32,27 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/greenbot/catkin_ws/build/greenbot/catkin_generated/installspace/greenbot.pc")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/fenrir/GreenBot/build/greenbot/catkin_generated/installspace/greenbot.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/greenbot/cmake" TYPE FILE FILES
-    "/home/greenbot/catkin_ws/build/greenbot/catkin_generated/installspace/greenbotConfig.cmake"
-    "/home/greenbot/catkin_ws/build/greenbot/catkin_generated/installspace/greenbotConfig-version.cmake"
+    "/home/fenrir/GreenBot/build/greenbot/catkin_generated/installspace/greenbotConfig.cmake"
+    "/home/fenrir/GreenBot/build/greenbot/catkin_generated/installspace/greenbotConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/greenbot" TYPE FILE FILES "/home/greenbot/catkin_ws/src/greenbot/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/greenbot" TYPE FILE FILES "/home/fenrir/GreenBot/src/greenbot/package.xml")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/greenbot" TYPE PROGRAM FILES "/home/fenrir/GreenBot/build/greenbot/catkin_generated/installspace/teleop_husky.py")
 endif()
 

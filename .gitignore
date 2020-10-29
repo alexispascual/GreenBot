@@ -7,3 +7,6 @@ msg_gen/
 srv_gen/
 
 CATKIN_IGNORE
+
+# Mac specific files
+.DS_Store

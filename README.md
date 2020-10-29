@@ -2,6 +2,6 @@
 
 This is the repository containing the ROS code for the GreenBot
 
-#Setup
+# Setup
 
-Do `catkin_make` on the workspace to install the whole thing
+Do `catkin_make` on the workspace to install the whole thing. This should create the build/ and devel/ folders.

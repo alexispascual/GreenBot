@@ -161,6 +161,10 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
    scripts/teleop_husky.py
+   scripts/range_sensor.py
+   scripts/person_detection.py
+   scripts/auto_husky.py
+   scripts/Husky.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

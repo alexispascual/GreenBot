@@ -145,13 +145,13 @@ class AutoHusky:
     def drive(self):
         self.qr_count = 0
         # In a row and driving to detect qr codes
-        if self.state is 'Row':
+        if self.state == 'Row':
             for count in range(1):  # Count to 2, 1 for entering, 1 for exiting
                 while self.qr_count < 5:
-                    while self.detect_qr is False:
+                    while self.detect_qr == False:
                         self.drive_straight()  # publish drive command
 
-                    if self.detect_qr is True:  # Stop at qr code
+                    if self.detect_qr == True:  # Stop at qr code
                         self.qr_count += 1  # increment qr code count
                         rospy.sleep(15)  # 15 second pause
                         self.detect_qr = False
@@ -161,14 +161,14 @@ class AutoHusky:
                 self.qr_count = 0  # Reset count for trip back to end
             self.state = 'Exit'
 
-        while self.state is 'Exit':  # While Husky is entering the aisle
+        while self.state == 'Exit':  # While Husky is entering the aisle
             while self.range_data[2:4] < 25:  # Wait for the back sensors to lose the platform
                 self.drive_straight()
             # TODO possibly add extra drive time to clear platform?
             self.turn_deg(math.radians(90))
             self.state = 'Aisle'
 
-        while self.state is 'Aisle':  # In the main aisle
+        while self.state == 'Aisle':  # In the main aisle
             while self.range_data[1] < 25:  # Front Left sensor detects platform
                 # Start passing the platform
                 self.drive_straight()
@@ -178,7 +178,7 @@ class AutoHusky:
             self.turn_deg(math.radians(90))  # Turn into row
             self.state = 'Enter'
 
-        while self.state is 'Enter':
+        while self.state == 'Enter':
             while self.range_data[2:4] > 25:
                 self.drive_straight()
             self.state = 'Row'
@@ -248,12 +248,12 @@ class AutoHusky:
                                                              start_time,
                                                              'base_link',
                                                              rospy.Duration(1))
-                print trans
+                print (trans)
                 if trans == [0, 0, 0, rad]:  # Turn complete
                     turn_complete = True
 
         except Exception as error:
-            print error
+            print (error)
         return
 
 # ------------------------------------------------------------------------------
@@ -266,16 +266,16 @@ class AutoHusky:
             # Testing functionality
             while self.joy_data.buttons[6] == 1:
             #while self.lab == 1:
-		self.drive_straight(20)
-		self.turn_deg(180)
-		self.drive_straight(20)
+                self.drive_straight(20)
+                self.turn_deg(180)
+                self.drive_straight(20)
                 self.turn_deg(90)
                 rospy.sleep(30)
                 self.turn_deg(-90)
                 rospy.sleep(30)
                 self.turn_deg(180)
                 rospy.sleep(30)
-           	self.drive_straight(20)
+                self.drive_straight(20)
 
             while self.z == 1:
                 self.turn_deg(-90, z=True)

@@ -10,7 +10,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 # Should this be top import?
 import roslib
-roslib.load_manifest("GreenBot")
+roslib.load_manifest("greenbot")
 
 
 # ------------------------------------------------------------------------------
@@ -135,8 +135,8 @@ class PersonDetection:
         unpacked_im = None
         try:
             unpacked_im = self.cv_bridge.imgmsg_to_cv2(message, desired_encoding='bgr8')
-        except CvBridgeError, e:
-            print e
+        except (CvBridgeError, e):
+            print (e)
 
         return np.asarray(unpacked_im[:, :])
 

@@ -35,9 +35,19 @@ class TeleopGreenbot:
         rospy.loginfo(f"Linear: x = {msg.linear.x}, y = {msg.linear.y} z = {msg.linear.z}")
         rospy.loginfo(f"Angular: x = {msg.angular.x}, y = {msg.angular.y} z = {msg.angular.z}")
 
-    def sendToArduino(self, msg):
+        self.sendToArduino(msg.linear.x, msg.angular.z)
 
-        self.udoo_serial(b"{msg}")
+    def sendToArduino(self, x, z):
+
+        message = f"[{x},{z}]"
+
+        print(message)
+
+        byte_array = bytearray()
+        byte_array.extend(message.encode()) 
+
+        
+        self.udoo_serial.write(byte_array)
 
     def start(self):
         # spin() simply keeps python from exiting until this node is stopped

@@ -4,12 +4,24 @@ const byte num_chars = 32;
 float cmd_vel[num_chars];
 char raw_chars[num_chars];
 
+byte PWM_pin_1 = 3;
+byte PWM_pin_2 = 5;
+byte PWM_pin_3 = 6;
+byte PWM_pin_4 = 9;
+byte PWM_pin_5 = 10;
+
 void setup() {
 
   // initialize serial port at a baud rate of 115200 bps
   Serial.begin(115200);
   delay(100);
   Serial.println("Start");
+
+  pinMode(PWM_pin_1, OUTPUT);
+  pinMode(PWM_pin_2, OUTPUT);
+  pinMode(PWM_pin_3, OUTPUT);
+  pinMode(PWM_pin_4, OUTPUT);
+  pinMode(PWM_pin_5, OUTPUT);
 }
 
 

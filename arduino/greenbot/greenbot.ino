@@ -4,11 +4,11 @@ const byte num_chars = 32;
 float cmd_vel[num_chars];
 char raw_chars[num_chars];
 
-byte PWM_pin_1 = 3;
-byte PWM_pin_2 = 5;
-byte PWM_pin_3 = 6;
-byte PWM_pin_4 = 9;
-byte PWM_pin_5 = 10;
+const byte PWM_pin_3 = 3; // front left
+const byte PWM_pin_5 = 5; // front right
+const byte PWM_pin_6 = 6; // rear left
+const byte PWM_pin_9 = 9; // rear right
+const byte PWM_pin_10 = 10; // mast
 
 void setup() {
 
@@ -17,11 +17,11 @@ void setup() {
   delay(100);
   Serial.println("Start");
 
-  pinMode(PWM_pin_1, OUTPUT);
-  pinMode(PWM_pin_2, OUTPUT);
   pinMode(PWM_pin_3, OUTPUT);
-  pinMode(PWM_pin_4, OUTPUT);
   pinMode(PWM_pin_5, OUTPUT);
+  pinMode(PWM_pin_6, OUTPUT);
+  pinMode(PWM_pin_9, OUTPUT);
+  pinMode(PWM_pin_10, OUTPUT);
 }
 
 
@@ -72,15 +72,46 @@ void ParseRawChars() {
 void HandleCmdVelData(float cmd_vel[]) {
   
   if (new_data) {
-    Serial.print("Received the following:");
-    Serial.print(cmd_vel[0]);
-    Serial.print("\n");
-    Serial.print(cmd_vel[1]);
-    Serial.print("\n");
 
-    new_data = false;
+    // Drive Forward or Backwards
+    if (cmd_vel[1] == 0) {
+
+      if (cmd_vel[0] > 0) { // Forward
+        Serial.println("Moving forward \n");
+        analogWrite(PWM_pin_3, cmd_vel[0]);
+        analogWrite(PWM_pin_5, cmd_vel[0]);
+        analogWrite(PWM_pin_6, cmd_vel[0]);
+        analogWrite(PWM_pin_9, cmd_vel[0]);
+      } else { // TODO: Reverse
+        Serial.println("Moving backward \n");
+        analogWrite(PWM_pin_3, cmd_vel[0]);
+        analogWrite(PWM_pin_5, cmd_vel[0]);
+        analogWrite(PWM_pin_6, cmd_vel[0]);
+        analogWrite(PWM_pin_9, cmd_vel[0]);
+      }
+
     }
-  
+    // Turn without moving forwards or backwards
+    else if (cmd_vel[0] == 0) {
+
+        if (cmd_vel[1] > 0) {// Turn counter-clockwise
+          Serial.println("Turning counter-clockwise \n");
+          analogWrite(PWM_pin_5, cmd_vel[1]);
+          analogWrite(PWM_pin_9, cmd_vel[1]);
+        } else { // Turn Clockwise
+          Serial.println("Turning clockwise \n");
+          analogWrite(PWM_pin_3, cmd_vel[1]);
+          analogWrite(PWM_pin_6, cmd_vel[1]);
+        }
+    }
+
+    delay(10); // Move for a few milliseconds before waiting for a new command.
+    analogWrite(PWM_pin_3, 0);
+    analogWrite(PWM_pin_5, 0);
+    analogWrite(PWM_pin_6, 0);
+    analogWrite(PWM_pin_9, 0);
+    new_data = false;
+  }
 }
 
 void loop() {

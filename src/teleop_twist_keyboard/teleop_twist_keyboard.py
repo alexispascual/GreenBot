@@ -198,6 +198,15 @@ if __name__=="__main__":
                 speed = speed * speedBindings[key][0]
                 turn = turn * speedBindings[key][1]
 
+                if speed >= 255:
+                    speed = 255
+                elif speed < 0:
+                    speed = 0
+                if turn >= 255:
+                    turn = 255
+                elif turn < 0:
+                    turn = 0
+
                 print(vels(speed,turn))
                 if (status == 14):
                     print(msg)

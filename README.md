@@ -16,10 +16,13 @@ To perform teleoperation on the GreenBot, perform the following steps:
    * Once the IP addresses of both computers, edit the `ros_master_setup.sh` and `ros_node_setup.sh` files and populate the appropriate IP addresses
  
 1. Source the `ros_master_setup` file on the main pc and Start ROS Master (`source config/ros_master_config.sh; roscore`)
-   * It will be good to do the following here on both PCs: `source devel/setup.bash`
+   * It will be good to do the following here: `source devel/setup.bash`
+   
+3. Source the `ros_node_setup` file on GreenBot
+   * It will be good to do the following here: `source devel/setup.bash`
   
-2. Start the `teleop_twist_keyboard.py` script on the main PC `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
+4. Start the `teleop_twist_keyboard.py` script on the main PC `rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
 
-3. Start the `teleop_greenbot.py` script on GreenBot `rosrun teleop_greenbot teleop_greenbot.py`
+5. Start the `teleop_greenbot.py` script on GreenBot `rosrun teleop_greenbot teleop_greenbot.py`
 
-4. Mash some buttons!
+6. Mash some buttons!

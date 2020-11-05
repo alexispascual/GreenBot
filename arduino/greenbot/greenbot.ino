@@ -122,7 +122,7 @@ void HandleCmdVelData(float cmd_vel[]) {
       analogWrite(PWM_pin_6, pwm_signal_1);
     }
 
-    delay(10); // Move for a few milliseconds before waiting for a new command.
+    delay(10000); // Move for a few milliseconds before waiting for a new command.
     analogWrite(PWM_pin_3, 0);
     analogWrite(PWM_pin_5, 0);
     analogWrite(PWM_pin_6, 0);
@@ -137,7 +137,7 @@ uint8_t ScaleVelocity(float vel) {
   float scaled_vel = 0;
 
   scaled_vel = (vel + 255) / 2;
-
+  Serial.println(scaled_vel);
   return (uint8_t)scaled_vel;
 
 }

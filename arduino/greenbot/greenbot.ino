@@ -1,3 +1,5 @@
+#include "Greenbot.h"
+
 bool new_data = false;
 const byte num_chars = 32;
 

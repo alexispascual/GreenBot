@@ -31,4 +31,13 @@ class Greenbot {
 	Greenbot(uint8_t pwm_pins_right, 
 			uint8_t pwm_pins_left, 
 			uint8_t speed);
+
+	void SetSpeed(uint8_t speed);
+	void SetForwardDutyCycle(uint8_t speed);
+	void SetReverseDutyCycle(uint8_t speed);
+	void DriveForward();
+	void DriveBackward();
+	void Stop();
 }
+
+#endif

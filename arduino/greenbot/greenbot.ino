@@ -73,36 +73,53 @@ void HandleCmdVelData(float cmd_vel[]) {
   
   if (new_data) {
 
-    // Drive Forward or Backwards
-    if (cmd_vel[1] == 0) {
+    uint8_t pwm_signal_1;
+    uint8_t pwm_signal_2;
 
-      if (cmd_vel[0] > 0) { // Forward
-        Serial.println("Moving forward \n");
-        analogWrite(PWM_pin_3, cmd_vel[0]);
-        analogWrite(PWM_pin_5, cmd_vel[0]);
-        analogWrite(PWM_pin_6, cmd_vel[0]);
-        analogWrite(PWM_pin_9, cmd_vel[0]);
-      } else { // TODO: Reverse
-        Serial.println("Moving backward \n");
-        analogWrite(PWM_pin_3, cmd_vel[0]);
-        analogWrite(PWM_pin_5, cmd_vel[0]);
-        analogWrite(PWM_pin_6, cmd_vel[0]);
-        analogWrite(PWM_pin_9, cmd_vel[0]);
-      }
 
+    if (cmd_vel[0] > 0 && cmd_vel[1] == 0) { // Forward
+
+      pwm_signal_1 = ScaleVelocity(cmd_vel[0]);
+
+      Serial.println("Moving forward \n");
+      analogWrite(PWM_pin_3, pwm_signal_1);
+      analogWrite(PWM_pin_5, pwm_signal_1);
+      analogWrite(PWM_pin_6, pwm_signal_1);
+      analogWrite(PWM_pin_9, pwm_signal_1);
+
+    } else if (cmd_vel[0] < 0 && cmd_vel[1] == 0) { // TODO: Reverse
+
+      pwm_signal_1 = ScaleVelocity(cmd_vel[0]);
+
+      Serial.println("Moving backward \n");
+      analogWrite(PWM_pin_3, pwm_signal_1);
+      analogWrite(PWM_pin_5, pwm_signal_1);
+      analogWrite(PWM_pin_6, pwm_signal_1);
+      analogWrite(PWM_pin_9, pwm_signal_1);
     }
-    // Turn without moving forwards or backwards
-    else if (cmd_vel[0] == 0) {
 
-        if (cmd_vel[1] > 0) {// Turn counter-clockwise
-          Serial.println("Turning counter-clockwise \n");
-          analogWrite(PWM_pin_5, cmd_vel[1]);
-          analogWrite(PWM_pin_9, cmd_vel[1]);
-        } else { // Turn Clockwise
-          Serial.println("Turning clockwise \n");
-          analogWrite(PWM_pin_3, cmd_vel[1]);
-          analogWrite(PWM_pin_6, cmd_vel[1]);
-        }
+    else if (cmd_vel[0] == 0 && cmd_vel[1] > 0) { // Turn counter-clockwise
+
+      pwm_signal_1 = ScaleVelocity(cmd_vel[1]);
+      pwm_signal_2 = ScaleVelocity(-cmd_vel[1]);
+
+      Serial.println("Turning counter-clockwise \n");
+      analogWrite(PWM_pin_5, pwm_signal_2);
+      analogWrite(PWM_pin_9, pwm_signal_2);
+      analogWrite(PWM_pin_3, pwm_signal_2);
+      analogWrite(PWM_pin_6, pwm_signal_2);
+    }
+
+    else if (cmd_vel[0] == 0 && cmd_vel[1] < 0) { // Turn Clockwise
+
+      pwm_signal_1 = ScaleVelocity(cmd_vel[1]);
+      pwm_signal_2 = ScaleVelocity(-cmd_vel[1]);
+
+      Serial.println("Turning clockwise \n");
+      analogWrite(PWM_pin_5, pwm_signal_2);
+      analogWrite(PWM_pin_9, pwm_signal_2);
+      analogWrite(PWM_pin_3, pwm_signal_1);
+      analogWrite(PWM_pin_6, pwm_signal_1);
     }
 
     delay(10); // Move for a few milliseconds before waiting for a new command.
@@ -112,6 +129,17 @@ void HandleCmdVelData(float cmd_vel[]) {
     analogWrite(PWM_pin_9, 0);
     new_data = false;
   }
+
+}
+
+uint8_t ScaleVelocity(float vel) {
+
+  float scaled_vel = 0;
+
+  scaled_vel = (vel + 255) / 2;
+
+  return (uint8_t)scaled_vel;
+
 }
 
 void loop() {

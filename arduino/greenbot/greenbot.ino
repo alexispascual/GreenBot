@@ -1,4 +1,8 @@
 #include "Greenbot.h"
+#include <Servo.h>
+
+#define MIN_PERIOD 10
+#define MAX_PERIOD 10000
 
 bool new_data = false;
 const byte num_chars = 32;
@@ -12,6 +16,9 @@ const byte PWM_pin_6 = 6; // rear left
 const byte PWM_pin_9 = 9; // rear right
 const byte PWM_pin_10 = 10; // mast
 
+Servo left_wheels;
+Servo right_wheels;
+
 void setup() {
 
   // initialize serial port at a baud rate of 115200 bps
@@ -19,11 +26,16 @@ void setup() {
   delay(100);
   Serial.println("Start");
 
-  pinMode(PWM_pin_3, OUTPUT);
-  pinMode(PWM_pin_5, OUTPUT);
-  pinMode(PWM_pin_6, OUTPUT);
-  pinMode(PWM_pin_9, OUTPUT);
-  pinMode(PWM_pin_10, OUTPUT);
+//  pinMode(PWM_pin_3, OUTPUT);
+//  pinMode(PWM_pin_5, OUTPUT);
+//  pinMode(PWM_pin_6, OUTPUT);
+//  pinMode(PWM_pin_9, OUTPUT);
+//  pinMode(PWM_pin_10, OUTPUT);
+  right_wheels.detach();
+  left_wheels.detach();
+
+  right_wheels.attach(PWM_pin_5, 400, 2400);
+  left_wheels.attach(PWM_pin_3, 400, 2400);
 }
 
 
@@ -75,8 +87,8 @@ void HandleCmdVelData(float cmd_vel[]) {
   
   if (new_data) {
 
-    uint8_t pwm_signal_1;
-    uint8_t pwm_signal_2;
+    int pwm_signal_1;
+    int pwm_signal_2;
 
 
     if (cmd_vel[0] > 0 && cmd_vel[1] == 0) { // Forward
@@ -84,20 +96,28 @@ void HandleCmdVelData(float cmd_vel[]) {
       pwm_signal_1 = ScaleVelocity(cmd_vel[0]);
 
       Serial.println("Moving forward \n");
-      analogWrite(PWM_pin_3, pwm_signal_1);
-      analogWrite(PWM_pin_5, pwm_signal_1);
-      analogWrite(PWM_pin_6, pwm_signal_1);
-      analogWrite(PWM_pin_9, pwm_signal_1);
+
+      right_wheels.writeMicroseconds(2300);
+      left_wheels.writeMicroseconds(2300);
+
+      // analogWrite(PWM_pin_3, pwm_signal_1);
+      // analogWrite(PWM_pin_5, pwm_signal_1);
+      // analogWrite(PWM_pin_6, pwm_signal_1);
+      // analogWrite(PWM_pin_9, pwm_signal_1);
 
     } else if (cmd_vel[0] < 0 && cmd_vel[1] == 0) { // TODO: Reverse
 
       pwm_signal_1 = ScaleVelocity(cmd_vel[0]);
 
       Serial.println("Moving backward \n");
-      analogWrite(PWM_pin_3, pwm_signal_1);
-      analogWrite(PWM_pin_5, pwm_signal_1);
-      analogWrite(PWM_pin_6, pwm_signal_1);
-      analogWrite(PWM_pin_9, pwm_signal_1);
+
+      right_wheels.writeMicroseconds(700);
+      left_wheels.writeMicroseconds(700);
+
+      // analogWrite(PWM_pin_3, pwm_signal_1);
+      // analogWrite(PWM_pin_5, pwm_signal_1);
+      // analogWrite(PWM_pin_6, pwm_signal_1);
+      // analogWrite(PWM_pin_9, pwm_signal_1);
     }
 
     else if (cmd_vel[0] == 0 && cmd_vel[1] > 0) { // Turn counter-clockwise
@@ -106,10 +126,14 @@ void HandleCmdVelData(float cmd_vel[]) {
       pwm_signal_2 = ScaleVelocity(-cmd_vel[1]);
 
       Serial.println("Turning counter-clockwise \n");
-      analogWrite(PWM_pin_5, pwm_signal_2);
-      analogWrite(PWM_pin_9, pwm_signal_2);
-      analogWrite(PWM_pin_3, pwm_signal_2);
-      analogWrite(PWM_pin_6, pwm_signal_2);
+
+      right_wheels.writeMicroseconds(2300);
+      left_wheels.writeMicroseconds(700);
+
+      // analogWrite(PWM_pin_5, pwm_signal_2);
+      // analogWrite(PWM_pin_9, pwm_signal_2);
+      // analogWrite(PWM_pin_3, pwm_signal_2);
+      // analogWrite(PWM_pin_6, pwm_signal_2);
     }
 
     else if (cmd_vel[0] == 0 && cmd_vel[1] < 0) { // Turn Clockwise
@@ -118,29 +142,49 @@ void HandleCmdVelData(float cmd_vel[]) {
       pwm_signal_2 = ScaleVelocity(-cmd_vel[1]);
 
       Serial.println("Turning clockwise \n");
-      analogWrite(PWM_pin_5, pwm_signal_2);
-      analogWrite(PWM_pin_9, pwm_signal_2);
-      analogWrite(PWM_pin_3, pwm_signal_1);
-      analogWrite(PWM_pin_6, pwm_signal_1);
+
+      right_wheels.writeMicroseconds(700);
+      left_wheels.writeMicroseconds(2300);
+
+      // analogWrite(PWM_pin_5, pwm_signal_2);
+      // analogWrite(PWM_pin_9, pwm_signal_2);
+      // analogWrite(PWM_pin_3, pwm_signal_1);
+      // analogWrite(PWM_pin_6, pwm_signal_1);
     }
 
-    delay(10000); // Move for a few milliseconds before waiting for a new command.
-    analogWrite(PWM_pin_3, 0);
-    analogWrite(PWM_pin_5, 0);
-    analogWrite(PWM_pin_6, 0);
-    analogWrite(PWM_pin_9, 0);
+    else if (cmd_vel[0] == 0 && cmd_vel[1] == 0) { // Stop
+
+      pwm_signal_1 = ScaleVelocity(0);
+      pwm_signal_2 = ScaleVelocity(0);
+
+      Serial.println("Stopping \n");
+
+      right_wheels.writeMicroseconds(1500);
+      left_wheels.writeMicroseconds(1500);
+
+      // analogWrite(PWM_pin_5, pwm_signal_2);
+      // analogWrite(PWM_pin_9, pwm_signal_2);
+      // analogWrite(PWM_pin_3, pwm_signal_1);
+      // analogWrite(PWM_pin_6, pwm_signal_1);
+    }
+
+//    delay/(10000); // Move for a few milliseconds before waiting for a new command.
+//    analogWrite(PWM_pin_3, 0);
+//    analogWrite(PWM_pin_5, 0);
+//    analogWrite(PWM_pin_6, 0);
+//    analogWrite(PWM_pin_9, 0);
     new_data = false;
   }
 
 }
 
-uint8_t ScaleVelocity(float vel) {
+int ScaleVelocity(float vel) {
 
   float scaled_vel = 0;
-
-  scaled_vel = (vel + 255) / 2;
+ 
+  scaled_vel = (vel + 255) *(2400/510);
   Serial.println(scaled_vel);
-  return (uint8_t)scaled_vel;
+  return (int)scaled_vel;
 
 }
 

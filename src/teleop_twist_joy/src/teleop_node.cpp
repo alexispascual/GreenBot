@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 
   ros::NodeHandle nh(""), nh_param("~");
   teleop_twist_joy::TeleopTwistJoy joy_teleop(&nh, &nh_param);
-
+  
+  ros::Rate(5);
   ros::spin();
 }

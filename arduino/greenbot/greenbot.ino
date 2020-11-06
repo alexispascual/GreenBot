@@ -1,8 +1,9 @@
 #include "Greenbot.h"
 #include <Servo.h>
 
-#define MIN_PERIOD 10
-#define MAX_PERIOD 10000
+#define PWM_HIGH_DUR 2000
+#define PWM_NEUTRAL_DUR 1500
+#define PWM_LOW_DUR 1000
 
 bool new_data = false;
 const byte num_chars = 32;
@@ -34,8 +35,8 @@ void setup() {
   right_wheels.detach();
   left_wheels.detach();
 
-  right_wheels.attach(PWM_pin_5, 400, 2400);
-  left_wheels.attach(PWM_pin_3, 400, 2400);
+  right_wheels.attach(10);
+  left_wheels.attach(11);
 }
 
 
@@ -97,8 +98,8 @@ void HandleCmdVelData(float cmd_vel[]) {
 
       Serial.println("Moving forward \n");
 
-      right_wheels.writeMicroseconds(2300);
-      left_wheels.writeMicroseconds(2300);
+      right_wheels.writeMicroseconds(PWM_HIGH_DUR);
+      left_wheels.writeMicroseconds(PWM_HIGH_DUR);
 
       // analogWrite(PWM_pin_3, pwm_signal_1);
       // analogWrite(PWM_pin_5, pwm_signal_1);
@@ -111,11 +112,11 @@ void HandleCmdVelData(float cmd_vel[]) {
 
       Serial.println("Moving backward \n");
 
-      right_wheels.writeMicroseconds(700);
-      left_wheels.writeMicroseconds(700);
+      right_wheels.writeMicroseconds(PWM_LOW_DUR);
+      left_wheels.writeMicroseconds(PWM_LOW_DUR);
 
       // analogWrite(PWM_pin_3, pwm_signal_1);
-      // analogWrite(PWM_pin_5, pwm_signal_1);
+      // analogWrite(PWM_pin_5, pwm_signal_1);2300
       // analogWrite(PWM_pin_6, pwm_signal_1);
       // analogWrite(PWM_pin_9, pwm_signal_1);
     }
@@ -127,8 +128,8 @@ void HandleCmdVelData(float cmd_vel[]) {
 
       Serial.println("Turning counter-clockwise \n");
 
-      right_wheels.writeMicroseconds(2300);
-      left_wheels.writeMicroseconds(700);
+      right_wheels.writeMicroseconds(PWM_HIGH_DUR);
+      left_wheels.writeMicroseconds(PWM_LOW_DUR);
 
       // analogWrite(PWM_pin_5, pwm_signal_2);
       // analogWrite(PWM_pin_9, pwm_signal_2);
@@ -143,8 +144,8 @@ void HandleCmdVelData(float cmd_vel[]) {
 
       Serial.println("Turning clockwise \n");
 
-      right_wheels.writeMicroseconds(700);
-      left_wheels.writeMicroseconds(2300);
+      right_wheels.writeMicroseconds(PWM_LOW_DUR);
+      left_wheels.writeMicroseconds(PWM_HIGH_DUR);
 
       // analogWrite(PWM_pin_5, pwm_signal_2);
       // analogWrite(PWM_pin_9, pwm_signal_2);
@@ -159,8 +160,8 @@ void HandleCmdVelData(float cmd_vel[]) {
 
       Serial.println("Stopping \n");
 
-      right_wheels.writeMicroseconds(1500);
-      left_wheels.writeMicroseconds(1500);
+      right_wheels.writeMicroseconds(PWM_NEUTRAL_DUR);
+      left_wheels.writeMicroseconds(PWM_NEUTRAL_DUR);
 
       // analogWrite(PWM_pin_5, pwm_signal_2);
       // analogWrite(PWM_pin_9, pwm_signal_2);

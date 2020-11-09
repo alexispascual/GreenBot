@@ -5,26 +5,28 @@
 
 #include "Arduino.h"
 #include "Greenbot.h"
+#include <Servo.h>
 
 //--------------------------------------------------------------------------//
 //								    Constructor				   				//
 //--------------------------------------------------------------------------//
 
 
-	Greenbot::Greenbot(uint8_t pwm_pins_right, uint8_t pwm_pins_left, uint8_t speed){
+	Greenbot::Greenbot(uint8_t pwm_pins_right, uint8_t pwm_pins_left, 
+	                  uint8_t pwm_pins_mast, uint8_t speed){
 
-		this->pwm_pins_right = pwm_pins_right;
-		this->pwm_pins_left = pwm_pins_left;
+		this->right_wheels.attach(pwm_pins_right);
+    this->left_wheels.attach(pwm_pins_left);
+    this->mast.attach(pwm_pins_mast);
+    
 		this->speed = speed;
 
 		this->is_moving = false;
 		this->is_turning = false;
 
-		this->forward_duty_cycle = SetForwardDutyCycle(speed);
-		this->reverse_duty_cycle = SetReverseDutyCycle(speed);
+		this->forward_pulse_width = SetForwardPulseWidth(speed);
+		this->reverse_pulse_width = SetReversePulseWidth(speed);
 
-		pinMode(pwm_pins_right, OUTPUT);
-		pinMode(pwm_pins_left, OUTPUT);
 
 	}
 //--------------------------------------------------------------------------//
@@ -33,29 +35,29 @@
 	void Greenbot::SetSpeed(uint8_t speed) {
 
 		this->speed = speed;
-		this->forward_duty_cycle = SetForwardDutyCycle(speed);
-		this->reverse_duty_cycle = SetReverseDutyCycle(speed);
+		this->forward_pulse_width = SetForwardPulseWidth(speed);
+		this->reverse_pulse_width = SetReversePulseWidth(speed);
 
 	}
 
 
-	uint8_t Greenbot::SetForwardDutyCycle(uint8_t speed){
+	uint16_t Greenbot::SetForwardPulseWidth(uint8_t speed){
 
 		float duty_cycle = 0;
 
-		duty_cycle = (speed + 255) / 2;
+		duty_cycle = 1500 + ((500/255) * speed);
 
-  		return (uint8_t)duty_cycle;
+  	return (uint16_t)duty_cycle;
 
 	}
 
-	uint8_t Greenbot::SetReverseDutyCycle(uint8_t speed){
+	uint16_t Greenbot::SetReversePulseWidth(uint8_t speed){
 
 		float duty_cycle = 0;
 
-		duty_cycle = (-speed + 255) / 2;
+		duty_cycle = 1000 + ((500/255)*speed);
 
-  		return (uint8_t)duty_cycle;
+    return (uint16_t)duty_cycle;
 
 	}
 //--------------------------------------------------------------------------//
@@ -67,8 +69,8 @@
 
 		if (this->is_moving == false) {
 
-			analogWrite(this->pwm_pins_left, this->forward_duty_cycle);
-			analogWrite(this->pwm_pins_right, this->forward_duty_cycle);
+			this->right_wheels.writeMicroseconds(this->forward_pulse_width);
+			this->left_wheels.writeMicroseconds(this->forward_pulse_width);
 
 		} else {
 
@@ -82,22 +84,28 @@
 
 		if (this->is_moving == false) {
 
-			analogWrite(this->pwm_pins_left, this->reverse_duty_cycle);
-			analogWrite(this->pwm_pins_right, this->reverse_duty_cycle);
+			this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
+      this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
 
 		} else {
 
-			Serial.println("Already moving forward");
+			Serial.println("Already moving backwards");
 		}
 	}
 
 	void Greenbot::Stop(){
+    
+    if (this->is_moving) {
+      
+      this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
+      this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
 
-		this->is_moving = false;
+      this->is_moving = false;
+      
+    } else {
 
-		analogWrite(this->pwm_pins_left, 0);
-		analogWrite(this->pwm_pins_right, 0);
+        Serial.println("Already stopped");
+      
+      }
 		
 	}
-
-

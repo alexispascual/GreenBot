@@ -1,9 +1,9 @@
-#include "Greenbot.h"
+ #include "Greenbot.h"
 #include <Servo.h>
 
-#define PWM_HIGH_DUR 1600
+#define PWM_HIGH_DUR 2000
 #define PWM_NEUTRAL_DUR 1500
-#define PWM_LOW_DUR 1400
+#define PWM_LOW_DUR 1000
 
 bool new_data = false;
 const byte num_chars = 32;

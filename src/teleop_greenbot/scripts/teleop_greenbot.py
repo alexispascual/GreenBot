@@ -4,12 +4,13 @@ import rospy
 import serial
 import time
 from geometry_msgs.msg import Twist
+from teleop_master.msg import Command
 
 class TeleopGreenbot:
     def __init__(self):
         rospy.init_node('teleop_greenbot', anonymous=True)
 
-        rospy.Subscriber("/cmd_vel", Twist, self.handleTwistMessage, queue_size=3, buff_size=2**24)
+        rospy.Subscriber("/cmd_vel", Command, self.handleCommandMessage, queue_size=3, buff_size=2**24)
 
         self.udoo_serial = self.initializeArduino()
 
@@ -30,22 +31,20 @@ class TeleopGreenbot:
 
             return ser
 
-    def handleTwistMessage(self, msg):
+    def handleCommandMessage(self, msg):
 
-        rospy.loginfo(f"Linear: x = {msg.linear.x}, y = {msg.linear.y} z = {msg.linear.z}")
-        rospy.loginfo(f"Angular: x = {msg.angular.x}, y = {msg.angular.y} z = {msg.angular.z}")
+        rospy.loginfo(f"Motion: x = {msg.x}, z = {msg.z}")
+        rospy.loginfo(f"Speed: {msg.speed}")
+        rospy.loginfo(f"Mast control: {msg.mast_control}")
 
-        self.sendToArduino(msg.linear.x, msg.angular.z)
+        self.sendToArduino(msg.x, msg.z, msg.speed, msg.mast_control)
 
-    def sendToArduino(self, x, z):
+    def sendToArduino(self, x, z, speed, mast_control):
 
-        message = f"[{x},{z}]"
-
-        print(message)
+        message = f"[{x},{z},{speed},{mast_control}]"
 
         byte_array = bytearray()
         byte_array.extend(message.encode()) 
-
         
         self.udoo_serial.write(byte_array)
 

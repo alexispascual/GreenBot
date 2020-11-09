@@ -9,7 +9,7 @@ class TeleopGreenbot:
     def __init__(self):
         rospy.init_node('teleop_greenbot', anonymous=True)
 
-        rospy.Subscriber("/cmd_vel", Twist, self.handle_twist_message)
+        rospy.Subscriber("/cmd_vel", Twist, self.handle_twist_message, queue_size=3, buff_size=2**24)
 
         self.udoo_serial = self.initialize_arduino()
 
@@ -53,15 +53,6 @@ class TeleopGreenbot:
         # spin() simply keeps python from exiting until this node is stopped
         rospy.spin()
     
-# def listener():
-
-#     rospy.init_node('teleop_greenbot', anonymous=True)
-
-#     rospy.Subscriber("/cmd_vel", Twist, callback)
-
-#     # spin() simply keeps python from exiting until this node is stopped
-#     rospy.spin()
-
 if __name__ == '__main__':
     teleop_greenbot = TeleopGreenbot()
     teleop_greenbot.start()

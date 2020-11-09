@@ -23,6 +23,8 @@
 
 		this->is_moving = false;
 		this->is_turning = false;
+    this->mast_extending = false;
+    this->mast_retracting = false;
 
 		this->forward_pulse_width = SetForwardPulseWidth(speed);
 		this->reverse_pulse_width = SetReversePulseWidth(speed);
@@ -123,19 +125,38 @@
     }
   }
 
-	void Greenbot::Stop(){
+  void Greenbot::ExtendMast(){
+
+    if (this->mast_extending == false) {
+
+      this->mast.writeMicroseconds(this->mast_extension_pulse_width);
+
+      this->mast_extending = true;
+
+    }
+  }
+
+  void Greenbot::RetractMast(){
+
+    if (this->mast_retracting == false) {
+
+      this->mast.writeMicroseconds(this->mast_retraction_pulse_width);
+
+      this->mast_retracting = true;
+
+    }
     
-    if (this->is_moving) {
+  }
+
+	void Greenbot::Stop(){
       
       this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
       this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
+      this->mast.writeMicroseconds(this->neutral_pulse_width);
 
       this->is_moving = false;
+      this->is_turning = false;
+      this->mast_retracting = false;
+      this->mast_extending = false;
       
-    } else {
-
-        Serial.println("Already stopped");
-      
-      }
-		
 	}

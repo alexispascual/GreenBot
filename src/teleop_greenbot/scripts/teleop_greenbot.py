@@ -34,14 +34,14 @@ class TeleopGreenbot:
     def handleCommandMessage(self, msg):
 
         rospy.loginfo(f"Motion: x = {msg.x}, z = {msg.z}")
-        rospy.loginfo(f"Speed: {msg.speed}")
         rospy.loginfo(f"Mast control: {msg.mast_control}")
+        rospy.loginfo(f"Speed: {msg.speed}")
 
-        self.sendToArduino(msg.x, msg.z, msg.speed, msg.mast_control)
+        self.sendToArduino(msg.x, msg.z, msg.mast_control, msg.speed)
 
-    def sendToArduino(self, x, z, speed, mast_control):
+    def sendToArduino(self, x, z, mast_control, speed):
 
-        message = f"[{x},{z},{speed},{mast_control}]"
+        message = f"[{x},{z},{mast_control},{speed}]"
 
         byte_array = bytearray()
         byte_array.extend(message.encode()) 

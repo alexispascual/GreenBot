@@ -26,9 +26,13 @@ class Greenbot {
 	uint16_t forward_pulse_width;
 	uint16_t reverse_pulse_width;
   uint16_t neutral_pulse_width = 1500;
+  uint16_t mast_extension_pulse_width = 1600;
+  uint16_t mast_retraction_pulse_width = 1400;
 
 	bool is_moving;
 	bool is_turning;
+  bool mast_extending;
+  bool mast_retracting;
   
 	public:
 
@@ -44,6 +48,8 @@ class Greenbot {
 	void DriveBackward();
   void TurnCounterClockwise();
   void TurnClockwise();
+  void ExtendMast();
+  void RetractMast();
 	void Stop();
 };
 

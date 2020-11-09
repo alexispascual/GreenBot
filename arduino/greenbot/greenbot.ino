@@ -70,7 +70,7 @@ void ParseRawChars() {
   command.z = atoi(strtokIndx);     // Get z
 
   strtokIndx = strtok(NULL, ",");
-  command.mast_control = atoi(strtokIndx);  // Get mast
+  command.mast_control = atoi(strtokIndx);  // Get mast_control
 
   strtokIndx = strtok(NULL, ",");
   command.speed = atof(strtokIndx);
@@ -86,30 +86,38 @@ void HandleCommand() {
       Serial.println("Moving forward \n");
 
       greenbot.DriveForward();
-
+      
     } else if (command.x < 0) { // Reverse
 
       Serial.println("Moving backward \n");
 
       greenbot.DriveBackward();
       
-    }
-
-    else if (command.z > 0) { // Turn counter-clockwise
+    } else if (command.z > 0) { // Turn counter-clockwise
       
       Serial.println("Turning counter-clockwise \n");
 
       greenbot.TurnCounterClockwise();
-    }
-
-    else if (command.z < 0) { // Turn Clockwise
+      
+    } else if (command.z < 0) { // Turn Clockwise
 
       Serial.println("Turning clockwise \n");
 
       greenbot.TurnClockwise();
-    }
+      
+    } else if (command.mast_control > 0) { // Extend mast
+      
+      Serial.println("Extending mast \n");
 
-    else if (command.x == 0&& command.z == 0) { // Stop
+      greenbot.ExtendMast();
+      
+    } else if (command.mast_control < 0) { // Retract mast
+      
+      Serial.println("Retracting mast \n");
+
+      greenbot.RetractMast();
+      
+    } else if (command.x == 0 && command.z == 0 && command.mast_control == 0) { // Stop
 
       Serial.println("Stopping \n");
 
@@ -119,16 +127,6 @@ void HandleCommand() {
     
     new_data = false;
   }
-
-}
-
-int ScaleVelocity(float vel) {
-
-  float scaled_vel = 0;
- 
-  scaled_vel = (vel + 255) *(2400/510);
-  Serial.println(scaled_vel);
-  return (int)scaled_vel;
 
 }
 

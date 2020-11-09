@@ -41,10 +41,10 @@ class TeleopMaster:
 
         command = Command()
 
-        command.x = (int)self.x
-        command.z = (int)self.z
-        command.mast_control = (int)self.mast_control
-        command.speed_control = (int)self.speed
+        command.x = int(self.x)
+        command.z = int(self.z)
+        command.mast_control = int(self.mast_control)
+        command.speed = float(self.speed)
 
         return command
 

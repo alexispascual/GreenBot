@@ -31,7 +31,7 @@ class TeleopMaster:
         self.enable_control = False
         self.new_command = False
 
-        # Initialize control modes
+        # Initialize control modes and default speed
         self.x = 0
         self.z = 0
         self.speed = 127

@@ -9,13 +9,13 @@ class TeleopGreenbot:
     def __init__(self):
         rospy.init_node('teleop_greenbot', anonymous=True)
 
-        rospy.Subscriber("/cmd_vel", Twist, self.handle_twist_message, queue_size=3, buff_size=2**24)
+        rospy.Subscriber("/cmd_vel", Twist, self.handleTwistMessage, queue_size=3, buff_size=2**24)
 
-        self.udoo_serial = self.initialize_arduino()
+        self.udoo_serial = self.initializeArduino()
 
     # ------------------------------------------------------------------------------
     @staticmethod
-    def initialize_arduino():
+    def initializeArduino():
         try:
             ser = serial.Serial('/dev/ttyACM0',115200,timeout=1)
             ser.flushOutput()
@@ -30,7 +30,7 @@ class TeleopGreenbot:
 
             return ser
 
-    def handle_twist_message(self, msg):
+    def handleTwistMessage(self, msg):
 
         rospy.loginfo(f"Linear: x = {msg.linear.x}, y = {msg.linear.y} z = {msg.linear.z}")
         rospy.loginfo(f"Angular: x = {msg.angular.x}, y = {msg.angular.y} z = {msg.angular.z}")

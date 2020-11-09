@@ -1,21 +1,21 @@
- #include "Greenbot.h"
+#include "Greenbot.h"
+#include "Command.h"
 #include <Servo.h>
 
-#define PWM_HIGH_DUR 2000
-#define PWM_NEUTRAL_DUR 1500
-#define PWM_LOW_DUR 1000
-
 bool new_data = false;
-const byte num_chars = 32;
-
-float cmd_vel[num_chars];
+const uint8_t num_chars = 32;
 char raw_chars[num_chars];
 
-const byte PWM_pin_10 = 10; // right_wheels
-const byte PWM_pin_11 = 11; // left_wheels
+const uint8_t pwm_pins_right = 10; // right_wheels
+const uint8_t pwm_pins_left = 11; // left_wheels
+const uint8_t pwm_pins_mast = 9; //mast
+const uint8_t default_speed = 127; //default speed
 
 Servo left_wheels;
 Servo right_wheels;
+
+Command command;
+Greenbot greenbot(pwm_pins_right, pwm_pins_left, pwm_pins_mast, default_speed);
 
 void setup() {
 
@@ -23,12 +23,7 @@ void setup() {
   Serial.begin(115200);
   delay(100);
   Serial.println("Start");
-
-  right_wheels.detach();
-  left_wheels.detach();
-
-  right_wheels.attach(PWM_pin_10);
-  left_wheels.attach(PWM_pin_11);
+  
 }
 
 
@@ -52,7 +47,7 @@ void ReceiveSerialData() {
                 }
             }
             else {
-                cmd_vel[i] = '\0'; // terminate the string
+                raw_chars[i] = '\0'; // terminate the string
                 in_progress = false;
                 i = 0;
                 new_data = true;
@@ -68,59 +63,57 @@ void ReceiveSerialData() {
 void ParseRawChars() {
   char * strtokIndx; // this is used by strtok() as an index
 
-  strtokIndx = strtok(raw_chars,",");      // get the first part - the string
-  cmd_vel[0] = atof(strtokIndx);
+  strtokIndx = strtok(raw_chars,","); //Get x
+  command.x = atoi(strtokIndx);
 
   strtokIndx = strtok(NULL, ",");
-  cmd_vel[1] = atof(strtokIndx);     // convert this part to a float
+  command.z = atoi(strtokIndx);     // Get z
+
+  strtokIndx = strtok(NULL, ",");
+  command.mast_control = atoi(strtokIndx);  // Get mast
+
+  strtokIndx = strtok(NULL, ",");
+  command.speed = atof(strtokIndx);
     
 }
 
-void HandleCmdVelData(float cmd_vel[]) {
+void HandleCommand() {
   
   if (new_data) {
 
-    int pwm_signal_1;
-    int pwm_signal_2;
-
-
-    if (cmd_vel[0] > 0 && cmd_vel[1] == 0) { // Forward
+    if (command.x > 0) { // Forward
 
       Serial.println("Moving forward \n");
 
-      right_wheels.writeMicroseconds(PWM_HIGH_DUR);
-      left_wheels.writeMicroseconds(PWM_HIGH_DUR);
+      greenbot.DriveForward();
 
-    } else if (cmd_vel[0] < 0 && cmd_vel[1] == 0) { // TODO: Reverse
+    } else if (command.x < 0) { // Reverse
 
       Serial.println("Moving backward \n");
 
-      right_wheels.writeMicroseconds(PWM_LOW_DUR);
-      left_wheels.writeMicroseconds(PWM_LOW_DUR);
+      greenbot.DriveBackward();
+      
     }
 
-    else if (cmd_vel[0] == 0 && cmd_vel[1] > 0) { // Turn counter-clockwise
+    else if (command.z > 0) { // Turn counter-clockwise
       
       Serial.println("Turning counter-clockwise \n");
 
-      right_wheels.writeMicroseconds(PWM_HIGH_DUR);
-      left_wheels.writeMicroseconds(PWM_LOW_DUR);
+      greenbot.TurnCounterClockwise();
     }
 
-    else if (cmd_vel[0] == 0 && cmd_vel[1] < 0) { // Turn Clockwise
+    else if (command.z < 0) { // Turn Clockwise
 
       Serial.println("Turning clockwise \n");
 
-      right_wheels.writeMicroseconds(PWM_LOW_DUR);
-      left_wheels.writeMicroseconds(PWM_HIGH_DUR);
+      greenbot.TurnClockwise();
     }
 
-    else if (cmd_vel[0] == 0 && cmd_vel[1] == 0) { // Stop
+    else if (command.x == 0&& command.z == 0) { // Stop
 
       Serial.println("Stopping \n");
 
-      right_wheels.writeMicroseconds(PWM_NEUTRAL_DUR);
-      left_wheels.writeMicroseconds(PWM_NEUTRAL_DUR);
+      greenbot.Stop();
       
     }
     
@@ -143,7 +136,7 @@ void loop() {
 
   ReceiveSerialData();
   ParseRawChars();
-  HandleCmdVelData(cmd_vel);
+  HandleCommand();
   delay(10);
 
 }

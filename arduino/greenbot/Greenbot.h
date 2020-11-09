@@ -42,6 +42,8 @@ class Greenbot {
 	uint16_t SetReversePulseWidth(uint8_t speed);
 	void DriveForward();
 	void DriveBackward();
+  void TurnCounterClockwise();
+  void TurnClockwise();
 	void Stop();
 };
 

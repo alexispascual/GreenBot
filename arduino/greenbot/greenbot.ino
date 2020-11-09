@@ -2,18 +2,20 @@
 #include "Command.h"
 #include <Servo.h>
 
-bool new_data = false;
 const uint8_t num_chars = 32;
-char raw_chars[num_chars];
-
 const uint8_t pwm_pins_right = 10; // right_wheels
 const uint8_t pwm_pins_left = 11; // left_wheels
 const uint8_t pwm_pins_mast = 9; //mast
 const uint8_t default_speed = 127; //default speed
 
+bool new_data = false;
+char raw_chars[num_chars];
+uint8_t current_speed;
+
 Servo left_wheels;
 Servo right_wheels;
 
+// Initialize Command and Greenbot objects
 Command command;
 Greenbot greenbot(pwm_pins_right, pwm_pins_left, pwm_pins_mast, default_speed);
 
@@ -23,6 +25,8 @@ void setup() {
   Serial.begin(115200);
   delay(100);
   Serial.println("Start");
+
+  current_speed = default_speed;
   
 }
 
@@ -84,44 +88,46 @@ void HandleCommand() {
     if (command.x > 0) { // Forward
 
       Serial.println("Moving forward \n");
-
       greenbot.DriveForward();
       
     } else if (command.x < 0) { // Reverse
 
       Serial.println("Moving backward \n");
-
       greenbot.DriveBackward();
       
     } else if (command.z > 0) { // Turn counter-clockwise
       
       Serial.println("Turning counter-clockwise \n");
-
       greenbot.TurnCounterClockwise();
       
     } else if (command.z < 0) { // Turn Clockwise
 
       Serial.println("Turning clockwise \n");
-
       greenbot.TurnClockwise();
-      
+
     } else if (command.mast_control > 0) { // Extend mast
       
       Serial.println("Extending mast \n");
-
       greenbot.ExtendMast();
       
     } else if (command.mast_control < 0) { // Retract mast
       
       Serial.println("Retracting mast \n");
-
       greenbot.RetractMast();
       
     } else if (command.x == 0 && command.z == 0 && command.mast_control == 0) { // Stop
 
       Serial.println("Stopping \n");
-
       greenbot.Stop();
+      
+    }
+
+    if (command.speed != current_speed) {
+
+      Serial.println("Updating Greenbot Speed");
+      greenbot.SetSpeed((uint8_t)command.speed);
+
+      current_speed = (uint8_t)command.speed;
       
     }
     

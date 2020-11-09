@@ -10,7 +10,7 @@ class TeleopGreenbot:
     def __init__(self):
         rospy.init_node('teleop_greenbot', anonymous=True)
 
-        rospy.Subscriber("/cmd_vel", Command, self.handleCommandMessage, queue_size=3, buff_size=2**24)
+        rospy.Subscriber("/cmd_vel", Command, self.handleCommandMessage, queue_size=5, buff_size=2**24)
 
         self.udoo_serial = self.initializeArduino()
 

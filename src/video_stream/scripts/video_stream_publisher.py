@@ -4,7 +4,6 @@ import cv2
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-import sys, select, termios, tty
 
 class ImageStreamer:
     def __init__(self):
@@ -21,20 +20,6 @@ class ImageStreamer:
         # Initialize rate of publishing @10Hz
         self.rate = rospy.Rate(10)
 
-        self.key_timeout = 0.0
-
-        self.settings = termios.tcgetattr(sys.stdin)
-
-    def getKey(self, key_timeout):
-        tty.setraw(sys.stdin.fileno())
-        rlist, _, _ = select.select([sys.stdin], [], [], key_timeout)
-        if rlist:
-            key = sys.stdin.read(1)
-        else:
-            key = ''
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
-        return key
-
     def startVideoCapture(self):
 
         # Try initializing camera
@@ -46,7 +31,7 @@ class ImageStreamer:
             cap.set(4, height)
 
         # Escape errors
-        except Exception as e:
+        except cv2.error as e:
             rospy.logerror(f"Error opening the camera: {e}")
 
         # If no errors encountered, open capture, and convert cv2 image to ROS image

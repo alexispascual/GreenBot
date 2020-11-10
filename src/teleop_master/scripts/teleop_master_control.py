@@ -117,7 +117,7 @@ class TeleopMaster:
         # Initialize Publisher
         while not rospy.is_shutdown():
 
-            # Wait for subscriber
+            # Wait for subscribers
             if self.command_publisher.get_num_connections() == 0:
                 rospy.loginfo("Waiting for subscribers...")
                 rospy.sleep(1)

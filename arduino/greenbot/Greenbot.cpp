@@ -13,53 +13,59 @@
 
 
 	Greenbot::Greenbot(uint8_t pwm_pins_right, uint8_t pwm_pins_left, 
-	                  uint8_t pwm_pins_mast, uint8_t speed){
+	                  uint8_t pwm_pins_mast, float in_speed){
 
-		this->right_wheels.attach(pwm_pins_right);
-    this->left_wheels.attach(pwm_pins_left);
-    this->mast.attach(pwm_pins_mast);
+    this->right_wheels.detach();
+    this->left_wheels.detach();
+    this->mast.detach();
+
+		this->right_wheels.attach(10);
+    this->left_wheels.attach(11);
+    this->mast.attach(9);
     
-		this->speed = speed;
+		this->in_speed = in_speed;
 
 		this->is_moving = false;
 		this->is_turning = false;
     this->mast_extending = false;
     this->mast_retracting = false;
 
-		this->forward_pulse_width = SetForwardPulseWidth(speed);
-		this->reverse_pulse_width = SetReversePulseWidth(speed);
+		this->forward_pulse_width = SetForwardPulseWidth(in_speed);
+		this->reverse_pulse_width = SetReversePulseWidth(in_speed);
+
+    Stop();
 
 
 	}
 //--------------------------------------------------------------------------//
 //								    Setters 				   				//
 //--------------------------------------------------------------------------//
-	void Greenbot::SetSpeed(uint8_t speed) {
+	void Greenbot::SetSpeed(float in_speed) {
 
-		this->speed = speed;
-		this->forward_pulse_width = SetForwardPulseWidth(speed);
-		this->reverse_pulse_width = SetReversePulseWidth(speed);
-
-	}
-
-
-	uint16_t Greenbot::SetForwardPulseWidth(uint8_t speed){
-
-		float duty_cycle = 0;
-
-		duty_cycle = 1500 + ((500/255) * speed);
-
-  	return (uint16_t)duty_cycle;
+		this->in_speed = in_speed;
+		this->forward_pulse_width = SetForwardPulseWidth(in_speed);
+		this->reverse_pulse_width = SetReversePulseWidth(in_speed);
 
 	}
 
-	uint16_t Greenbot::SetReversePulseWidth(uint8_t speed){
+
+	int Greenbot::SetForwardPulseWidth(float in_speed){
 
 		float duty_cycle = 0;
 
-		duty_cycle = 1000 + ((500/255)*speed);
+		duty_cycle = 1500 + (500 * in_speed/255);
 
-    return (uint16_t)duty_cycle;
+  	return (int)duty_cycle;
+
+	}
+
+	int Greenbot::SetReversePulseWidth(float in_speed){
+
+		float duty_cycle = 0;
+
+		duty_cycle = 1500 - (500 * in_speed/255);
+
+    return (int)duty_cycle;
 
 	}
 //--------------------------------------------------------------------------//
@@ -150,10 +156,13 @@
 
 	void Greenbot::Stop(){
       
-      this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
-      this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
-      this->mast.writeMicroseconds(this->neutral_pulse_width);
+      //this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
+      //this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
+      //this->mast.writeMicroseconds(this->neutral_pulse_width);
 
+      this->right_wheels.writeMicroseconds(1500);
+      this->left_wheels.writeMicroseconds(1500);
+      this->mast.writeMicroseconds(1500);
       this->is_moving = false;
       this->is_turning = false;
       this->mast_retracting = false;

@@ -22,12 +22,12 @@ class Greenbot {
   Servo left_wheels;
   Servo mast;
   
-	uint8_t speed;
-	uint16_t forward_pulse_width;
-	uint16_t reverse_pulse_width;
-  uint16_t neutral_pulse_width = 1500;
-  uint16_t mast_extension_pulse_width = 1600;
-  uint16_t mast_retraction_pulse_width = 1400;
+	float in_speed;
+	int forward_pulse_width;
+	int reverse_pulse_width;
+  int neutral_pulse_width = 1500;
+  int mast_extension_pulse_width = 1600;
+  int mast_retraction_pulse_width = 1400;
 
 	bool is_moving;
 	bool is_turning;
@@ -39,11 +39,11 @@ class Greenbot {
 	Greenbot(uint8_t pwm_pins_right, 
 			uint8_t pwm_pins_left,
       uint8_t pwm_pins_mast, 
-			uint8_t speed);
+			float in_speed);
 
-	void SetSpeed(uint8_t speed);
-	uint16_t SetForwardPulseWidth(uint8_t speed);
-	uint16_t SetReversePulseWidth(uint8_t speed);
+	void SetSpeed(float in_speed);
+	int SetForwardPulseWidth(float in_speed);
+	int SetReversePulseWidth(float in_speed);
 	void DriveForward();
 	void DriveBackward();
   void TurnCounterClockwise();

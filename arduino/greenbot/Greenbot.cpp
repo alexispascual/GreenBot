@@ -76,65 +76,43 @@
 //--------------------------------------------------------------------------//
 	void Greenbot::DriveForward(){
 
-		if (this->is_moving == false) {
+    this->right_wheels.writeMicroseconds(this->forward_pulse_width);
+    this->left_wheels.writeMicroseconds(this->forward_pulse_width);
 
-			this->right_wheels.writeMicroseconds(this->forward_pulse_width);
-			this->left_wheels.writeMicroseconds(this->forward_pulse_width);
-
-     this->is_moving = true;
-
-		} else {
-
-			Serial.println("Already moving forward");
-		}
+    this->is_moving = true;
+	
 	}
 
 	void Greenbot::DriveBackward(){
 
-		if (this->is_moving == false) {
+  	this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
 
-			this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
-      this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->is_moving = true;
 
-      this->is_moving = true;
-
-		} else {
-
-			Serial.println("Already moving backwards");
-		}
 	}
 
  void Greenbot::TurnCounterClockwise(){
 
-    if (this->is_turning == false) {
+    this->right_wheels.writeMicroseconds(this->forward_pulse_width);
+    this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
 
-      this->right_wheels.writeMicroseconds(this->forward_pulse_width);
-      this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->is_turning = true;
 
-      this->is_turning = true;
-
-    } else {
-
-      Serial.println("Already turning counter clockwise");
-    }
   }
 
   void Greenbot::TurnClockwise(){
 
-    if (this->is_turning == false) {
+    this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->left_wheels.writeMicroseconds(this->forward_pulse_width);
 
-      this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
-      this->left_wheels.writeMicroseconds(this->forward_pulse_width);
+    this->is_turning = true;
 
-      this->is_turning = true;
-
-    } else {
-
-      Serial.println("Already turning clockwise");
-    }
   }
 
   void Greenbot::ExtendMast(){
+
+    this->mast_retracting = false;
 
     if (this->mast_extending == false) {
 
@@ -146,6 +124,8 @@
   }
 
   void Greenbot::RetractMast(){
+
+    this->mast_extending = false;
 
     if (this->mast_retracting == false) {
 
@@ -159,13 +139,10 @@
 
 	void Greenbot::Stop(){
       
-      //this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
-      //this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
-      //this->mast.writeMicroseconds(this->neutral_pulse_width);
+      this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
+      this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
+      this->mast.writeMicroseconds(this->neutral_pulse_width);
 
-      this->right_wheels.writeMicroseconds(1500);
-      this->left_wheels.writeMicroseconds(1500);
-      this->mast.writeMicroseconds(1500);
       this->is_moving = false;
       this->is_turning = false;
       this->mast_retracting = false;

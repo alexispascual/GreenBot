@@ -8,35 +8,38 @@
 #include <Servo.h>
 
 //--------------------------------------------------------------------------//
-//								    Constructor				   				//
+//                    Pseudo-constructor                   //
 //--------------------------------------------------------------------------//
 
+  bool Greenbot::Initialize(uint8_t pwm_pins_right, uint8_t pwm_pins_left, 
+                    uint8_t pwm_pins_mast, float in_speed){
 
-	Greenbot::Greenbot(uint8_t pwm_pins_right, uint8_t pwm_pins_left, 
-	                  uint8_t pwm_pins_mast, float in_speed){
+      this->right_wheels.detach();
+      this->left_wheels.detach();
+      this->mast.detach();
 
-    this->right_wheels.detach();
-    this->left_wheels.detach();
-    this->mast.detach();
-
-		this->right_wheels.attach(10);
-    this->left_wheels.attach(11);
-    this->mast.attach(9);
+      this->right_wheels.attach(10);
+      this->left_wheels.attach(11);
+      this->mast.attach(9);
     
-		this->in_speed = in_speed;
+      this->in_speed = in_speed;
 
-		this->is_moving = false;
-		this->is_turning = false;
-    this->mast_extending = false;
-    this->mast_retracting = false;
+      this->is_moving = false;
+      this->is_turning = false;
+      this->mast_extending = false;
+      this->mast_retracting = false;
 
-		this->forward_pulse_width = SetForwardPulseWidth(in_speed);
-		this->reverse_pulse_width = SetReversePulseWidth(in_speed);
+      this->forward_pulse_width = SetForwardPulseWidth(in_speed);
+      this->reverse_pulse_width = SetReversePulseWidth(in_speed);
 
-    Stop();
+      Stop();
 
+      // Somehow, Arduino does not allow try catch exception handling.
+      // This will have to do.
+      return true;
 
-	}
+  }
+
 //--------------------------------------------------------------------------//
 //								    Setters 				   				//
 //--------------------------------------------------------------------------//

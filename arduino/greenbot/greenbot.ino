@@ -16,12 +16,12 @@ Servo left_wheels;
 Servo right_wheels;
 
 bool new_data = false;
+bool greenbot_status = false;
 char raw_chars[num_chars];
 uint8_t current_speed;
 
-// Initialize Command and Greenbot objects
 Command command;
-Greenbot* greenbot(pwm_pins_right, pwm_pins_left, pwm_pins_mast, default_speed);
+Greenbot greenbot;
 
 void setup() {
 
@@ -31,14 +31,24 @@ void setup() {
   Serial.println("Start");
 
   current_speed = default_speed;
-
-  right_wheels.attach(10);
-  left_wheels.attach(11);
   
+  // Initialize Greenbot object  
+  greenbot_status = greenbot.Initialize(pwm_pins_right, pwm_pins_left, pwm_pins_mast, default_speed);
+
+  if (greenbot_status) {
+
+    Serial.println("Greenbot successfully initialized!");
+
+  } else {
+
+    Serial.println("Greenbot initialization failed!");
+
+  }
+
 }
 
-
 void ReceiveSerialData() {
+
     static boolean in_progress = false;
     static byte i = 0;
     char start_marker = '[';
@@ -95,44 +105,44 @@ void HandleCommand() {
     if (command.x > 0) { // Forward
 
       Serial.println("Moving forward \n");
-      //greenbot.DriveForward();
+      greenbot.DriveForward();
       
     } else if (command.x < 0) { // Reverse
 
       Serial.println("Moving backward \n");
-      //greenbot.DriveBackward();
+      greenbot.DriveBackward();
       
     } else if (command.z > 0) { // Turn counter-clockwise
       
       Serial.println("Turning counter-clockwise \n");
-      //greenbot.TurnCounterClockwise();
+      greenbot.TurnCounterClockwise();
       
     } else if (command.z < 0) { // Turn Clockwise
 
       Serial.println("Turning clockwise \n");
-      //greenbot.TurnClockwise();
+      greenbot.TurnClockwise();
 
     } else if (command.mast_control > 0) { // Extend mast
       
       Serial.println("Extending mast \n");
-      //greenbot.ExtendMast();
+      greenbot.ExtendMast();
       
     } else if (command.mast_control < 0) { // Retract mast
       
       Serial.println("Retracting mast \n");
-      //greenbot.RetractMast();
+      greenbot.RetractMast();
       
     } else if (command.x == 0 && command.z == 0 && command.mast_control == 0) { // Stop
 
       Serial.println("Stopping \n");
-      //greenbot.Stop();
+      greenbot.Stop();
       
     }
 
     if (command.speed != current_speed) {
 
       Serial.println("Updating Greenbot Speed");
-      //greenbot.SetSpeed((uint8_t)command.speed);
+      greenbot.SetSpeed((uint8_t)command.speed);
 
       current_speed = (uint8_t)command.speed;
       
@@ -145,9 +155,19 @@ void HandleCommand() {
 
 void loop() {
 
-  ReceiveSerialData();
-  ParseRawChars();
-  HandleCommand();
-  delay(10);
+  if (!greenbot_status) {
+
+    while(1){
+      Serial.println("Greenbot initialization failed!");
+      delay(1000);
+    }
+  } else {
+    ReceiveSerialData();
+    ParseRawChars();
+    HandleCommand();
+    delay(10);
+  }
+
+
 
 }

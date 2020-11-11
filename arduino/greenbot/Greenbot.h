@@ -36,7 +36,7 @@ class Greenbot {
   
 	public:
 
-	Greenbot(uint8_t pwm_pins_right, 
+	bool Initialize(uint8_t pwm_pins_right, 
 			uint8_t pwm_pins_left,
       uint8_t pwm_pins_mast, 
 			float in_speed);

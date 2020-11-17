@@ -6,7 +6,7 @@ This is the repository containing the ROS code for the GreenBot
 
 Do `catkin_make` on the workspace to install the whole thing. This should create the build/ and devel/ folders.
 
-# Teleoperation
+# Teleoperation (outdated)
 
 To perform teleoperation on the GreenBot, perform the following steps:
 

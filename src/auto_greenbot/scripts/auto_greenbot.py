@@ -42,33 +42,50 @@ class AutonomousGreenbot:
         """ 
         Receive QR code meaning and determine state. 
         Execute commands depending on curent state 
+
+        TODO: parse message to determine state. Probably a good idea
+        to use some function instead of a massive if else
         """
 
-        if self.state == -1: # Halt. Stop everything
-            self.haltGreenbot()
+        switch = {
+            -1: haltGreenbot,
+            0: standBy,
+            1: driveForward,
+            2: takeImage,
+            3: turnCorner,
+            4: turnInToRow,
+            5: turnAround,
+            6: endOperations,
+        }
 
-        elif self.state == 0: # Standby, await command
-            self.standBy()
+        method = getattr(switch.get(self.state))
+        method()
+
+        # if self.state == -1: # Halt. Stop everything
+        #     self.haltGreenbot()
+
+        # elif self.state == 0: # Standby, await command
+        #     self.standBy()
         
-        elif self.state == 1: # Found white QR code, drive forward
-            # Perform alignment to plant box?
-            self.driveForward()
+        # elif self.state == 1: # Found white QR code, drive forward
+        #     # Perform alignment to plant box?
+        #     self.driveForward()
 
-        elif self.state == 2: # Found green QR code, take image, then drive forward
-            self.takeImage()
-            self.driveForward()
+        # elif self.state == 2: # Found green QR code, take image, then drive forward
+        #     self.takeImage()
+        #     self.driveForward()
 
-        elif self.state == 3: # Found black QR code, turn corner
-            self.turnCorner()
+        # elif self.state == 3: # Found black QR code, turn corner
+        #     self.turnCorner()
 
-        elif self.state == 4: # Found red QR code, turn in to row
-            self.turnCorner()
+        # elif self.state == 4: # Found red QR code, turn in to row
+        #     self.turnInToRow()
 
-        elif self.state == 5: # Found pink QR code, turn around
-            self.turnAround()
+        # elif self.state == 5: # Found pink QR code, turn around
+        #     self.turnAround()
 
-        elif self.state == 6: # Found blue QR code, stand by
-            self.standBy()
+        # elif self.state == 6: # Found blue QR code, end operations
+        #     self.endOperations()
 
     def haltGreenbot(self):
         """
@@ -109,6 +126,19 @@ class AutonomousGreenbot:
 
         self.sendToArduino(1, 0, 0, gb_slow_speed)
 
+    def turnInToRow(self):
+        """
+        Turn into row
+        Maneuver distances?
+        """
+        self.sendToArduino(1, 0, 0, gb_slow_speed)
+        rospy.sleep(self.turn_maneuver_forward_duration)
+
+        self.sendToArduino(0, -1, 0, gb_slow_speed)
+        rospy.sleep(self.turn_maneuver_turn_duration)
+
+        self.sendToArduino(1, 0, 0, gb_slow_speed)
+
     def turnAround(self):
         """
         Turn around
@@ -120,6 +150,12 @@ class AutonomousGreenbot:
         rospy.sleep(self.turn_around_duration)
 
         self.sendToArduino(1, 0, 0, gb_slow_speed)
+
+    def endOperations(self):
+        """
+        TODO: End operations
+        """
+        self.sendToArduino(0, 0, 0, 0)
 
     def sendToArduino(self, x, z, mast_control, speed):
         """

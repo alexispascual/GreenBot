@@ -69,7 +69,7 @@ class AutonomousGreenbot:
 
         elif self.state == 6: # Found blue QR code, stand by
             self.standBy()
-            
+
     def haltGreenbot(self):
         """
         Stop everything
@@ -133,9 +133,7 @@ class AutonomousGreenbot:
         self.udoo_serial.write(byte_array)
 
     def start():
-        pass
-
-    def sendToArduino
+        rospy.spin()
 
 if __name__ == '__main__':
     auto_greenbot = AutonomousGreenbot()

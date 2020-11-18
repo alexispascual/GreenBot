@@ -5,7 +5,7 @@ from std_msgs.msg import String
 
 class AutonomousGreenbot:
     
-    def __init__(self, arg):
+    def __init__(self):
 
         # Initialize QR code subscriber
         rospy.Subscriber("/qr_code_decoded", String, self.determineState, queue_size=10, buff_size=2**24)

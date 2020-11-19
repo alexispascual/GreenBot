@@ -70,12 +70,13 @@ class TeleopMaster:
             elif self.control_status == c.STANDBY:
                 rospy.loginfo("Starting teleop mode!")
                 self.control_status = c.TELEOP_MANUAL
+
             return
-            
+
         elif joy_msg.buttons[self.autonomous_control_button]:
             if self.control_status != c.AUTONOMOUS:
                 rospy.loginfo("Starting autonomous mode!")
-                self.control_status = c.AUTONOMOUS:
+                self.control_status = c.AUTONOMOUS
 
             return
 

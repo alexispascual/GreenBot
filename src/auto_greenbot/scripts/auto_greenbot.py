@@ -8,7 +8,7 @@ class AutonomousGreenbot:
     def __init__(self):
 
         # Initialize QR code subscriber
-        rospy.Subscriber("/qr_code_decoded", String, self.determineState, queue_size=10, buff_size=2**24)
+        rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**24)
 
         self.udoo_serial = self.initializeArduino()
 
@@ -48,44 +48,18 @@ class AutonomousGreenbot:
         """
 
         switch = {
-            -1: haltGreenbot,
-            0: standBy,
-            1: driveForward,
-            2: takeImage,
-            3: turnCorner,
-            4: turnInToRow,
-            5: turnAround,
-            6: endOperations,
+            -1:'haltGreenbot',
+            0: 'standBy',
+            1: 'driveForward',
+            2: 'takeImage',
+            3: 'turnCorner',
+            4: 'turnInToRow',
+            5: 'turnAround',
+            6: 'endOperations',
         }
 
         method = getattr(switch.get(self.state))
         method()
-
-        # if self.state == -1: # Halt. Stop everything
-        #     self.haltGreenbot()
-
-        # elif self.state == 0: # Standby, await command
-        #     self.standBy()
-        
-        # elif self.state == 1: # Found white QR code, drive forward
-        #     # Perform alignment to plant box?
-        #     self.driveForward()
-
-        # elif self.state == 2: # Found green QR code, take image, then drive forward
-        #     self.takeImage()
-        #     self.driveForward()
-
-        # elif self.state == 3: # Found black QR code, turn corner
-        #     self.turnCorner()
-
-        # elif self.state == 4: # Found red QR code, turn in to row
-        #     self.turnInToRow()
-
-        # elif self.state == 5: # Found pink QR code, turn around
-        #     self.turnAround()
-
-        # elif self.state == 6: # Found blue QR code, end operations
-        #     self.endOperations()
 
     def haltGreenbot(self):
         """

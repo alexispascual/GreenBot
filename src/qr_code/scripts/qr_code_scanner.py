@@ -9,7 +9,7 @@ class QRCodeScanner():
 
         rospy.init_node('qr_code', anonymous=False)
 
-        self.qr_code_publisher = rospy.Publisher("/qr_code_decoded", String, queue_size = 10)
+        self.qr_code_publisher = rospy.Publisher('/qr_code_decoded', String, queue_size = 10)
 
         self.rate = rospy.Rate(100)
 

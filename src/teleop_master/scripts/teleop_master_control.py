@@ -5,7 +5,7 @@ import serial
 import time
 import constants as c
 from teleop_master.msg import MotionCommand
-from teleop_master.msg import MasterCommand
+from std_msgs.msg import Int8
 from sensor_msgs.msg import Joy
 
 class TeleopMaster:
@@ -18,10 +18,10 @@ class TeleopMaster:
         rospy.Subscriber('/joy', Joy, self.handleJoyMessage, queue_size=3, buff_size=2**24)
 
         # Initialize cmd_vel publisher
-        self.command_publisher = rospy.Publisher('cmd_vel', MotionCommand, queue_size=10)
+        self.motion_cmd_publisher = rospy.Publisher('cmd_vel', MotionCommand, queue_size=10)
 
         # Initialize master_cmd publisher
-        self.master_cmd_publisher = rospy.Publisher('master_cmd', MasterCommand, queue_size=10)
+        self.master_cmd_publisher = rospy.Publisher('master_cmd', Int8, queue_size=10)
 
         # Define buttons
         self.teleop_control_button = c.START_BUTTON
@@ -128,7 +128,7 @@ class TeleopMaster:
                 print(command_message)
 
                 # Publish command message
-                self.command_publisher.publish(command_message)
+                self.motion_cmd_publisher.publish(command_message)
 
                 self.new_command = False
                 

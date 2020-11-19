@@ -2,13 +2,14 @@
 import rospy
 import serial
 from std_msgs.msg import String
+from std_msgs.msg import Int8
 
 class AutonomousGreenbot:
     
     def __init__(self):
 
-        # Initialize QR code subscriber
-        rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**24)
+        # Initialize Master Command subscriber
+        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=10)
 
         self.udoo_serial = self.initializeArduino()
 
@@ -30,13 +31,29 @@ class AutonomousGreenbot:
 
             rospy.loginfo("Connected to Arduino!")
 
-        except Exception as e:
+        except serial.SerialException as e:
 
             rospy.logerr(f"Arduino Initialization error: {e}")
 
-        finally:
+        else:
 
             return ser
+
+    def handleMasterCommand(self, msg):
+        if msg.data == 0:
+            rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
+            if self.qr_subscriber:
+                self.qr_subscriber.unregister()
+
+        elif msg.data == 1: 
+            rospy.loginfo("Switching to Manual Teleoperation mode. Releasing QR subscriber.")
+            if self.qr_subscriber:
+                self.qr_subscriber.unregister()
+        elif msg.data == 2:
+            rospy.loginfo("Switching to Autonomous mode. Spawning QR subscriber.")
+            
+            # Initialize QR code subscriber
+            self.qr_subscriber = rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**24)
 
     def determineState(self, msg):
         """ 

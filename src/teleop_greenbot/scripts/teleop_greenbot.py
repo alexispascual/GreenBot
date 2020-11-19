@@ -3,22 +3,23 @@ import roslib; roslib.load_manifest('teleop_greenbot')
 import rospy
 import serial
 import time
-from geometry_msgs.msg import Twist
-from teleop_master.msg import Command
+from teleop_master.msg import MotionCommand
 
 class TeleopGreenbot:
     def __init__(self):
+        # Initialize teleop node
         rospy.init_node('teleop_greenbot', anonymous=True)
 
-        rospy.Subscriber("/cmd_vel", Command, self.handleCommandMessage, queue_size=5, buff_size=2**24)
+        # Initialize Master Command subscriber
+        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=10)
 
+        # Initialize Arduino Serial comms
         self.udoo_serial = self.initializeArduino()
 
-    # ------------------------------------------------------------------------------
     @staticmethod
     def initializeArduino():
         try:
-            ser = serial.Serial('/dev/ttyACM0',115200,timeout=1)
+            ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
             ser.flushOutput()
 
             rospy.loginfo("Connected to Arduino!")
@@ -31,7 +32,23 @@ class TeleopGreenbot:
 
             return ser
 
-    def handleCommandMessage(self, msg):
+    def handleMasterCommand(self, msg):
+
+        if msg.data == 0:
+            rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
+            if self.motion_cmd_subscriber:
+                self.motion_cmd_subscriber.unregister()
+
+        elif msg.data == 1: 
+            rospy.loginfo("Switching to Manual Teleoperation mode. Spawning motion command subscriber.")
+            self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**24)
+
+        elif msg.data == 2:
+            rospy.loginfo("Switching to Autonomous mode. Releasing QR code subscriber.")
+            if self.motion_cmd_subscriber:
+                self.motion_cmd_subscriber.unregister()
+
+    def handleMotionCommand(self, msg):
 
         rospy.loginfo(f"Motion: x = {msg.x}, z = {msg.z}")
         rospy.loginfo(f"Mast control: {msg.mast_control}")

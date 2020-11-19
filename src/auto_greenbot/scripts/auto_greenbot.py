@@ -8,22 +8,31 @@ class AutonomousGreenbot:
     
     def __init__(self):
 
+        # Initialize node for autonomy
+        rospy.init_node('autonomous_greenbot', anonymous=True)
+
         # Initialize Master Command subscriber
         self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=10)
 
+        # Initialize Arduino Serial comms
         self.udoo_serial = self.initializeArduino()
 
+        # Initialize state as Stand by
         self.state = 0
 
+        # Initialize default durations
         self.drive_forward_duration = 90
         self.imaging_duration = 60
         self.turn_maneuver_forward_duration = 15
         self.turn_maneuver_turn_duration = 90
         self.turn_around_duration = 180
+
+        # Define forward and slow speeds
         self.gb_default_speed = 127
         self.gb_slow_speed = 32
 
-    def initializeArduino(self):
+    @staticmethod
+    def initializeArduino():
 
         try:
             ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)

@@ -62,13 +62,20 @@ class TeleopMaster:
     def handleJoyMessage(self, joy_msg):
 
         # Toggle Start/Stop for Greenbot Teleop mode
-        if joy_msg.buttons[self.start_control_button]:
-            if not self.start_control:
+        if joy_msg.buttons[self.teleop_control_button]:
+            if self.control_status == c.TELEOP_MANUAL:
+                rospy.loginfo("GreenBot stading by...")
+                self.control_status = c.STANDBY
+
+            elif self.control_status == c.STANDBY:
                 rospy.loginfo("Starting teleop mode!")
-                self.start_control = True
-            else:
-                rospy.loginfo("Stopping teleop mode!")
-                self.start_control = False
+                self.control_status = c.TELEOP_MANUAL
+            return
+            
+        elif joy_msg.buttons[self.autonomous_control_button]:
+            if self.control_status != c.AUTONOMOUS:
+                rospy.loginfo("Starting autonomous mode!")
+                self.control_status = c.AUTONOMOUS:
 
             return
 

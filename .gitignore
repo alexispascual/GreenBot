@@ -13,3 +13,6 @@ CATKIN_IGNORE
 
 # Navigation files
 *.csv
+
+# Pycache
+__pycache__/

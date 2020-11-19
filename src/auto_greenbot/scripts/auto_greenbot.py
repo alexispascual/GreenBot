@@ -58,7 +58,7 @@ class AutonomousGreenbot:
             6: 'endOperations',
         }
 
-        method = getattr(switch.get(self.state))
+        method = getattr(self, switch.get(self.state))
         method()
 
     def haltGreenbot(self):

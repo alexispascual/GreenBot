@@ -2,6 +2,7 @@
 import cv2
 import zbar
 import rospy
+import json
 from std_msgs.msg import String
 
 class QRCodeScanner():
@@ -16,6 +17,8 @@ class QRCodeScanner():
         self.scanner = zbar.Scanner()
 
     def startScanning(self):
+
+        last_read_code = 0
 
         try:
             cap = cv2.VideoCapture(0) # TODO: Figure out if there's 2 cameras
@@ -37,8 +40,13 @@ class QRCodeScanner():
                 results = self.scanner.scan(gray)
 
                 for result in results:
-                    if result.data:
-                        self.qr_code_publisher.publish(result.data.decode("utf-8"))
+                    if result.data & last_read_code != result.data:
+                        last_read_code = result.data
+
+                        json_parsed = json.loads(result.data.decode("utf-8"))
+
+                        if json_parsed.get('S', None):
+                            self.qr_code_publisher.publish(result.data.decode("utf-8"))
 
                 self.rate.sleep()
 

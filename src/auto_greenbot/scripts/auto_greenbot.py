@@ -73,10 +73,10 @@ class AutonomousGreenbot:
         TODO: parse message to determine state. Probably a good idea
         to use some function instead of a massive if else
         """
-        encoded_string = json.loads(msg.data)
-        
-        self.state = encoded_string.get('S')
-        self.qr_index = 0
+        json_parsed = json.loads(msg.data)
+
+        self.state = json_parsed.get('S')
+        self.qr_index = json_parsed.get('I')
 
         switch = {
             -1:'haltGreenbot',

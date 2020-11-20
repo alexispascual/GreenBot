@@ -145,6 +145,7 @@ class TeleopMaster:
     def AutonomousMode(self):
         while (self.control_status == 2):
             # TODO: Figure out what master does when rover is autonomous
+            rospy.sleep(5)
             pass
 
 
@@ -160,6 +161,7 @@ class TeleopMaster:
 
             # Once Greenbot is subscribed, start publishing
             elif (self.master_cmd_publisher.get_num_connections() & self.control_status == c.STANDBY):
+                self.master_cmd_publisher.publish(c.STANDBY)
                 rospy.loginfo("Greenbot is in Standby mode. Press 'Start' to begin teleop mode.")
                 rospy.loginfo("To begin Autonomous mode, line up the rover to the first QR code and press 'Back'")
                 rospy.sleep(1)

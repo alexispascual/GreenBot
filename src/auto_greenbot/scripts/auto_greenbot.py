@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import serial
+import json
 from std_msgs.msg import String
 from std_msgs.msg import Int8
 
@@ -19,6 +20,7 @@ class AutonomousGreenbot:
 
         # Initialize state as Stand by
         self.state = 0
+        self.qr_index = 0
 
         # Initialize default durations
         self.drive_forward_duration = 90
@@ -27,7 +29,7 @@ class AutonomousGreenbot:
         self.turn_maneuver_turn_duration = 90
         self.turn_around_duration = 180
 
-        # Define forward and slow speeds
+        # Define forward and slow speeds    
         self.gb_default_speed = 127
         self.gb_slow_speed = 32
 
@@ -71,6 +73,10 @@ class AutonomousGreenbot:
         TODO: parse message to determine state. Probably a good idea
         to use some function instead of a massive if else
         """
+        encoded_string = json.loads(msg.data)
+        
+        self.state = encoded_string.get('S')
+        self.qr_index = 0
 
         switch = {
             -1:'haltGreenbot',

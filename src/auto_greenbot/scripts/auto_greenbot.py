@@ -33,6 +33,9 @@ class AutonomousGreenbot:
         self.gb_default_speed = 127
         self.gb_slow_speed = 32
 
+        # Initialize qr_subscriber object
+        self.qr_subscriber = None
+
     @staticmethod
     def initializeArduino():
 
@@ -173,9 +176,9 @@ class AutonomousGreenbot:
         
         self.udoo_serial.write(byte_array)
 
-    def start():
+    def start(self):
         rospy.spin()
 
 if __name__ == '__main__':
     auto_greenbot = AutonomousGreenbot()
-    auto_greenbot.start
+    auto_greenbot.start()

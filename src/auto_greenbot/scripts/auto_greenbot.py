@@ -36,6 +36,18 @@ class AutonomousGreenbot:
         # Initialize qr_subscriber object
         self.qr_subscriber = None
 
+        # Initialize state definitions
+        self.switch = {
+                -1:'haltGreenbot',
+                0: 'standBy',
+                1: 'driveForward',
+                2: 'takeImage',
+                3: 'turnCorner',
+                4: 'turnInToRow',
+                5: 'turnAround',
+                6: 'endOperations',
+            }
+
     @staticmethod
     def initializeArduino():
 
@@ -78,24 +90,24 @@ class AutonomousGreenbot:
         TODO: parse message to determine state. Probably a good idea
         to use some function instead of a massive if else
         """
-        json_parsed = json.loads(msg.data)
+        try: 
+            print(msg.data)
+            json_parsed = json.loads(msg.data)
+            self.state = json_parsed.get('S', None)
+            self.qr_index = json_parsed.get('I', None)
 
-        self.state = json_parsed.get('S')
-        self.qr_index = json_parsed.get('I')
+        except json.JSONDecodeError as e:
+            rospy.logerr(f"Error parsing JSON object: {e}")
 
-        switch = {
-            -1:'haltGreenbot',
-            0: 'standBy',
-            1: 'driveForward',
-            2: 'takeImage',
-            3: 'turnCorner',
-            4: 'turnInToRow',
-            5: 'turnAround',
-            6: 'endOperations',
-        }
+        else:
 
-        method = getattr(self, switch.get(self.state))
-        method()
+            if self.state is not None and self.qr_index is not None:
+
+                method = getattr(self, self.switch.get(self.state))
+                method()
+
+            else:
+                rospy.loginfo("Invalid QR code read!")
 
     def haltGreenbot(self):
         """
@@ -107,59 +119,59 @@ class AutonomousGreenbot:
         """
         Stand by 
         """
-        self.sendToArduino(0, 0, 0, gb_default_speed)
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
     def takeImage(self):
         """
         Take image. Probably just stop. I don't know if we could command the camera
         """
-        self.sendToArduino(0, 0, 0, gb_default_speed)
-        rospy.sleep(self.imaging_duration)
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+        # rospy.sleep(self.imaging_duration)
 
     def driveForward(self):
         """
         Drive forward 
         """
-        self.sendToArduino(1, 0, 0, gb_default_speed)
-        rospy.sleep(self.drive_forward_duration)
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
+        self.sendToArduino(1, 0, 0, self.gb_default_speed)
+        # rospy.sleep(self.drive_forward_duration)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnCorner(self):
         """
         Turn corner
         """
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_forward_duration)
 
-        self.sendToArduino(0, -1, 0, gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_turn_duration)
+        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_turn_duration)
 
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnInToRow(self):
         """
         Turn into row
         Maneuver distances?
         """
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_forward_duration)
 
-        self.sendToArduino(0, -1, 0, gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_turn_duration)
+        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_turn_duration)
 
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnAround(self):
         """
         Turn around
         """
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_forward_duration)
 
-        self.sendToArduino(0, -1, 0, gb_slow_speed)
-        rospy.sleep(self.turn_around_duration)
+        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_around_duration)
 
-        self.sendToArduino(1, 0, 0, gb_slow_speed)
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def endOperations(self):
         """

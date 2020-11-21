@@ -55,6 +55,18 @@ class QRCodeScanner():
             cap.release()
             cv2.destroyAllWindows()
 
+    def publishString(self):
+        while  True:
+            
+            i = 0
+
+            while i < 7:
+                sample_string = '{"S":' + str(i) + ', "I": 1}'
+                print(sample_string)
+                self.qr_code_publisher.publish(sample_string)
+                rospy.sleep(2)
+                i += 1
+
     def start(self):
 
         while not rospy.is_shutdown():
@@ -66,7 +78,7 @@ class QRCodeScanner():
             # Start video capture
             else:
                 rospy.loginfo("Got a Subscriber! Starting qr code scanning")
-                self.startScanning();
+                self.publishString();
 
 if __name__ == '__main__':
     qr_scanner = QRCodeScanner()

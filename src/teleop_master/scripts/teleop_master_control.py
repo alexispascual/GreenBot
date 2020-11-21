@@ -3,7 +3,7 @@ import roslib; roslib.load_manifest('teleop_master')
 import rospy
 import serial
 import time
-import constants as c
+import yaml
 from teleop_master.msg import MotionCommand
 from std_msgs.msg import Int8
 from sensor_msgs.msg import Joy
@@ -24,20 +24,20 @@ class TeleopMaster:
         self.master_cmd_publisher = rospy.Publisher('master_cmd', Int8, queue_size=10)
 
         # Define buttons
-        self.teleop_control_button = c.START_BUTTON
-        self.autonomous_control_button = c.BACK_BUTTON
-        self.enable_button = c.X_BUTTON
-        self.x_axis_index = c.UP_DOWN_AXIS
-        self.z_axis_index = c.LEFT_RIGHT_AXIS
-        self.mast_button_up = c.LB_BUTTON
-        self.mast_button_down = c.RB_BUTTON
-        self.speed_button_up = c.LT_BUTTON
-        self.speed_button_down = c.RT_BUTTON
+        self.teleop_control_button = 9
+        self.autonomous_control_button = 8
+        self.enable_button = 0
+        self.x_axis_index = 5
+        self.z_axis_index = 4
+        self.mast_button_up = 4
+        self.mast_button_down = 5
+        self.speed_button_up = 6
+        self.speed_button_down = 7
         self.enable_control = False
         self.new_command = False
 
         # Initialize rover status
-        self.control_status = c.STANDBY
+        self.control_status = 0
 
         # Initialize control modes and default speed
         self.x = 0
@@ -63,20 +63,20 @@ class TeleopMaster:
 
         # Toggle Start/Stop for Greenbot Teleop mode
         if joy_msg.buttons[self.teleop_control_button]:
-            if self.control_status == c.TELEOP_MANUAL:
+            if self.control_status == 1:
                 rospy.loginfo("GreenBot stading by...")
-                self.control_status = c.STANDBY
+                self.control_status = 0
 
-            elif self.control_status == c.STANDBY:
+            elif self.control_status == 0:
                 rospy.loginfo("Starting teleop mode!")
-                self.control_status = c.TELEOP_MANUAL
+                self.control_status = 1
 
             return
 
         elif joy_msg.buttons[self.autonomous_control_button]:
-            if self.control_status != c.AUTONOMOUS:
+            if self.control_status != 2:
                 rospy.loginfo("Starting autonomous mode!")
-                self.control_status = c.AUTONOMOUS
+                self.control_status = 2
 
             return
 
@@ -160,23 +160,30 @@ class TeleopMaster:
                 rospy.sleep(1)
 
             # Once Greenbot is subscribed, start publishing
-            elif (self.master_cmd_publisher.get_num_connections() & self.control_status == c.STANDBY):
-                self.master_cmd_publisher.publish(c.STANDBY)
+            elif (self.master_cmd_publisher.get_num_connections() & self.control_status == 0):
+                self.master_cmd_publisher.publish(0)
                 rospy.loginfo("Greenbot is in Standby mode. Press 'Start' to begin teleop mode.")
                 rospy.loginfo("To begin Autonomous mode, line up the rover to the first QR code and press 'Back'")
                 rospy.sleep(1)
 
             # Greenbot in Teleop mode
-            elif (self.master_cmd_publisher.get_num_connections() & self.control_status == c.TELEOP_MANUAL):
-                self.master_cmd_publisher.publish(c.TELEOP_MANUAL)
+            elif (self.master_cmd_publisher.get_num_connections() & self.control_status == 1):
+                self.master_cmd_publisher.publish(1)
                 self.TeleopMode()
 
             # Greenbot in Autonomous mode        
-            elif(self.master_cmd_publisher.get_num_connections() & self.control_status == c.AUTONOMOUS):
-                self.master_cmd_publisher.publish(c.AUTONOMOUS)
+            elif(self.master_cmd_publisher.get_num_connections() & self.control_status == 2):
+                self.master_cmd_publisher.publish(2)
                 self.AutonomousMode()
 
-
+def handle_configuration_file(config_file):
+    print("Selected configuration from file: ", config_file)
+    if not os.path.exists(config_file):
+        print("Config file not found!")
+        sys.exit(1)
+    else:
+        with open(config_file, 'r') as f:
+            return yaml.safe_load(f)
 
 if __name__ == '__main__':
     teleop_master = TeleopMaster()

@@ -4,6 +4,7 @@ import rospy
 import serial
 import time
 from teleop_master.msg import MotionCommand
+from std_msgs.msg import Int8
 
 class TeleopGreenbot:
     def __init__(self):
@@ -15,6 +16,9 @@ class TeleopGreenbot:
 
         # Initialize Arduino Serial comms
         self.udoo_serial = self.initializeArduino()
+
+        # Initialize self.motion_cmd_subscriber property
+        self.motion_cmd_subscriber = None
 
     @staticmethod
     def initializeArduino():
@@ -37,6 +41,7 @@ class TeleopGreenbot:
         if msg.data == 0:
             rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
             if self.motion_cmd_subscriber:
+                print(self.motion_cmd_subscriber)
                 self.motion_cmd_subscriber.unregister()
 
         elif msg.data == 1: 

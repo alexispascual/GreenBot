@@ -39,7 +39,7 @@ class TeleopGreenbot:
     def handleMasterCommand(self, msg):
 
         if msg.data == 0:
-            rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
+            rospy.loginfo("Switching to Stand By mode. Releasing motion command subscriber.")
             if self.motion_cmd_subscriber:
                 self.motion_cmd_subscriber.unregister()
                 self.motion_cmd_subscriber = None
@@ -49,7 +49,7 @@ class TeleopGreenbot:
             self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**24)
 
         elif msg.data == 2:
-            rospy.loginfo("Switching to Autonomous mode. Releasing QR code subscriber.")
+            rospy.loginfo("Switching to Autonomous mode. Releasing motion command subscriber.")
             if self.motion_cmd_subscriber:
                 self.motion_cmd_subscriber.unregister()
                 self.motion_cmd_subscriber = None

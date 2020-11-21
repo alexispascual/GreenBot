@@ -57,11 +57,13 @@ class AutonomousGreenbot:
             rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
             if self.qr_subscriber:
                 self.qr_subscriber.unregister()
+                self.qr_subscriber = None
 
         elif msg.data == 1: 
             rospy.loginfo("Switching to Manual Teleoperation mode. Releasing QR subscriber.")
             if self.qr_subscriber:
                 self.qr_subscriber.unregister()
+                self.qr_subscriber = None
 
         elif msg.data == 2:
             rospy.loginfo("Switching to Autonomous mode. Spawning QR subscriber.")

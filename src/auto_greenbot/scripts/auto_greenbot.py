@@ -126,14 +126,14 @@ class AutonomousGreenbot:
         Take image. Probably just stop. I don't know if we could command the camera
         """
         self.sendToArduino(0, 0, 0, self.gb_default_speed)
-        # rospy.sleep(self.imaging_duration)
+        rospy.sleep(self.imaging_duration)
 
     def driveForward(self):
         """
         Drive forward 
         """
         self.sendToArduino(1, 0, 0, self.gb_default_speed)
-        # rospy.sleep(self.drive_forward_duration)
+        rospy.sleep(self.drive_forward_duration)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnCorner(self):
@@ -141,10 +141,10 @@ class AutonomousGreenbot:
         Turn corner
         """
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_maneuver_forward_duration)
+        rospy.sleep(self.turn_maneuver_forward_duration)
 
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_maneuver_turn_duration)
+        rospy.sleep(self.turn_maneuver_turn_duration)
 
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
@@ -154,10 +154,10 @@ class AutonomousGreenbot:
         Maneuver distances?
         """
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_maneuver_forward_duration)
+        rospy.sleep(self.turn_maneuver_forward_duration)
 
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_maneuver_turn_duration)
+        rospy.sleep(self.turn_maneuver_turn_duration)
 
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
@@ -166,10 +166,10 @@ class AutonomousGreenbot:
         Turn around
         """
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_maneuver_forward_duration)
+        rospy.sleep(self.turn_maneuver_forward_duration)
 
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
-        # rospy.sleep(self.turn_around_duration)
+        rospy.sleep(self.turn_around_duration)
 
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 

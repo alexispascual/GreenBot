@@ -78,7 +78,7 @@ class QRCodeScanner():
             # Start video capture
             else:
                 rospy.loginfo("Got a Subscriber! Starting qr code scanning")
-                self.publishString();
+                self.startScanning();
 
 if __name__ == '__main__':
     qr_scanner = QRCodeScanner()

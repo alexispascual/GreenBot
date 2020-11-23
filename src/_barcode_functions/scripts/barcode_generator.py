@@ -3,8 +3,8 @@ import pyqrcode
 import os
 
 for s in range(7):
-    for i in range(5):
-        qr_string = '{' + f"S: {s}, I: {i}" + '}'
+    for i in range(3):
+        qr_string = '{' + f"\"S\": {s}, \"I\": {i}" + '}.png'
         img = pyqrcode.create(qr_string, error='L', version = 2, mode = 'binary')
         save_path = os.path.join('./images', qr_string)
         img.png(save_path, scale = 8, module_color=[0, 0, 0, 255], background=[0xff, 0xff, 0xff])

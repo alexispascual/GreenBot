@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 import pyqrcode
+import os
 
-for r in range(2):
-    for x in range(10):
-        img = pyqrcode.create(('Row: {}'.format(str(r+1)) + ' Location: {}'.format(str(x+1))), error='L', version = 2, mode = 'binary')
-        img.png(('R {}_'.format(str(r+1)) + 'L {}'.format(str(x+1))), scale = 8, module_color=[0, 0, 0, 255], background=[0xff, 0xff, 0xff])
+for s in range(7):
+    for i in range(5):
+        qr_string = '{' + f"S: {s}, I: {i}" + '}'
+        img = pyqrcode.create(qr_string, error='L', version = 2, mode = 'binary')
+        save_path = os.path.join('./images', qr_string)
+        img.png(save_path, scale = 8, module_color=[0, 0, 0, 255], background=[0xff, 0xff, 0xff])
 
 # def generateQR(name, num_qr):
 #     qr = qrcode.QRCode(

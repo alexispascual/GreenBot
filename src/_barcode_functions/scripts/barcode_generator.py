@@ -4,9 +4,10 @@ import os
 
 for s in range(7):
     for i in range(3):
-        qr_string = '{' + f"\"S\": {s}, \"I\": {i}" + '}.png'
+        qr_string = '{' + f"\"S\": {s}, \"I\": {i}" + '}'
         img = pyqrcode.create(qr_string, error='L', version = 2, mode = 'binary')
-        save_path = os.path.join('./images', qr_string)
+        file_name = qr_string + '.png'
+        save_path = os.path.join('./images', file_name)
         img.png(save_path, scale = 8, module_color=[0, 0, 0, 255], background=[0xff, 0xff, 0xff])
 
 # def generateQR(name, num_qr):

@@ -40,7 +40,7 @@ class QRCodeScanner():
                 results = self.scanner.scan(gray)
 
                 for result in results:
-                    if result.data & last_read_code != result.data:
+                    if result.data and last_read_code != result.data:
                         last_read_code = result.data
 
                         json_parsed = json.loads(result.data.decode("utf-8"))

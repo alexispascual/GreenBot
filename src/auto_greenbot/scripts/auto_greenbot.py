@@ -38,8 +38,8 @@ class AutonomousGreenbot:
 
         # Initialize state definitions
         self.switch = {
-                -1:'haltGreenbot',
-                0: 'standBy',
+                -2:'haltGreenbot',
+                -1: 'standBy',
                 1: 'driveForward',
                 2: 'takeImage',
                 3: 'turnCorner',

@@ -23,11 +23,11 @@ class AutonomousGreenbot:
         self.qr_index = 0
 
         # Initialize default durations
-        self.drive_forward_duration = 90
-        self.imaging_duration = 60
-        self.turn_maneuver_forward_duration = 15
-        self.turn_maneuver_turn_duration = 90
-        self.turn_around_duration = 180
+        self.drive_forward_duration = 5
+        self.imaging_duration = 5
+        self.turn_maneuver_forward_duration = 5
+        self.turn_maneuver_turn_duration = 5
+        self.turn_around_duration = 5
 
         # Define forward and slow speeds    
         self.gb_default_speed = 127
@@ -113,25 +113,32 @@ class AutonomousGreenbot:
         """
         Stop everything
         """
+        rospy.loginfo("Halting!")
         self.sendToArduino(0, 0, 0, 0)
 
     def standBy(self):
         """
         Stand by 
         """
+        rospy.loginfo("Standing by...")
         self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
     def takeImage(self):
         """
         Take image. Probably just stop. I don't know if we could command the camera
         """
+        rospy.loginfo("Taking an image...")
         self.sendToArduino(0, 0, 0, self.gb_default_speed)
         rospy.sleep(self.imaging_duration)
+
+        rospy.loginfo("Continuing on...")
+        self.driveForward()
 
     def driveForward(self):
         """
         Drive forward 
         """
+        rospy.loginfo("Driving forward...")
         self.sendToArduino(1, 0, 0, self.gb_default_speed)
         rospy.sleep(self.drive_forward_duration)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
@@ -140,12 +147,16 @@ class AutonomousGreenbot:
         """
         Turn corner
         """
+        rospy.loginfo("Found end of row!")
+        rospy.loginfo("Clearing platform...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Turning into aisle...")
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
+        rospy.loginfo("Creeping forward to find red QR code...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnInToRow(self):
@@ -153,30 +164,37 @@ class AutonomousGreenbot:
         Turn into row
         Maneuver distances?
         """
+        rospy.loginfo("Found red QR code! Turning into row...")
+        rospy.loginfo("Clearing platform...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Turning into row...")
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
+        rospy.loginfo("Creeping forward to find 1st QR code...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnAround(self):
         """
         Turn around
         """
+        rospy.loginfo("Found pink QR code! Turning around...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
         self.sendToArduino(0, -1, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_around_duration)
 
+        rospy.loginfo("Creeping forward to find 1st QR code")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def endOperations(self):
         """
         TODO: End operations
         """
+        rospy.loginfo("Ending operations. Swtich to manual mode!")
         self.sendToArduino(0, 0, 0, 0)
 
     def sendToArduino(self, x, z, mast_control, speed):

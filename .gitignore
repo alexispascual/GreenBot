@@ -16,3 +16,6 @@ CATKIN_IGNORE
 
 # Pycache
 __pycache__/
+
+# Generated QR codes
+images/

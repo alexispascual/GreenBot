@@ -10,7 +10,7 @@
 class Greenbot {
 
     //--------------------------------------------------------------------------//
-    //                                  Definitions                                 //
+    //                                  Definitions                             //
     //--------------------------------------------------------------------------//
     private:
 
@@ -38,7 +38,7 @@ class Greenbot {
 
         bool Initialize(uint8_t pwm_pins_right, 
                 uint8_t pwm_pins_left,
-          uint8_t pwm_pins_mast, 
+                uint8_t pwm_pins_mast, 
                 float in_speed);
 
         void SetSpeed(float in_speed);

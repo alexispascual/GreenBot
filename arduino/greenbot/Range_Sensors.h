@@ -29,11 +29,12 @@ class Range_Sensors {
         float front_distance;
         float rear_distance;
 
-        void Activate_Sensors();
+        void Activate_Front_Sensors();
+        void Activate_Rear_Sensors();
         
     public:
     
-        //Range_Sensors(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
+        Range_Sensors();
         void Initialize(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
         float Get_Front_Distance();
         float Get_Rear_Distance();

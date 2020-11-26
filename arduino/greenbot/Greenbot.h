@@ -6,7 +6,9 @@
 //--------------------------------------------------------------------------//
 
 #include "Arduino.h"
+#include "Range_Sensors.h"
 #include <Servo.h>
+
 class Greenbot {
 
     //--------------------------------------------------------------------------//
@@ -33,6 +35,11 @@ class Greenbot {
         bool is_turning;
         bool mast_extending;
         bool mast_retracting;
+
+        Range_Sensors range_sensors;
+
+        float front_distance;
+        float rear_distance;
   
     public:
 

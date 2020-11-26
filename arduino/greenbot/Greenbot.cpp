@@ -5,7 +5,6 @@
 
 #include "Arduino.h"
 #include "Greenbot.h"
-#include <Servo.h>
 
 //--------------------------------------------------------------------------//
 //                    Pseudo-constructor                                    //
@@ -76,6 +75,13 @@ void Greenbot::DriveForward(){
     this->left_wheels.writeMicroseconds(this->forward_pulse_width);
 
     this->is_moving = true;
+}
+
+void Greenbot::DriveForwardWithSteering() {
+
+    this->front_distance = range_sensors.Get_Front_Distance();
+    this->rear_distance = range_sensors.Get_Rear_Distance();
+
 }
 
 void Greenbot::DriveBackward(){

@@ -5,7 +5,7 @@ Servo right_wheels;
 Servo left_wheels;
 
 float frequency = 0.01;
-float amplitude = 50;
+float amplitude = 200;
 float test_duration = 10000;
 
 float right_pulse_width;
@@ -26,9 +26,16 @@ void loop() {
   // put your main code here, to run repeatedly:
 	for (int i = 0; i <= test_duration; i++) {
 
-		right_pulse_width = 1600 + amplitude*sin(TWO_PI*frequency*i);
-		left_pulse_width = 1600 - amplitude*sin(TWO_PI*frequency*i);
-    delay(500);
+		right_pulse_width = 1550 + amplitude*sin(TWO_PI*frequency*i);
+		left_pulse_width = 1550 - amplitude*sin(TWO_PI*frequency*i);
+    delay(100);
+
+    if (right_pulse_width < 0) {
+      right_pulse_width = 0;
+      }
+    else if (left_pulse_width < 0) {
+      left_pulse_width = 0;
+      }
 
     right_wheels.writeMicroseconds(right_pulse_width);
     left_wheels.writeMicroseconds(left_pulse_width);

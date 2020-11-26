@@ -19,7 +19,7 @@ void setup() {
   delay(100);
   Serial.println("Start");
 
-  range_sensors.Initialize();
+  range_sensors.Initialize(trigger_pins, echo_pins, 2);
 
 }
 void loop() {

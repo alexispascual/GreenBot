@@ -34,7 +34,7 @@ class Range_Sensors {
     public:
     
         //Range_Sensors(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
-        void Initialize();
+        void Initialize(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
         float Get_Front_Distance();
         float Get_Rear_Distance();
         float* Get_Distances();

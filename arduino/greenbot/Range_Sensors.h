@@ -11,23 +11,31 @@ class Range_Sensors {
 //--------------------------------------------------------------------------//
 //                                  Definitions                             //
 //--------------------------------------------------------------------------//
-	private:
+    private:
 
-		#define NUM_SENSORS 4
+        #define NUM_SENSORS 2
 
-		uint8_t trigger_pins[NUM_SENSORS] = {0, 2};
-		uint8_t echo_pins[NUM_SENSORS] = {1, 3};
+        #define TRIGGER_PIN_FRONT 0
+        #define TRIGGER_PIN_REAR 2
 
-		float front_distance;
-		float rear_distance;
+        #define ECHO_PIN_FRONT 1
+        #define ECHO_PIN_REAR 3
 
-		void Activate_Sensors();
-		
-	public:
-		Range_Sensors(uint8_t* trigger_pins, uint8_t* echo_pins);
-		float Get_Front_Distance();
-		float Get_Rear_Distance();
-		float* Get_Distances();
-}
+        uint8_t trigger_pins[NUM_SENSORS] = {TRIGGER_PIN_FRONT, TRIGGER_PIN_REAR};
+        uint8_t echo_pins[NUM_SENSORS] = {ECHO_PIN_FRONT, ECHO_PIN_REAR};
+
+        float front_duration;
+        float rear_duration;
+        float front_distance;
+        float rear_distance;
+
+        void Activate_Sensors();
+        
+    public:
+        Range_Sensors(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
+        float Get_Front_Distance();
+        float Get_Rear_Distance();
+        float* Get_Distances();
+};
 
 #endif

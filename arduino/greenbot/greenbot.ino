@@ -1,8 +1,12 @@
 
 #ifndef Greenbot_h
-        #include "Greenbot.h"
+  #include "Greenbot.h"
 #endif
 
+#ifndef Range_Sensors_h
+  #include "Range_Sensors.h"
+#endif
+  
 #include "Command.h"
 #include <Servo.h>
 

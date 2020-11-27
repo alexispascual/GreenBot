@@ -97,7 +97,7 @@ void ParseRawChars() {
   strtokIndx = strtok(NULL, ",");
   command.mast_control = atoi(strtokIndx);  // Get mast_control
 
-  strtokIndx = strtok(NULL, ",");
+  strtokIndx = strtok(NULL, ","); // Get speed
   command.speed = atof(strtokIndx);
     
 }
@@ -106,7 +106,7 @@ void HandleCommand() {
   
   if (new_data) {
 
-    if (command.x > 0) { // Forward
+    if (command.x == 1) { // Forward
 
       Serial.println("Moving forward \n");
       greenbot.DriveForward();
@@ -141,6 +141,11 @@ void HandleCommand() {
       Serial.println("Stopping \n");
       greenbot.Stop();
       
+    } else if (command.x == 2) {
+
+      Serial.println("Driving with auto_steer \n");
+      greenbot.DriveForwardWithSteering();
+
     }
 
     if (command.speed != current_speed) {

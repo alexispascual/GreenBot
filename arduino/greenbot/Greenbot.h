@@ -8,7 +8,7 @@
 #include "Arduino.h"
 #include "Range_Sensors.h"
 #include <Servo.h>
-
+#include <math.h>
 class Greenbot {
 
     //--------------------------------------------------------------------------//
@@ -38,8 +38,16 @@ class Greenbot {
 
         Range_Sensors range_sensors;
 
+        bool auto_steer;
         float front_distance;
         float rear_distance;
+        float delta_theta;
+        float delta_d;
+        float delta_pulse;
+        float sensor_gap;
+
+        float k_d = 0.1;
+        float k_theta = 0.1;
   
     public:
 
@@ -52,6 +60,7 @@ class Greenbot {
         int SetForwardPulseWidth(float in_speed);
         int SetReversePulseWidth(float in_speed);
         void DriveForward();
+        void DriveForwardWithSteering();
         void DriveBackward();
         void TurnCounterClockwise();
         void TurnClockwise();

@@ -82,6 +82,13 @@ void Greenbot::DriveForwardWithSteering() {
     this->front_distance = range_sensors.Get_Front_Distance();
     this->rear_distance = range_sensors.Get_Rear_Distance();
 
+    this->delta_theta = atan((this->front_distance - this->rear_distance)/this->sensor_gap);
+    this->delta_d = (this->sensor_gap)/2 * tan(this->delta_theta);
+    
+    this->delta_pulse = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
+    
+    this->right_wheels.writeMicroseconds(this->forward_pulse_width - this->delta_pulse);
+    this->left_wheels.writeMicroseconds(this->forward_pulse_width + this->delta_pulse);
 }
 
 void Greenbot::DriveBackward(){

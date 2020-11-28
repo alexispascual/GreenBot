@@ -150,12 +150,9 @@ void HandleCommand() {
           greenbot.DriveForwardWithSteering();
           ReceiveSerialData();
   
-          if (new_data) {break;}
-        
+          if (new_data) {
+            break;}
         }
-
-      
-
     }
 
     if (command.speed != current_speed) {
@@ -164,12 +161,8 @@ void HandleCommand() {
       greenbot.SetSpeed((uint8_t)command.speed);
 
       current_speed = (uint8_t)command.speed;
-      
     }
-    
-    new_data = false;
   }
-
 }
 
 void loop() {

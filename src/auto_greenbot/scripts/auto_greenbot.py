@@ -104,7 +104,6 @@ class AutonomousGreenbot:
             if self.state is not None and self.qr_index is not None:
 
                 method = getattr(self, self.switch.get(self.state))
-                rospy.loginfo(self.new_state)
                 method()
 
             else:
@@ -143,7 +142,6 @@ class AutonomousGreenbot:
         Drive forward 
         """
 
-        rospy.loginfo(self.new_state)
         rospy.loginfo("Driving forward with auto steering...")
         self.sendToArduino(2, 0, 0, self.gb_default_speed)
 

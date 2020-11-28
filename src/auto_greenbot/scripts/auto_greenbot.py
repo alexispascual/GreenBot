@@ -66,19 +66,28 @@ class AutonomousGreenbot:
     def handleMasterCommand(self, msg):
 
         if msg.data == 0:
+
             rospy.loginfo("Switching to Stand By mode. Releasing QR code subscriber.")
+            self.standBy()
+
             if self.qr_subscriber:
                 self.qr_subscriber.unregister()
                 self.qr_subscriber = None
 
         elif msg.data == 1: 
+
             rospy.loginfo("Switching to Manual Teleoperation mode. Releasing QR subscriber.")
+            self.standBy()
+
             if self.qr_subscriber:
                 self.qr_subscriber.unregister()
                 self.qr_subscriber = None
 
         elif msg.data == 2:
+            
             rospy.loginfo("Switching to Autonomous mode. Spawning QR subscriber.")
+            self.standBy()
+            
             # Initialize QR code subscriber
             self.qr_subscriber = rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**24)
 

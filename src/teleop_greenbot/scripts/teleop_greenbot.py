@@ -22,6 +22,7 @@ class TeleopGreenbot:
 
     @staticmethod
     def initializeArduino():
+        
         try:
             ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
             ser.flushOutput()
@@ -29,11 +30,9 @@ class TeleopGreenbot:
             rospy.loginfo("Connected to Arduino!")
 
         except Exception as e:
-
             rospy.logerr(f"Arduino Initialization error: {e}")
 
-        finally:
-
+        else:
             return ser
 
     def handleMasterCommand(self, msg):

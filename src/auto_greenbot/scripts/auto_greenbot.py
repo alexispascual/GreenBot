@@ -106,6 +106,7 @@ class AutonomousGreenbot:
 
                 self.new_state = True;
                 method = getattr(self, self.switch.get(self.state))
+                rospy.loginfo(self.new_state)
                 method()
 
             else:
@@ -146,12 +147,10 @@ class AutonomousGreenbot:
         """
         Drive forward 
         """
-        self.new_state = False;
 
-        while not self.new_state:
-            rospy.loginfo("Driving forward with auto steering...")
-            self.sendToArduino(2, 0, 0, self.gb_default_speed)
-            rospy.sleep(1)
+        rospy.loginfo(self.new_state)
+        rospy.loginfo("Driving forward with auto steering...")
+        self.sendToArduino(2, 0, 0, self.gb_default_speed)
 
     def turnCorner(self):
         """

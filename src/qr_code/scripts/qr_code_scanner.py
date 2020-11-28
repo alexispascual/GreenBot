@@ -36,7 +36,7 @@ class QRCodeScanner():
                 ret, image = cap.read()
                 view_image = cv2.resize(image, (0,0), fy=0.5, fx=0.5)
                 gray = cv2.cvtColor(view_image, cv2.COLOR_BGR2GRAY)
-
+                cv2.imshow("image", view_image)
                 results = self.scanner.scan(gray)
 
                 for result in results:

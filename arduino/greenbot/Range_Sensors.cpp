@@ -60,19 +60,20 @@ void Range_Sensors::Activate_Rear_Sensors() {
 }
 
 float Range_Sensors::Get_Front_Distance() {
-    Activate_Front_Sensors();
+    this->Activate_Front_Sensors();
     return this->front_distance;
 
 }
 
 float Range_Sensors::Get_Rear_Distance() {
-    Activate_Rear_Sensors();
+    this->Activate_Rear_Sensors();
     return this->rear_distance;
 
 }
 
 float* Range_Sensors::Get_Distances() {
-    Activate_Sensors();
+    this->Activate_Front_Sensors();
+    this->Activate_Rear_Sensors();
 
     static float distances[NUM_SENSORS];
     distances[0] = this->front_distance;

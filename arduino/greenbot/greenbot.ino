@@ -106,6 +106,8 @@ void HandleCommand() {
   
   if (new_data) {
 
+    new_data = false;
+
     if (command.x == 1) { // Forward
 
       Serial.println("Moving forward \n");
@@ -143,8 +145,16 @@ void HandleCommand() {
       
     } else if (command.x == 2) {
 
-      Serial.println("Driving with auto_steer \n");
-      greenbot.DriveForwardWithSteering();
+      while (true){
+          Serial.println("Driving with auto_steer \n");
+          greenbot.DriveForwardWithSteering();
+          ReceiveSerialData();
+  
+          if (new_data) {break;}
+        
+        }
+
+      
 
     }
 

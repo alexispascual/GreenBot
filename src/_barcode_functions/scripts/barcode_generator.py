@@ -3,7 +3,7 @@ import pyqrcode
 import os
 
 for s in range(7):
-    for i in range(3):
+    for i in range(1):
         qr_string = '{' + f"\"S\": {s}, \"I\": {i}" + '}'
         img = pyqrcode.create(qr_string, error='L', version = 2, mode = 'binary')
         file_name = qr_string + '.png'

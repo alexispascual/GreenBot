@@ -32,6 +32,7 @@ class AutonomousGreenbot:
         # Define forward and slow speeds    
         self.gb_default_speed = 64
         self.gb_slow_speed = 32
+        self.gb_turning_speed = 102
 
         # Initialize qr_subscriber object
         self.qr_subscriber = None
@@ -51,7 +52,8 @@ class AutonomousGreenbot:
     @staticmethod
     def initializeArduino():
 
-        try:
+        try:    raise SerialException('write failed: {}'.format(e))
+
             ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
             ser.flushOutput()
 
@@ -165,7 +167,7 @@ class AutonomousGreenbot:
         rospy.sleep(self.turn_maneuver_forward_duration)
 
         rospy.loginfo("Turning into aisle...")
-        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Creeping forward to find red QR code...")
@@ -183,7 +185,7 @@ class AutonomousGreenbot:
         rospy.sleep(self.turn_maneuver_forward_duration)
 
         rospy.loginfo("Turning into row...")
-        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Creeping forward to find 1st QR code...")
@@ -198,7 +200,7 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
-        self.sendToArduino(0, -1, 0, self.gb_slow_speed)
+        self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
 
         rospy.loginfo("Creeping forward to find 1st QR code")

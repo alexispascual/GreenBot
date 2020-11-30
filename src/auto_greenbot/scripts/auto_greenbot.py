@@ -52,8 +52,7 @@ class AutonomousGreenbot:
     @staticmethod
     def initializeArduino():
 
-        try:    raise SerialException('write failed: {}'.format(e))
-
+        try:
             ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
             ser.flushOutput()
 

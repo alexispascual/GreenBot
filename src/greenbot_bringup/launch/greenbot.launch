@@ -1,0 +1,5 @@
+<launch>
+  <node name="teleop_greenbot" pkg="teleop_greenbot" type="teleop_greenbot.py" />
+  <node name="qr_code" pkg="qr_code" type="qr_code_scanner.py" />
+  <node name="autonomous_greenbot" pkg="auto_greenbot" type="auto_greenbot.py" />
+</launch>

@@ -1,0 +1,4 @@
+<launch>
+  <node name="joy" pkg="joy" type="joy_node" />
+  <node name="teleop_master" pkg="teleop_master" type="teleop_master_control.py" />
+</launch>

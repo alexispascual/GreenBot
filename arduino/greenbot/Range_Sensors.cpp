@@ -41,7 +41,7 @@ void Range_Sensors::Activate_Front_Sensors() {
     digitalWrite(this->trigger_pins[0], LOW);
 
     this->front_duration = pulseIn(this->echo_pins[0], HIGH);
-    this->front_distance = this->front_duration * 0.034/2;
+    this->front_distance = floor(this->front_duration * 0.034/2);
    
 }
 
@@ -55,7 +55,7 @@ void Range_Sensors::Activate_Rear_Sensors() {
     digitalWrite(this->trigger_pins[1], LOW);
 
     this->rear_duration = pulseIn(this->echo_pins[1], HIGH);
-    this->rear_distance = this->rear_duration * 0.034/2;
+    this->rear_distance = floor(this->rear_duration * 0.034/2);
     
 }
 

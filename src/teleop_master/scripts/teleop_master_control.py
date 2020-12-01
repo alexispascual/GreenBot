@@ -43,7 +43,7 @@ class TeleopMaster:
         # Initialize control modes and default speed
         self.x = 0
         self.z = 0
-        self.speed = 127
+        self.speed = 96
         self.mast_control = 0
 
         # Initialize rate @ 10Hz

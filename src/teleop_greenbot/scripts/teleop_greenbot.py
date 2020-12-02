@@ -65,8 +65,8 @@ class TeleopGreenbot:
 
         message = f"[{x},{z},{mast_control},{speed}]"
 
-        byte_array = bytearray(message)
-        # byte_array.extend(message.encode()) 
+        byte_array = bytearray()
+        byte_array.extend(message.encode()) 
         
         self.udoo_serial.write(byte_array)
 

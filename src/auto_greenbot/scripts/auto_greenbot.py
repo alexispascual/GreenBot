@@ -30,8 +30,8 @@ class AutonomousGreenbot:
         self.turn_around_duration = 9.0
 
         # Define forward and slow speeds    
-        self.gb_default_speed = 32
-        self.gb_slow_speed = 24
+        self.gb_default_speed = 24
+        self.gb_slow_speed = 22
         self.gb_turning_speed = 102
 
         # Initialize qr_subscriber object
@@ -39,8 +39,8 @@ class AutonomousGreenbot:
 
         # Initialize state definitions
         self.switch = {
-                -2:'haltGreenbot',
-                -1: 'standBy',
+                -1:'haltGreenbot',
+                0: 'standBy',
                 1: 'driveForward',
                 2: 'takeImage',
                 3: 'turnCorner',
@@ -153,6 +153,7 @@ class AutonomousGreenbot:
         """
 
         rospy.loginfo("Driving forward with auto steering...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
         self.sendToArduino(2, 0, 0, self.gb_default_speed)
 
     def turnCorner(self):
@@ -162,14 +163,17 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Found end of row!")
         rospy.loginfo("Clearing platform...")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
         rospy.loginfo("Turning into aisle...")
+        self.sendToArduino(0, 0, 0, self.gb_turning_speed)
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Creeping forward to find red QR code...")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnInToRow(self):
@@ -180,14 +184,17 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Found red QR code! Turning into row...")
         rospy.loginfo("Clearing platform...")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
         rospy.loginfo("Turning into row...")
+        self.sendToArduino(0, 0, 0, self.gb_turning_speed)
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Creeping forward to find 1st QR code...")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnAround(self):
@@ -196,13 +203,16 @@ class AutonomousGreenbot:
         """
 
         rospy.loginfo("Found pink QR code! Turning around...")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        self.sendToArduino(0, 0, 0, self.gb_turning_speed)
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
 
         rospy.loginfo("Creeping forward to find 1st QR code")
+        self.sendToArduino(0, 0, 0, self.gb_slow_speed)
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def endOperations(self):

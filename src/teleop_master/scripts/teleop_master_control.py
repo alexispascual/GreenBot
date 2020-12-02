@@ -43,7 +43,7 @@ class TeleopMaster:
         # Initialize control modes and default speed
         self.x = 0
         self.z = 0
-        self.speed = 20
+        self.speed = 22
         self.turning_speed = 102
         self.mast_control = 0
 

@@ -130,8 +130,6 @@ class TeleopMaster:
                 # Get command string
                 command_message = self.getMotionCommand()
 
-                print(command_message)
-
                 # Publish command message
                 self.motion_cmd_publisher.publish(command_message)
 

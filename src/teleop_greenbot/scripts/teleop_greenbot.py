@@ -45,7 +45,7 @@ class TeleopGreenbot:
 
         elif msg.data == 1: 
             rospy.loginfo("Switching to Manual Teleoperation mode. Spawning motion command subscriber.")
-            self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**24)
+            self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**32)
 
         elif msg.data == 2:
             rospy.loginfo("Switching to Autonomous mode. Releasing motion command subscriber.")
@@ -65,8 +65,8 @@ class TeleopGreenbot:
 
         message = f"[{x},{z},{mast_control},{speed}]"
 
-        byte_array = bytearray()
-        byte_array.extend(message.encode()) 
+        byte_array = bytearray(message)
+        # byte_array.extend(message.encode()) 
         
         self.udoo_serial.write(byte_array)
 

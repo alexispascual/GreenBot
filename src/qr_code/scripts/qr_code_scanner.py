@@ -22,8 +22,12 @@ class QRCodeScanner():
 
         try:
             cap = cv2.VideoCapture(0) # TODO: Figure out if there's 2 cameras
-            width = 800
-            height = 600
+
+            # Can be configured to any width/height
+            # For now, just using default dimensions
+            width = cap.get(3) 
+            height = cap.get(4)
+
             cap.set(3, width)
             cap.set(4, height)
 

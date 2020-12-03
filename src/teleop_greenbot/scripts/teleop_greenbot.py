@@ -12,7 +12,7 @@ class TeleopGreenbot:
         rospy.init_node('teleop_greenbot', anonymous=True)
 
         # Initialize Master Command subscriber
-        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=10)
+        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=3)
 
         # Initialize Arduino Serial comms
         self.udoo_serial = self.initializeArduino()
@@ -45,7 +45,7 @@ class TeleopGreenbot:
 
         elif msg.data == 1: 
             rospy.loginfo("Switching to Manual Teleoperation mode. Spawning motion command subscriber.")
-            self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**32)
+            self.motion_cmd_subscriber = rospy.Subscriber('/cmd_vel', MotionCommand, self.handleMotionCommand, queue_size=10, buff_size=2**16)
 
         elif msg.data == 2:
             rospy.loginfo("Switching to Autonomous mode. Releasing motion command subscriber.")

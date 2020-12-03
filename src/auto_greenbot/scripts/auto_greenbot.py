@@ -13,7 +13,7 @@ class AutonomousGreenbot:
         rospy.init_node('autonomous_greenbot', anonymous=True)
 
         # Initialize Master Command subscriber
-        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=10)
+        self.master_cmd_subscriber = rospy.Subscriber('/master_cmd', Int8, self.handleMasterCommand, queue_size=3)
 
         # Initialize Arduino Serial comms
         self.udoo_serial = self.initializeArduino()
@@ -90,7 +90,7 @@ class AutonomousGreenbot:
             self.standBy()
             
             # Initialize QR code subscriber
-            self.qr_subscriber = rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**24)
+            self.qr_subscriber = rospy.Subscriber('/qr_code_decoded', String, self.determineState, queue_size=10, buff_size=2**16)
 
     def determineState(self, msg):
         """ 

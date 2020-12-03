@@ -15,13 +15,13 @@ class TeleopMaster:
         rospy.init_node('teleop_master', anonymous=True)
 
         # Initialize joy message subscribers
-        rospy.Subscriber('/joy', Joy, self.handleJoyMessage, queue_size=3, buff_size=2**24)
+        rospy.Subscriber('/joy', Joy, self.handleJoyMessage, queue_size=3, buff_size=2**16)
 
         # Initialize cmd_vel publisher
         self.motion_cmd_publisher = rospy.Publisher('cmd_vel', MotionCommand, queue_size=10)
 
         # Initialize master_cmd publisher
-        self.master_cmd_publisher = rospy.Publisher('master_cmd', Int8, queue_size=10)
+        self.master_cmd_publisher = rospy.Publisher('master_cmd', Int8, queue_size=3)
 
         # Define buttons
         self.teleop_control_button = 9

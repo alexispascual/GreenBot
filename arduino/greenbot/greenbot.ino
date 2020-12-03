@@ -11,9 +11,9 @@
 #include <Servo.h>
 
 const uint8_t num_chars = 32;
-const uint8_t pwm_pins_mast = 9; //mast
-const uint8_t pwm_pins_right = 10; // right_wheels
-const uint8_t pwm_pins_left = 11; // left_wheels
+const uint8_t pwm_pins_mast = 7; //mast
+const uint8_t pwm_pins_right = 5; // right_wheels
+const uint8_t pwm_pins_left = 6; // left_wheels
 const uint8_t default_speed = 127; //default speed
 
 Servo left_wheels;

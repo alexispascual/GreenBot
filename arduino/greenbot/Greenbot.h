@@ -16,9 +16,9 @@ class Greenbot {
     //--------------------------------------------------------------------------//
     private:
 
-        #define PWM_PIN_RIGHT 10
-        #define PWM_PIN_LEFT 11
-        #define PWM_PIM_MAST 9
+        #define PWM_PIN_RIGHT 5
+        #define PWM_PIN_LEFT 6
+        #define PWM_PIM_MAST 7
 
         Servo right_wheels;
         Servo left_wheels;

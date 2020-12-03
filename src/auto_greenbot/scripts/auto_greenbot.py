@@ -25,14 +25,14 @@ class AutonomousGreenbot:
         # Initialize default durations
         self.drive_forward_duration = 5
         self.imaging_duration = 5
-        self.turn_maneuver_forward_duration = 7
+        self.turn_maneuver_forward_duration = 4
         self.turn_maneuver_turn_duration = 3.5
         self.turn_around_duration = 9.0
 
         # Define forward and slow speeds    
         self.gb_default_speed = 24
         self.gb_slow_speed = 24
-        self.gb_turning_speed = 102
+        self.gb_turning_speed = 127
 
         # Initialize qr_subscriber object
         self.qr_subscriber = None

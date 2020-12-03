@@ -17,9 +17,9 @@ bool Greenbot::Initialize(uint8_t pwm_pins_right, uint8_t pwm_pins_left,
     this->left_wheels.detach();
     this->mast.detach();
 
-    this->right_wheels.attach(10);
-    this->left_wheels.attach(11);
-    this->mast.attach(9);
+    this->right_wheels.attach(pwm_pins_right);
+    this->left_wheels.attach(pwm_pins_left);
+    this->mast.attach(pwm_pins_mast);
 
     this->in_speed = in_speed;
 

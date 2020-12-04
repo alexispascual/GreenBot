@@ -30,6 +30,8 @@ class Greenbot {
         int neutral_pulse_width = 1500;
         int mast_extension_pulse_width = 1600;
         int mast_retraction_pulse_width = 1400;
+        int turning_fast_pulse_width = 1700;
+        int turning_slow_pulse_width = 1600;
 
         bool is_moving;
         bool is_turning;
@@ -62,6 +64,7 @@ class Greenbot {
         int SetReversePulseWidth(float in_speed);
         void DriveForward();
         void DriveForwardWithSteering();
+        void Greenbot::TurnIntoRow();
         void DriveBackward();
         void TurnCounterClockwise();
         void TurnClockwise();

@@ -107,6 +107,14 @@ void HandleCommand() {
   if (new_data) {
 
     new_data = false;
+    
+    if (command.speed != current_speed) {
+
+      Serial.println("Updating Greenbot Speed");
+      greenbot.SetSpeed((uint8_t)command.speed);
+
+      current_speed = (uint8_t)command.speed;
+    }
 
     if (command.x == 1) { // Forward
 
@@ -150,18 +158,15 @@ void HandleCommand() {
           greenbot.DriveForwardWithSteering();
           ReceiveSerialData();
   
-          if (new_data) {
-            break;}
+          if (new_data) {break;}
         }
-    }
-
-    if (command.speed != current_speed) {
-
-      Serial.println("Updating Greenbot Speed");
-      greenbot.SetSpeed((uint8_t)command.speed);
-
-      current_speed = (uint8_t)command.speed;
-    }
+        
+    } else if (command.x == 3) {
+      
+      Serial.println("Turning into new row \n");
+      greenbot.TurnIntoRow();
+      
+      }
   }
 }
 

@@ -103,6 +103,14 @@ void Greenbot::DriveForwardWithSteering() {
     this->left_wheels.writeMicroseconds(this->forward_pulse_width + this->delta_pulse);
 }
 
+void Greenbot::TurnIntoRow() {
+
+    Serial.println("Executing turning command");
+    this->right_wheels.writeMicroseconds(this->turning_slow_pulse_width);
+    this->left_wheels.writeMicroseconds(this->turning_fast_pulse_width);
+  
+}
+
 void Greenbot::DriveBackward(){
 
     this->right_wheels.writeMicroseconds(this->reverse_pulse_width);

@@ -161,15 +161,25 @@ class AutonomousGreenbot:
         """
 
         rospy.loginfo("Found end of row!")
-        rospy.loginfo("Clearing platform...")
+        # rospy.loginfo("Clearing platform...")
+        # self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        # rospy.sleep(self.turn_maneuver_forward_duration)
+
+        # rospy.loginfo("Turning into aisle...")
+        # self.sendToArduino(0, -1, 0, self.gb_turning_speed)
+        # rospy.sleep(self.turn_maneuver_turn_duration)
+
+        # rospy.loginfo("Creeping forward to find red QR code...")
+        # self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+
+        rospy.loginfo("Executing turn maneuver!")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
-        rospy.loginfo("Turning into aisle...")
-        self.sendToArduino(0, -1, 0, self.gb_turning_speed)
+        self.sendToArduino(3, 0, 0, self.gb_slow_speed);
         rospy.sleep(self.turn_maneuver_turn_duration)
 
-        rospy.loginfo("Creeping forward to find red QR code...")
+        rospy.loginfo("Creeping forward to find 1st QR code...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
 
     def turnInToRow(self):

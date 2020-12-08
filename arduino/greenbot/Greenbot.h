@@ -16,26 +16,13 @@ class Greenbot {
     //--------------------------------------------------------------------------//
     private:
 
-        #define PWM_PIN_RIGHT 10
-        #define PWM_PIN_LEFT 11
-        #define PWM_PIM_MAST 9
+        #define START_FLAG 0x80
+        #define MESSAGE_LENGTH 3
 
         int8_t hero_message[3];
-        int8_t start_flag = 0x80;
 
-        Servo right_wheels;
-        Servo left_wheels;
-        Servo mast;
-      
-        float in_speed;
-        int forward_pulse_width;
-        int reverse_pulse_width;
-        int neutral_pulse_width = 1500;
-        int mast_extension_pulse_width = 1600;
-        int mast_retraction_pulse_width = 1400;
-        int turning_fast_pulse_width = 1700;
-        int turning_slow_pulse_width = 1600;
-
+        float speed;
+        
         bool is_moving;
         bool is_turning;
         bool mast_extending;
@@ -43,7 +30,6 @@ class Greenbot {
 
         Range_Sensors range_sensors;
 
-        bool auto_steer;
         float front_distance;
         float rear_distance;
         float delta_theta;
@@ -57,14 +43,9 @@ class Greenbot {
   
     public:
 
-        bool Initialize(uint8_t pwm_pins_right, 
-                uint8_t pwm_pins_left,
-                uint8_t pwm_pins_mast, 
-                float in_speed);
+        bool Initialize(float in_speed);
 
         void SetSpeed(float in_speed);
-        int SetForwardPulseWidth(float in_speed);
-        int SetReversePulseWidth(float in_speed);
         void DriveForward();
         void DriveForwardWithSteering();
         void Greenbot::TurnIntoRow();

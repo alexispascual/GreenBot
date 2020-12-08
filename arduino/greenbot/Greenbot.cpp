@@ -10,26 +10,17 @@
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
 
-bool Greenbot::Initialize(uint8_t pwm_pins_right, uint8_t pwm_pins_left, 
-                uint8_t pwm_pins_mast, float in_speed){
+bool Greenbot::Initialize(float in_speed){
 
-    this->right_wheels.detach();
-    this->left_wheels.detach();
-    this->mast.detach();
-
-    this->right_wheels.attach(10);
-    this->left_wheels.attach(11);
-    this->mast.attach(9);
-
-    this->in_speed = in_speed;
+    
+    this->speed = in_speed;
 
     this->is_moving = false;
     this->is_turning = false;
     this->mast_extending = false;
     this->mast_retracting = false;
 
-    this->forward_pulse_width = SetForwardPulseWidth(in_speed);
-    this->reverse_pulse_width = SetReversePulseWidth(in_speed);
+    this->hero_message[0] = START_FLAG;
 
     Stop();
 
@@ -43,36 +34,17 @@ bool Greenbot::Initialize(uint8_t pwm_pins_right, uint8_t pwm_pins_left,
 //--------------------------------------------------------------------------//
 void Greenbot::SetSpeed(float in_speed) {
 
-	this->in_speed = in_speed;
-	this->forward_pulse_width = SetForwardPulseWidth(in_speed);
-	this->reverse_pulse_width = SetReversePulseWidth(in_speed);
-}
-
-
-int Greenbot::SetForwardPulseWidth(float in_speed){
-
-	float duty_cycle = 0;
-
-	duty_cycle = 1500 + (500 * in_speed/255);
-
-	return (int)duty_cycle;
-}
-
-int Greenbot::SetReversePulseWidth(float in_speed){
-
-	float duty_cycle = 0;
-
-	duty_cycle = 1500 - (500 * in_speed/255);
-
-    return (int)duty_cycle;
+	this->speed = in_speed;
 }
 //--------------------------------------------------------------------------//
 //								    Functions				   				//
 //--------------------------------------------------------------------------//
 void Greenbot::DriveForward(){
 
-    this->right_wheels.writeMicroseconds(this->forward_pulse_width);
-    this->left_wheels.writeMicroseconds(this->forward_pulse_width);
+    this->hero_message[1] = (this->speed &= ~1 << 7);
+    this->hero_message[2] = (this->speed &= ~1 << 7);
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
 }
@@ -113,24 +85,30 @@ void Greenbot::TurnIntoRow() {
 
 void Greenbot::DriveBackward(){
 
-    this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
-    this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->hero_message[1] = (this->speed |= 1 << 7);
+    this->hero_message[2] = (this->speed |= 1 << 7);
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
 }
 
 void Greenbot::TurnCounterClockwise(){
 
-    this->right_wheels.writeMicroseconds(this->forward_pulse_width);
-    this->left_wheels.writeMicroseconds(this->reverse_pulse_width);
+    this->hero_message[1] = (this->speed &= ~1 << 7);
+    this->hero_message[2] = (this->speed |= 1 << 7);
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_turning = true;
 }
 
 void Greenbot::TurnClockwise(){
 
-    this->right_wheels.writeMicroseconds(this->reverse_pulse_width);
-    this->left_wheels.writeMicroseconds(this->forward_pulse_width);
+    this->hero_message[1] = (this->speed |= 1 << 7);
+    this->hero_message[2] = (this->speed &= ~1 << 7);
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_turning = true;
 }
@@ -161,9 +139,10 @@ void Greenbot::RetractMast(){
 
 void Greenbot::Stop(){
 
-    this->right_wheels.writeMicroseconds(this->neutral_pulse_width);
-    this->left_wheels.writeMicroseconds(this->neutral_pulse_width);
-    this->mast.writeMicroseconds(this->neutral_pulse_width);
+    this->hero_message[1] = 0
+    this->hero_message[2] = 0;
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = false;
     this->is_turning = false;

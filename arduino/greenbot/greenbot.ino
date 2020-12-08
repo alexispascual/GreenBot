@@ -11,13 +11,7 @@
 #include <Servo.h>
 
 const uint8_t num_chars = 32;
-const uint8_t pwm_pins_mast = 9; //mast
-const uint8_t pwm_pins_right = 10; // right_wheels
-const uint8_t pwm_pins_left = 11; // left_wheels
 const uint8_t default_speed = 127; //default speed
-
-Servo left_wheels;
-Servo right_wheels;
 
 bool new_data = false;
 bool greenbot_status = false;
@@ -37,7 +31,7 @@ void setup() {
   current_speed = default_speed;
   
   // Initialize Greenbot object  
-  greenbot_status = greenbot.Initialize(pwm_pins_right, pwm_pins_left, pwm_pins_mast, default_speed);
+  greenbot_status = greenbot.Initialize(default_speed);
 
   if (greenbot_status) {
 

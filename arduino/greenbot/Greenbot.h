@@ -20,6 +20,9 @@ class Greenbot {
         #define PWM_PIN_LEFT 11
         #define PWM_PIM_MAST 9
 
+        int8_t hero_message[3];
+        int8_t start_flag = 0x80;
+
         Servo right_wheels;
         Servo left_wheels;
         Servo mast;

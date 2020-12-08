@@ -43,8 +43,7 @@ class TeleopMaster:
         # Initialize control modes and default speed
         self.x = 0
         self.z = 0
-        self.speed = 22
-        self.turning_speed = 127
+        self.speed = 16
         self.mast_control = 0
 
         # Initialize rate @ 10Hz
@@ -100,18 +99,16 @@ class TeleopMaster:
             # Increase/decrese Greenbot speed while limiting ranges
             if joy_msg.buttons[self.speed_button_up]:
 
-                self.speed = 24
-                rospy.loginfo(f"Greenbot at {(self.speed/255)*100:.2f}% speed!")
+                rospy.loginfo(f"Greenbot at {self.speed} speed!")
 
-                if self.speed >= 255:
-                    self.speed = 255
+                if self.speed >= 127:
+                    self.speed = 127
 
             elif joy_msg.buttons[self.speed_button_down]:
 
-                self.speed = 102
-                rospy.loginfo(f"Greenbot at {(self.speed/255)*100:.2f} speed!")
+                rospy.loginfo(f"Greenbot at {self.speed} speed!")
 
-                if self.speed < 0:
+                if self.speed < 0 :
                     self.speed = 0
 
         # If enable button is not pressed, don't do anything                

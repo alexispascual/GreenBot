@@ -10,7 +10,7 @@ char raw_chars[num_chars];
 void setup() {
   // put your setup code here, to run once:
   
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(100);
   Serial.println("Start");
 
@@ -21,11 +21,12 @@ void ReceiveSerialData() {
     static boolean in_progress = false;
     static byte i = 0;
     char start_marker = 0x80;
-    char end_marker = ']';
+    char end_marker = 0x80;
     char temp_char;
     float temp_float;
  
     while (Serial.available() > 0 && new_data == false) {
+        Serial.println("Receiving data...");
         temp_char = Serial.read();
 
         if (in_progress == true) {
@@ -61,7 +62,7 @@ void ParseRawChars() {
 void PrintData() {
   
   if (new_data) {
-    
+    Serial.println("Printing data");
     new_data = false;
     
     Serial.print("Left wheel: ");

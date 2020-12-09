@@ -43,10 +43,10 @@ void Greenbot::SetSpeed(int8_t in_speed) {
 //--------------------------------------------------------------------------//
 void Greenbot::DriveForward(){
 
-    this->hero_message[1] = (this->speed &= ~1 << 7);
-    this->hero_message[2] = (this->speed &= ~1 << 7);
+    this->hero_message[1] = this->speed;
+    this->hero_message[2] = this->speed;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
 }
@@ -73,19 +73,19 @@ void Greenbot::DriveForwardWithSteering() {
     Serial.print("Delta sped: ");
     Serial.println(this->delta_speed);
 
-    this->hero_message[1] = (this->speed &= ~1 << 7) + this->delta_speed;
-    this->hero_message[2] = (this->speed &= ~1 << 7) - this->delta_speed;
+    this->hero_message[1] = this->speed + this->delta_speed;
+    this->hero_message[2] = this->speed - this->delta_speed;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 }
 
 void Greenbot::TurnIntoRow() {
 
     Serial.println("Executing turning command");
-    this->hero_message[1] = (this->speed &= ~1 << 7) + this->turning_offset_speed;
-    this->hero_message[2] = (this->speed &= ~1 << 7);
+    this->hero_message[1] = this->speed + this->turning_offset_speed;
+    this->hero_message[2] = this->speed;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
   
@@ -93,30 +93,30 @@ void Greenbot::TurnIntoRow() {
 
 void Greenbot::DriveBackward(){
 
-    this->hero_message[1] = (this->speed |= 1 << 7);
-    this->hero_message[2] = (this->speed |= 1 << 7);
+    this->hero_message[1] = this->speed * -1;
+    this->hero_message[2] = this->speed * -1;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
 }
 
 void Greenbot::TurnCounterClockwise(){
 
-    this->hero_message[1] = (this->speed &= ~1 << 7);
-    this->hero_message[2] = (this->speed |= 1 << 7);
+    this->hero_message[1] = this->speed;
+    this->hero_message[2] = this->speed * -1;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_turning = true;
 }
 
 void Greenbot::TurnClockwise(){
 
-    this->hero_message[1] = (this->speed |= 1 << 7);
-    this->hero_message[2] = (this->speed &= ~1 << 7);
+    this->hero_message[1] = this->speed * -1;
+    this->hero_message[2] = this->speed;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_turning = true;
 }
@@ -150,7 +150,7 @@ void Greenbot::Stop(){
     this->hero_message[1] = 0x00;
     this->hero_message[2] = 0x00;
 
-    Serial.write(this->hero_message, MESSAGE_LENGTH);
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = false;
     this->is_turning = false;

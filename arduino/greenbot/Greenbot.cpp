@@ -1,6 +1,6 @@
 
 //--------------------------------------------------------------------------//
-//								    Imports                                 //
+//                                  Imports                                 //
 //--------------------------------------------------------------------------//
 
 #include "Arduino.h"
@@ -22,6 +22,9 @@ bool Greenbot::Initialize(float in_speed){
 
     this->hero_message[0] = START_FLAG;
 
+    this->mast.detach();
+    this->mast.attach(MAST_PWM_PIN);
+
     Stop();
 
     // Somehow, Arduino does not allow try catch exception handling.
@@ -30,14 +33,14 @@ bool Greenbot::Initialize(float in_speed){
 }
 
 //--------------------------------------------------------------------------//
-//								    Setters 				   				//
+//                                  Setters                                 //
 //--------------------------------------------------------------------------//
 void Greenbot::SetSpeed(float in_speed) {
 
-	this->speed = in_speed;
+    this->speed = in_speed;
 }
 //--------------------------------------------------------------------------//
-//								    Functions				   				//
+//                                  Functions                               //
 //--------------------------------------------------------------------------//
 void Greenbot::DriveForward(){
 

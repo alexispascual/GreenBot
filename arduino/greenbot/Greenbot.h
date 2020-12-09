@@ -18,9 +18,13 @@ class Greenbot {
 
         #define START_FLAG 0x80
         #define MESSAGE_LENGTH 3
+        #define MAST_PWM_PIN 8
+
+        Servo mast;
 
         int8_t hero_message[3];
-
+        int16_t mast_extension_pulse_width = 1600;
+        int16_t mast_retraction_pulse_width = 1400;
         float speed;
         
         bool is_moving;

@@ -10,6 +10,9 @@
 #include "Command.h"
 #include <Servo.h>
 
+SoftwareSerial heroSerial(8, 9);
+char heroMessage[4] = {0x80, 0x5A, 0xAA, 0x80};
+
 const uint8_t num_chars = 32;
 const uint8_t default_speed = 127; //default speed
 
@@ -42,6 +45,8 @@ void setup() {
     Serial.println("Greenbot initialization failed!");
 
   }
+
+  heroSerial.begin(9600);
 
 }
 
@@ -113,6 +118,7 @@ void HandleCommand() {
     if (command.x == 1) { // Forward
 
       Serial.println("Moving forward \n");
+      heroSerial.write(heroMessage, 4 );
       greenbot.DriveForward();
       
     } else if (command.x < 0) { // Reverse

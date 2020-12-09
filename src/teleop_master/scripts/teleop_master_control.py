@@ -99,6 +99,7 @@ class TeleopMaster:
             # Increase/decrese Greenbot speed while limiting ranges
             if joy_msg.buttons[self.speed_button_up]:
 
+                self.speed += 1
                 rospy.loginfo(f"Greenbot at {self.speed} speed!")
 
                 if self.speed >= 127:
@@ -106,6 +107,7 @@ class TeleopMaster:
 
             elif joy_msg.buttons[self.speed_button_down]:
 
+                self.speed -= 1
                 rospy.loginfo(f"Greenbot at {self.speed} speed!")
 
                 if self.speed < 0 :

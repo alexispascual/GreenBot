@@ -9,6 +9,7 @@
 #include "Range_Sensors.h"
 #include <Servo.h>
 #include <math.h>
+#include <SoftwareSerial.h>
 
 class Greenbot {
 

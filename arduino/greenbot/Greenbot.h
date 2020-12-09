@@ -9,6 +9,7 @@
 #include "Range_Sensors.h"
 #include <Servo.h>
 #include <math.h>
+
 class Greenbot {
 
     //--------------------------------------------------------------------------//
@@ -18,14 +19,14 @@ class Greenbot {
 
         #define START_FLAG 0x80
         #define MESSAGE_LENGTH 3
-        #define MAST_PWM_PIN 8
+        #define MAST_PWM_PIN 10
 
         Servo mast;
 
-        int8_t hero_message[3];
+        char hero_message[3];
+        int8_t speed;
         int16_t mast_extension_pulse_width = 1600;
         int16_t mast_retraction_pulse_width = 1400;
-        float speed;
         
         bool is_moving;
         bool is_turning;
@@ -38,21 +39,21 @@ class Greenbot {
         float rear_distance;
         float delta_theta;
         float delta_d;
-        float delta_pulse;
+        float delta_speed;
         float sensor_gap = 54.0;
         float platform_distance = 25.0;
-
-        float k_d = 0.1;
-        float k_theta = 0.1;
+        float turning_offset_speed = 11.0;
+        float k_d = 0.01;
+        float k_theta = 0.01;
   
     public:
 
-        bool Initialize(float in_speed);
+        bool Initialize(int8_t in_speed);
 
-        void SetSpeed(float in_speed);
+        void SetSpeed(int8_t in_speed);
         void DriveForward();
         void DriveForwardWithSteering();
-        void Greenbot::TurnIntoRow();
+        void TurnIntoRow();
         void DriveBackward();
         void TurnCounterClockwise();
         void TurnClockwise();

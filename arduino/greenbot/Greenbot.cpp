@@ -5,12 +5,11 @@
 
 #include "Arduino.h"
 #include "Greenbot.h"
-
 //--------------------------------------------------------------------------//
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
 
-bool Greenbot::Initialize(float in_speed){
+bool Greenbot::Initialize(int8_t in_speed){
 
     
     this->speed = in_speed;
@@ -24,7 +23,7 @@ bool Greenbot::Initialize(float in_speed){
 
     this->mast.detach();
     this->mast.attach(MAST_PWM_PIN);
-
+ 
     Stop();
 
     // Somehow, Arduino does not allow try catch exception handling.
@@ -35,7 +34,7 @@ bool Greenbot::Initialize(float in_speed){
 //--------------------------------------------------------------------------//
 //                                  Setters                                 //
 //--------------------------------------------------------------------------//
-void Greenbot::SetSpeed(float in_speed) {
+void Greenbot::SetSpeed(int8_t in_speed) {
 
     this->speed = in_speed;
 }
@@ -69,20 +68,26 @@ void Greenbot::DriveForwardWithSteering() {
     Serial.print("delta_d: ");
     Serial.print(this->delta_d);
     
-    this->delta_pulse = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
+    this->delta_speed = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
     
-    Serial.print("Delta pulse: ");
-    Serial.println(this->delta_pulse);
-    
-    this->right_wheels.writeMicroseconds(this->forward_pulse_width - this->delta_pulse);
-    this->left_wheels.writeMicroseconds(this->forward_pulse_width + this->delta_pulse);
+    Serial.print("Delta sped: ");
+    Serial.println(this->delta_speed);
+
+    this->hero_message[1] = (this->speed &= ~1 << 7) + this->delta_speed;
+    this->hero_message[2] = (this->speed &= ~1 << 7) - this->delta_speed;
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
 }
 
 void Greenbot::TurnIntoRow() {
 
     Serial.println("Executing turning command");
-    this->right_wheels.writeMicroseconds(this->turning_slow_pulse_width);
-    this->left_wheels.writeMicroseconds(this->turning_fast_pulse_width);
+    this->hero_message[1] = (this->speed &= ~1 << 7) + this->turning_offset_speed;
+    this->hero_message[2] = (this->speed &= ~1 << 7);
+
+    Serial.write(this->hero_message, MESSAGE_LENGTH);
+
+    this->is_moving = true;
   
 }
 
@@ -142,8 +147,8 @@ void Greenbot::RetractMast(){
 
 void Greenbot::Stop(){
 
-    this->hero_message[1] = 0
-    this->hero_message[2] = 0;
+    this->hero_message[1] = 0x00;
+    this->hero_message[2] = 0x00;
 
     Serial.write(this->hero_message, MESSAGE_LENGTH);
 

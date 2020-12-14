@@ -25,7 +25,7 @@ class Greenbot {
         Servo mast;
 
         char hero_message[3];
-        int8_t speed;
+        char speed;
         int16_t mast_extension_pulse_width = 1600;
         int16_t mast_retraction_pulse_width = 1400;
         
@@ -49,9 +49,9 @@ class Greenbot {
   
     public:
 
-        bool Initialize(int8_t in_speed);
+        bool Initialize(char in_speed);
 
-        void SetSpeed(int8_t in_speed);
+        void SetSpeed(char in_speed);
         void DriveForward();
         void DriveForwardWithSteering();
         void TurnIntoRow();

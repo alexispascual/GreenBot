@@ -6,7 +6,7 @@ struct Command {
 	int x;
 	int z;
 	int mast_control;
-	float speed;
+	int8_t speed;
 };
 
 #endif

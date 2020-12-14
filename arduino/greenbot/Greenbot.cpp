@@ -9,7 +9,7 @@
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
 
-bool Greenbot::Initialize(int8_t in_speed){
+bool Greenbot::Initialize(char in_speed){
 
     
     this->speed = in_speed;
@@ -34,7 +34,7 @@ bool Greenbot::Initialize(int8_t in_speed){
 //--------------------------------------------------------------------------//
 //                                  Setters                                 //
 //--------------------------------------------------------------------------//
-void Greenbot::SetSpeed(int8_t in_speed) {
+void Greenbot::SetSpeed(char in_speed) {
 
     this->speed = in_speed;
 }

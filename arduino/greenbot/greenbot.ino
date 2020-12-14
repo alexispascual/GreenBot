@@ -16,7 +16,7 @@ const uint8_t default_speed = 16; //default speed
 bool new_data = false;
 bool greenbot_status = false;
 char raw_chars[num_chars];
-uint8_t current_speed;
+int8_t current_speed;
 
 Command command;
 Greenbot greenbot;
@@ -96,7 +96,7 @@ void ParseRawChars() {
   command.mast_control = atoi(strtokIndx);  // Get mast_control
 
   strtokIndx = strtok(NULL, ","); // Get speed
-  command.speed = atof(strtokIndx);
+  command.speed = atoi(strtokIndx);
     
 }
 
@@ -109,9 +109,9 @@ void HandleCommand() {
     if (command.speed != current_speed) {
 
       Serial.println("Updating Greenbot Speed");
-      greenbot.SetSpeed((uint8_t)command.speed);
+      greenbot.SetSpeed((char)command.speed);
 
-      current_speed = (uint8_t)command.speed;
+      current_speed = (int8_t)command.speed;
     }
 
     if (command.x == 1) { // Forward

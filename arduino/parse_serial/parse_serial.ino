@@ -2,8 +2,8 @@
 
 const uint8_t num_chars = 32;
 const uint8_t default_speed = 127; //default speed
-int8_t left_wheel_speed;
-int8_t right_wheel_speed;
+uint8_t left_wheel_speed;
+uint8_t right_wheel_speed;
 bool new_data = false;
 char raw_chars[num_chars];
 

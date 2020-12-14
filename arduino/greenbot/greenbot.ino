@@ -109,7 +109,7 @@ void HandleCommand() {
     if (command.speed != current_speed) {
 
       Serial.println("Updating Greenbot Speed");
-      greenbot.SetSpeed((char)command.speed);
+      greenbot.SetSpeed((unsigned char)command.speed);
 
       current_speed = command.speed;
     }

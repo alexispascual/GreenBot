@@ -93,8 +93,8 @@ void Greenbot::TurnIntoRow() {
 
 void Greenbot::DriveBackward(){
 
-    this->hero_message[1] = this->speed * -1;
-    this->hero_message[2] = this->speed * -1;
+    this->hero_message[1] = this->speed + 0x80;
+    this->hero_message[2] = this->speed + 0x80;
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
@@ -103,7 +103,7 @@ void Greenbot::DriveBackward(){
 
 void Greenbot::TurnCounterClockwise(){
 
-    this->hero_message[1] = this->speed * -1;
+    this->hero_message[1] = this->speed + 0x80;
     this->hero_message[2] = this->speed;
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
@@ -114,7 +114,7 @@ void Greenbot::TurnCounterClockwise(){
 void Greenbot::TurnClockwise(){
 
     this->hero_message[1] = this->speed;
-    this->hero_message[2] = this->speed * -1;
+    this->hero_message[2] = this->speed + 0x80;
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
 

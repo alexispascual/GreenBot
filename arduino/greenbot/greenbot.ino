@@ -111,7 +111,7 @@ void HandleCommand() {
       Serial.println("Updating Greenbot Speed");
       greenbot.SetSpeed((char)command.speed);
 
-      current_speed = (int8_t)command.speed;
+      current_speed = command.speed;
     }
 
     if (command.x == 1) { // Forward

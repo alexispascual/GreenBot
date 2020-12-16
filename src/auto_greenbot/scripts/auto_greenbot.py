@@ -186,6 +186,9 @@ class AutonomousGreenbot:
         rospy.loginfo("Turning into row...")
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
+
+        rospy.loginfo("Creeping forward to find first QR code...")
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         
 
     def turnAround(self):

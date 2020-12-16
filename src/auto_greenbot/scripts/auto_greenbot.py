@@ -25,13 +25,13 @@ class AutonomousGreenbot:
         # Initialize default durations
         self.drive_forward_duration = 5
         self.imaging_duration = 5
-        self.turn_maneuver_forward_duration = 2
-        self.turn_maneuver_turn_duration = 3.5
-        self.turn_around_duration = 6.0
+        self.turn_maneuver_forward_duration = 3
+        self.turn_maneuver_turn_duration = 3.6
+        self.turn_around_duration = 7.2
 
         # Define forward and slow speeds    
         self.gb_default_speed = 12
-        self.gb_slow_speed = 12
+        self.gb_slow_speed = 10
         self.gb_turning_speed = 32
 
         # Initialize qr_subscriber object
@@ -186,6 +186,7 @@ class AutonomousGreenbot:
         rospy.loginfo("Turning into row...")
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
+        
 
     def turnAround(self):
         """

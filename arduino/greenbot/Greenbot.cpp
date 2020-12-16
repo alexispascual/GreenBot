@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------------------//
 //                                  Imports                                 //
 //--------------------------------------------------------------------------//
@@ -9,7 +8,7 @@
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
 
-bool Greenbot::Initialize(char in_speed){
+bool Greenbot::Initialize(unsigned char in_speed){
 
     
     this->speed = in_speed;
@@ -34,7 +33,7 @@ bool Greenbot::Initialize(char in_speed){
 //--------------------------------------------------------------------------//
 //                                  Setters                                 //
 //--------------------------------------------------------------------------//
-void Greenbot::SetSpeed(char in_speed) {
+void Greenbot::SetSpeed(unsigned char in_speed) {
 
     this->speed = in_speed;
 }

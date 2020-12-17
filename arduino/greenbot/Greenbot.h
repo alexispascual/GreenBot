@@ -41,11 +41,11 @@ class Greenbot {
         float delta_theta;
         float delta_d;
         float delta_speed;
-        float sensor_gap = 54.0;
-        float platform_distance = 25.0;
-        float turning_offset_speed = 11.0;
-        float k_d = 0.01;
-        float k_theta = 0.01;
+        float sensor_gap = 100.0;
+        float platform_distance = 45.0;
+        float turning_offset_speed = 32.0;
+        float k_d = 0.1;
+        float k_theta = 0.1;
   
     public:
 

@@ -188,7 +188,7 @@ class AutonomousGreenbot:
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Creeping forward to find first QR code...")
-        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        self.sendToArduino(2, 0, 0, self.gb_slow_speed)
         
 
     def turnAround(self):
@@ -204,7 +204,7 @@ class AutonomousGreenbot:
         rospy.sleep(self.turn_around_duration)
 
         rospy.loginfo("Creeping forward to find 1st QR code")
-        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        self.sendToArduino(2, 0, 0, self.gb_slow_speed)
 
     def endOperations(self):
         """

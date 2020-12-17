@@ -69,7 +69,7 @@ void Greenbot::DriveForwardWithSteering() {
     
     this->delta_speed = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
     
-    Serial.print("Delta sped: ");
+    Serial.print("Delta speed: ");
     Serial.println(this->delta_speed);
 
     this->hero_message[1] = this->speed + this->delta_speed;

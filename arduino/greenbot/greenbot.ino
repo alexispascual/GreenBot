@@ -150,10 +150,11 @@ void HandleCommand() {
       greenbot.Stop();
       
     } else if (command.x == 2) {
-
-      while (Serial.available() == 0){
+      
+      while (!new_data){
 
           greenbot.DriveForwardWithSteering();
+          ReceiveSerialData();
 
         }
         

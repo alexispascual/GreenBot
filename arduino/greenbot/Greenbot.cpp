@@ -59,8 +59,8 @@ void Greenbot::DriveForwardWithSteering() {
     Serial.print("Rear distance: ");
     Serial.print(this->rear_distance);
     
-    this->delta_theta = atan((this->front_distance - this->rear_distance)/this->sensor_gap);
-    this->delta_d = (((this->sensor_gap)/2 * tan(this->delta_theta)) + this->rear_distance )- this->platform_distance;
+    this->delta_theta = asin((this->front_distance - this->rear_distance)/this->sensor_gap);
+    this->delta_d = ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
     
     Serial.print("delta_theta: ");
     Serial.print(this->delta_theta);

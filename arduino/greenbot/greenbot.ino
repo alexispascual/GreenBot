@@ -151,12 +151,10 @@ void HandleCommand() {
       
     } else if (command.x == 2) {
 
-      while (true){
-          Serial.println("Driving with auto_steer \n");
+      while (Serial.available() == 0){
+
           greenbot.DriveForwardWithSteering();
-          ReceiveSerialData();
-  
-          if (new_data) {break;}
+
         }
         
     } else if (command.x == 3) {

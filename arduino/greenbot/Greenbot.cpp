@@ -119,7 +119,6 @@ void Greenbot::ExecuteDistanceCorrection() {
             delay(100);
         }
 
-        delay(1000);
         this->Stop();
         delay(1000);
 
@@ -130,7 +129,6 @@ void Greenbot::ExecuteDistanceCorrection() {
             delay(100);
         }
 
-        delay(1000);
         this->Stop();
         delay(1000);
 
@@ -151,7 +149,6 @@ void Greenbot::ExecuteDistanceCorrection() {
             delay(100);
         }
 
-        delay(1000);
         this->Stop();
         delay(1000);
 
@@ -162,7 +159,6 @@ void Greenbot::ExecuteDistanceCorrection() {
             delay(100);
         }
 
-        delay(1000);
         this->Stop();
         delay(1000);
 
@@ -243,6 +239,8 @@ void Greenbot::RetractMast(){
 }
 
 void Greenbot::Stop(){
+
+    Serial.println("Stopping!");
 
     this->hero_message[1] = 0x00;
     this->hero_message[2] = 0x00;

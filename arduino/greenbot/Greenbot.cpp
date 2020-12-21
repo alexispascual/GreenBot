@@ -155,6 +155,8 @@ void Greenbot::ExecuteDistanceCorrection() {
             this->CorrectAttitude(false);
         }
     }
+
+    delay(1000);
 }
 
 void Greenbot::TurnIntoRow() {

@@ -187,6 +187,9 @@ class AutonomousGreenbot:
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
+        rospy.loginfo("Executing distance correction...")
+        self.sendToArduino(4, 0, 0, self.gb_slow_speed)
+
         rospy.loginfo("Creeping forward to find first QR code...")
         self.sendToArduino(2, 0, 0, self.gb_slow_speed)
         

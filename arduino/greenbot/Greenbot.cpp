@@ -88,8 +88,6 @@ void Greenbot::DriveForwardWithSteering() {
 
     this->DriveForward();
 
-
-
     if (range_sensors.GetAttitude() < this->attitude_floor) {
       
         this->CorrectAttitude(false);
@@ -148,7 +146,7 @@ void Greenbot::ExecuteDistanceCorrection() {
     } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
 
         Serial.println("Too close from the platform");
-        Serial.println("Turning towards platform");
+        Serial.println("Turning away from platform");
 
         if (range_sensors.GetAttitude() < this->turning_angle) {
             this->CorrectAttitude(false);
@@ -162,13 +160,13 @@ void Greenbot::ExecuteDistanceCorrection() {
         Serial.println("Moving forward");
         this->DriveForward();
 
-        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {;}
+        while (range_sensors.GetRoverDistance() < this->rover_distance_floor) {;}
 
         this->Stop();
         delay(1000);
 
         Serial.println("Straightening up...");
-        this->CorrectAttitude(false);
+        this->CorrectAttitude(true);
 
         while (range_sensors.GetAttitude() > this->neutral_attitude){;}
     }

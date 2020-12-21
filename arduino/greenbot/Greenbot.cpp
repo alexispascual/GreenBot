@@ -84,7 +84,7 @@ void Greenbot::DriveForwardWithSteering() {
 
     this->delta_theta = range_sensors.GetAttitude();
 
-    while (this->delta_theta> this->attitude_ceil) {
+    while (this->delta_theta > this->attitude_ceil) {
 
         this->CorrectAttitude(true);
     }

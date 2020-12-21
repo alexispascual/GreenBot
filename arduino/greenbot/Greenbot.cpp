@@ -77,6 +77,8 @@ void Greenbot::DriveForward(){
 
 void Greenbot::DriveForwardWithSteering() {
 
+    Serial.println("Driving with attitude correction");
+
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed;
 
@@ -114,6 +116,7 @@ void Greenbot::CorrectAttitude(bool direction) {
 
 void Greenbot::ExecuteDistanceCorrection() {
 
+    Serial.println("Executing distance correction");
 
     if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
 

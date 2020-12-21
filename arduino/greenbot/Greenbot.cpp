@@ -77,20 +77,27 @@ void Greenbot::DriveForward(){
 
 void Greenbot::DriveForwardWithSteering() {
 
-    this->hero_message[1] = this->speed;
-    this->hero_message[2] = this->speed;
+    this->DriveForward();
 
-    Serial1.write(this->hero_message, MESSAGE_LENGTH);
-
-    while (range_sensors.GetAttitude() > this->attitude_ceil) {
+    if (range_sensors.GetAttitude() > this->attitude_ceil) {
       
         this->CorrectAttitude(true);
     }
 
-    while (range_sensors.GetAttitude() < this->attitude_floor) {
+    while (range_sensors.GetAttitude() > this->attitude_ceil) {;}
+
+    this->DriveForward();
+
+
+
+    if (range_sensors.GetAttitude() < this->attitude_floor) {
       
         this->CorrectAttitude(false);
     }
+
+    while (range_sensors.GetAttitude() < this->attitude_floor) {;}
+
+    this->DriveForward();
 }
 
 void Greenbot::CorrectAttitude(bool direction) {

@@ -113,42 +113,64 @@ void Greenbot::ExecuteDistanceCorrection() {
     if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
 	Serial.println("Too far away from the platform");
 	Serial.println("Turning towards platform");
+
         while (range_sensors.GetAttitude() > (this->turning_angle * -1)) {
             this->CorrectAttitude(true);
+            delay(100);
         }
 
+        delay(1000);
         this->Stop();
         delay(1000);
-	Serial.println("Moving forward");
+
+        Serial.println("Moving forward");
+
         while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
             this->DriveForward();
+            delay(100);
         }
 
+        delay(1000);
         this->Stop();
         delay(1000);
-	Serial.println("Straightening up...");
+
+        Serial.println("Straightening up...");
+
         while (range_sensors.GetAttitude() < this->neutral_attitude){
             this->CorrectAttitude(false);
+            delay(100);
         }
 
     } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
-        Serial.println("Too close");
+
+        Serial.println("Too close from the platform");
+        Serial.println("Turning towards platform");
+
         while (range_sensors.GetAttitude() < this->turning_angle) {
             this->CorrectAttitude(false);
+            delay(100);
         }
 
+        delay(1000);
         this->Stop();
         delay(1000);
+
+        Serial.println("Moving forward");
 
         while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
             this->DriveForward();
+            delay(100);
         }
 
+        delay(1000);
         this->Stop();
         delay(1000);
 
+        Serial.println("Straightening up...");
+
         while (range_sensors.GetAttitude() > this->neutral_attitude){
             this->CorrectAttitude(false);
+            delay(100);
         }
     }
 

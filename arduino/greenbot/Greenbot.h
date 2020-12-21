@@ -48,7 +48,7 @@ class Greenbot {
         float k_d = .3;
         float k_theta = 12.5;
 
-        float turning_angle = 0.20;
+        float turning_angle = 0.18;
         float attitude_ceil = 0.15;
         float attitude_floor = -0.15;
         float neutral_attitude = 0.0;

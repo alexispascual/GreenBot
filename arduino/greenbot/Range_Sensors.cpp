@@ -54,19 +54,17 @@ void Range_Sensors::ActivateRearSensors() {
 
     this->rear_duration = pulseIn(this->echo_pins[1], HIGH);
     this->rear_distance = floor(this->rear_duration * 0.034/2);
-    
+
 }
 
 float Range_Sensors::GetFrontDistance() {
     this->ActivateFrontSensors();
     return this->front_distance;
-
 }
 
 float Range_Sensors::GetRearDistance() {
     this->ActivateRearSensors();
     return this->rear_distance;
-
 }
 
 float* Range_Sensors::GetDistances() {
@@ -86,7 +84,7 @@ float Range_Sensors::GetAttitude() {
     this->ActivateRearSensors();
 
     return atan((this->front_distance - this->rear_distance)/this->sensor_gap);
-
+}
 
 float Range_Sensors::GetRoverDistance() {
 
@@ -94,5 +92,4 @@ float Range_Sensors::GetRoverDistance() {
     this->ActivateRearSensors();
 
     return ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
-
 }

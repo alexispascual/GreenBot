@@ -117,20 +117,44 @@ void Greenbot::ExecuteDistanceCorrection() {
 
     if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
 
-        while (range_sensors.GetAttitude() > this->turning_angle) {
+        while (range_sensors.GetAttitude() > (this->turning_angle * -1)) {
             this->CorrectAttitude(true);
         }
+
+        this->Stop();
+        delay(1000);
 
         while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
             this->DriveForward();
         }
 
+        this->Stop();
+        delay(1000);
+
         while (range_sensors.GetAttitude() < this->attitude_floor){
             this->CorrectAttitude(false);
         }
 
-    }
+    } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
 
+        while (range_sensors.GetAttitude() < this->turning_angle) {
+            this->CorrectAttitude(false);
+        }
+
+        this->Stop();
+        delay(1000);
+
+        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
+            this->DriveForward();
+        }
+
+        this->Stop();
+        delay(1000);
+
+        while (range_sensors.GetAttitude() < this->attitude_floor){
+            this->CorrectAttitude(false);
+        }
+    }
 }
 
 void Greenbot::TurnIntoRow() {
@@ -142,7 +166,6 @@ void Greenbot::TurnIntoRow() {
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
     this->is_moving = true;
-  
 }
 
 void Greenbot::DriveBackward(){

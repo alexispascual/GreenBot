@@ -28,17 +28,20 @@ class Range_Sensors {
         float rear_duration;
         float front_distance;
         float rear_distance;
+        float sensor_gap = 100.0;
+        float platform_distance = 45.0;
 
-        void Activate_Front_Sensors();
-        void Activate_Rear_Sensors();
+        void ActivateFrontSensors();
+        void ActivateRearSensors();
         
     public:
     
         Range_Sensors();
         void Initialize(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_t num_sensors);
-        float Get_Front_Distance();
-        float Get_Rear_Distance();
-        float* Get_Distances();
+        float GetFrontDistance();
+        float GetRearDistance();
+        float* GetDistances();
+        float GetAttitude()
 };
 
 #endif

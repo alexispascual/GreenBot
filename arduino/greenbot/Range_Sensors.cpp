@@ -29,9 +29,7 @@ void Range_Sensors::Initialize(uint8_t* trigger_pins, uint8_t* echo_pins, uint8_
     }
 }
 
-
-
-void Range_Sensors::Activate_Front_Sensors() {
+void Range_Sensors::ActivateFrontSensors() {
 
     digitalWrite(this->trigger_pins[0], LOW);
     delayMicroseconds(2);
@@ -45,7 +43,7 @@ void Range_Sensors::Activate_Front_Sensors() {
    
 }
 
-void Range_Sensors::Activate_Rear_Sensors() {
+void Range_Sensors::ActivateRearSensors() {
 
     digitalWrite(this->trigger_pins[1], LOW);
     delayMicroseconds(2);
@@ -59,25 +57,42 @@ void Range_Sensors::Activate_Rear_Sensors() {
     
 }
 
-float Range_Sensors::Get_Front_Distance() {
-    this->Activate_Front_Sensors();
+float Range_Sensors::GetFrontDistance() {
+    this->ActivateFrontSensors();
     return this->front_distance;
 
 }
 
-float Range_Sensors::Get_Rear_Distance() {
-    this->Activate_Rear_Sensors();
+float Range_Sensors::GetRearDistance() {
+    this->ActivateRearSensors();
     return this->rear_distance;
 
 }
 
-float* Range_Sensors::Get_Distances() {
-    this->Activate_Front_Sensors();
-    this->Activate_Rear_Sensors();
+float* Range_Sensors::GetDistances() {
+    this->ActivateFrontSensors();
+    this->ActivateRearSensors();
 
     static float distances[NUM_SENSORS];
     distances[0] = this->front_distance;
     distances[1] = this->rear_distance;
 
     return distances;
+}
+
+float Range_Sensors::GetAttitude() {
+
+    this->ActivateFrontSensors();
+    this->ActivateRearSensors();
+
+    return atan((this->front_distance - this->rear_distance)/this->sensor_gap);
+
+
+float Range_Sensors::GetRoverDistance() {
+
+    this->ActivateFrontSensors();
+    this->ActivateRearSensors();
+
+    return ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
+
 }

@@ -26,6 +26,7 @@ class Greenbot {
 
         unsigned char hero_message[3];
         unsigned char speed;
+        unsigned char turning_speed = 32;
         int16_t mast_extension_pulse_width = 1600;
         int16_t mast_retraction_pulse_width = 1400;
         
@@ -38,14 +39,20 @@ class Greenbot {
 
         float front_distance;
         float rear_distance;
-        float delta_theta;
-        float delta_d;
+        float delta_theta = 0;
+        float delta_d = 0;
         float delta_speed;
         float sensor_gap = 100.0;
         float platform_distance = 45.0;
         float turning_offset_speed = 32.0;
         float k_d = .3;
         float k_theta = 12.5;
+
+        float turning_angle = -0.5;
+        float attitude_ceil;
+        float attitude_floor;
+        float rover_distance_ceil;
+        float rover_distance_floor;
   
     public:
 

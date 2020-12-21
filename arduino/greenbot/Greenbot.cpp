@@ -50,29 +50,87 @@ void Greenbot::DriveForward(){
     this->is_moving = true;
 }
 
+// void Greenbot::DriveForwardWithSteering() {
+
+//     this->front_distance = range_sensors.Get_Front_Distance();
+//     this->rear_distance = range_sensors.Get_Rear_Distance();
+   
+//     Serial.println(this->front_distance);
+//     Serial.println(this->rear_distance);
+    
+//     this->delta_theta = atan((this->front_distance - this->rear_distance)/this->sensor_gap);
+//     this->delta_d = ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
+    
+//     Serial.println(this->delta_theta);
+//     Serial.println(this->delta_d);
+    
+//     this->delta_speed = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
+    
+//     Serial.println(this->delta_speed);
+//     Serial.println("------------");
+
+//     this->hero_message[1] = this->speed + this->delta_speed;
+//     this->hero_message[2] = this->speed - this->delta_speed;
+
+//     Serial1.write(this->hero_message, MESSAGE_LENGTH);
+// }
+
 void Greenbot::DriveForwardWithSteering() {
 
-    this->front_distance = range_sensors.Get_Front_Distance();
-    this->rear_distance = range_sensors.Get_Rear_Distance();
-   
-    Serial.println(this->front_distance);
-    Serial.println(this->rear_distance);
-    
-    this->delta_theta = atan((this->front_distance - this->rear_distance)/this->sensor_gap);
-    this->delta_d = ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
-    
-    Serial.println(this->delta_theta);
-    Serial.println(this->delta_d);
-    
-    this->delta_speed = this->k_theta*this->delta_theta + this->k_d*this->delta_d;
-    
-    Serial.println(this->delta_speed);
-    Serial.println("------------");
-
-    this->hero_message[1] = this->speed + this->delta_speed;
-    this->hero_message[2] = this->speed - this->delta_speed;
+    this->hero_message[1] = this->speed;
+    this->hero_message[2] = this->speed;
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
+
+    this->delta_theta = range_sensors.GetAttitude();
+
+    while (this->delta_theta> this->attitude_ceil) {
+
+        this->CorrectAttitude(true);
+    }
+
+    while (this->delta_theta < this->attitude_floor) {
+
+        this->CorrectAttitude(false);
+    }
+}
+
+void Greenbot::CorrectAttitude(bool direction) {
+
+    if (direction) { // Turn clockwise
+
+        this->hero_message[1] = this->turning_speed;
+        this->hero_message[2] = this->turning_speed + 0x80;
+
+    } else { // Turn counter-clockwise
+
+        this->hero_message[1] = this->turning_speed + 0x80;
+        this->hero_message[2] = this->turning_speed;
+
+    }
+
+    Serial1.write(this->hero_message, MESSAGE_LENGTH);
+}
+
+void Greenbot::ExecuteDistanceCorrection() {
+
+
+    if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
+
+        while (range_sensors.GetAttitude() > this->turning_angle) {
+            this->CorrectAttitude(true);
+        }
+
+        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
+            this->DriveForward();
+        }
+
+        while (range_sensors.GetAttitude() < this->attitude_floor){
+            this->CorrectAttitude(false);
+        }
+
+    }
+
 }
 
 void Greenbot::TurnIntoRow() {

@@ -163,7 +163,12 @@ void HandleCommand() {
       Serial.println("Turning into new row \n");
       greenbot.TurnIntoRow();
       
-      }
+    } else if (command.x == 4) {
+      
+      Serial.println("Executing Distance Correction \n");
+      greenbot.ExecuteDistanceCorrection();
+      
+    }
   }
 }
 

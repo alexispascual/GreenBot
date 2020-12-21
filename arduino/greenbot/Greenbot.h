@@ -61,6 +61,8 @@ class Greenbot {
         void SetSpeed(unsigned char in_speed);
         void DriveForward();
         void DriveForwardWithSteering();
+        void CorrectAttitude(bool direction);
+        void ExecuteDistanceCorrection();
         void TurnIntoRow();
         void DriveBackward();
         void TurnCounterClockwise();

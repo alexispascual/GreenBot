@@ -41,7 +41,8 @@ class Range_Sensors {
         float GetFrontDistance();
         float GetRearDistance();
         float* GetDistances();
-        float GetAttitude()
+        float GetAttitude();
+        float GetRoverDistance();
 };
 
 #endif

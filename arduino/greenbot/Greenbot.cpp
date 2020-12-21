@@ -114,63 +114,59 @@ void Greenbot::ExecuteDistanceCorrection() {
 	Serial.println("Too far away from the platform");
 	Serial.println("Turning towards platform");
 
-        while (range_sensors.GetAttitude() > (this->turning_angle * -1)) {
+        if (range_sensors.GetAttitude() > (this->turning_angle * -1)) {
+
             this->CorrectAttitude(true);
-            delay(100);
         }
+
+        while (range_sensors.GetAttitude() > (this->turning_angle * -1)) {;}
 
         this->Stop();
         delay(1000);
 
         Serial.println("Moving forward");
+        this->DriveForward();
 
-        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
-            this->DriveForward();
-            delay(100);
-        }
+        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {;}
 
         this->Stop();
         delay(1000);
 
         Serial.println("Straightening up...");
+        this->CorrectAttitude(false);
 
-        while (range_sensors.GetAttitude() < this->neutral_attitude){
-            this->CorrectAttitude(false);
-            delay(100);
-        }
+        while (range_sensors.GetAttitude() < this->neutral_attitude){;}
+        this->Stop();
 
     } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
 
         Serial.println("Too close from the platform");
         Serial.println("Turning towards platform");
 
-        while (range_sensors.GetAttitude() < this->turning_angle) {
+        if (range_sensors.GetAttitude() < this->turning_angle) {
             this->CorrectAttitude(false);
-            delay(100);
         }
+
+        while (range_sensors.GetAttitude() < this->turning_angle) {;}
 
         this->Stop();
         delay(1000);
 
         Serial.println("Moving forward");
+        this->DriveForward();
 
-        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
-            this->DriveForward();
-            delay(100);
-        }
+        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {;}
 
         this->Stop();
         delay(1000);
 
         Serial.println("Straightening up...");
+        this->CorrectAttitude(false);
 
-        while (range_sensors.GetAttitude() > this->neutral_attitude){
-            this->CorrectAttitude(false);
-            delay(100);
-        }
+        while (range_sensors.GetAttitude() > this->neutral_attitude){;}
     }
 
-    delay(1000);
+    this->Stop();
 }
 
 void Greenbot::TurnIntoRow() {

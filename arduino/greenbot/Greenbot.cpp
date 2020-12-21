@@ -77,22 +77,18 @@ void Greenbot::DriveForward(){
 
 void Greenbot::DriveForwardWithSteering() {
 
-    Serial.println("Driving with attitude correction");
-
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed;
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
-    this->delta_theta = range_sensors.GetAttitude();
-
-    while (this->delta_theta > this->attitude_ceil) {
-
+    while (range_sensors.GetAttitude() > this->attitude_ceil) {
+      
         this->CorrectAttitude(true);
     }
 
-    while (this->delta_theta < this->attitude_floor) {
-
+    while (range_sensors.GetAttitude() < this->attitude_floor) {
+      
         this->CorrectAttitude(false);
     }
 }
@@ -100,12 +96,10 @@ void Greenbot::DriveForwardWithSteering() {
 void Greenbot::CorrectAttitude(bool direction) {
 
     if (direction) { // Turn clockwise
-
         this->hero_message[1] = this->turning_speed;
         this->hero_message[2] = this->turning_speed + 0x80;
 
     } else { // Turn counter-clockwise
-
         this->hero_message[1] = this->turning_speed + 0x80;
         this->hero_message[2] = this->turning_speed;
 
@@ -115,8 +109,6 @@ void Greenbot::CorrectAttitude(bool direction) {
 }
 
 void Greenbot::ExecuteDistanceCorrection() {
-
-    Serial.println("Executing distance correction");
 
     if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
 
@@ -134,12 +126,12 @@ void Greenbot::ExecuteDistanceCorrection() {
         this->Stop();
         delay(1000);
 
-        while (range_sensors.GetAttitude() < this->attitude_floor){
+        while (range_sensors.GetAttitude() < this->neutral_attitude){
             this->CorrectAttitude(false);
         }
 
     } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
-
+        Serial.println("Too close");
         while (range_sensors.GetAttitude() < this->turning_angle) {
             this->CorrectAttitude(false);
         }
@@ -154,7 +146,7 @@ void Greenbot::ExecuteDistanceCorrection() {
         this->Stop();
         delay(1000);
 
-        while (range_sensors.GetAttitude() < this->attitude_floor){
+        while (range_sensors.GetAttitude() > this->neutral_attitude){
             this->CorrectAttitude(false);
         }
     }

@@ -83,6 +83,8 @@ float Range_Sensors::GetAttitude() {
     this->ActivateFrontSensors();
     this->ActivateRearSensors();
 
+    Serial.println(atan((this->front_distance - this->rear_distance)/this->sensor_gap));
+
     return atan((this->front_distance - this->rear_distance)/this->sensor_gap);
 }
 
@@ -91,5 +93,6 @@ float Range_Sensors::GetRoverDistance() {
     this->ActivateFrontSensors();
     this->ActivateRearSensors();
 
-    return ((this->front_distance + this->rear_distance)/2) - this->platform_distance;
+    Serial.println((this->front_distance + this->rear_distance)/2);
+    return ((this->front_distance + this->rear_distance)/2);
 }

@@ -45,8 +45,6 @@ class Greenbot {
         float sensor_gap = 100.0;
         float platform_distance = 45.0;
         float turning_offset_speed = 32.0;
-        float k_d = .3;
-        float k_theta = 12.5;
 
         float turning_angle = 0.15;
         float attitude_ceil = 0.10;

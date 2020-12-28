@@ -231,6 +231,8 @@ void Greenbot::Stop(){
 
     Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
+    this->mast.writeMicroseconds(this->mast_neutral_pulse_width);
+
     this->is_moving = false;
     this->is_turning = false;
     this->mast_retracting = false;

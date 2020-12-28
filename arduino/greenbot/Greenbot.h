@@ -28,6 +28,7 @@ class Greenbot {
         unsigned char speed;
         unsigned char turning_speed = 32;
         int16_t mast_extension_pulse_width = 1600;
+        int16_t mast_neutral_pulse_width = 1500;
         int16_t mast_retraction_pulse_width = 1400;
         
         bool is_moving;

@@ -96,12 +96,8 @@ class AutonomousGreenbot:
         """ 
         Receive QR code meaning and determine state. 
         Execute commands depending on curent state 
-
-        TODO: parse message to determine state. Probably a good idea
-        to use some function instead of a massive if else
         """
         try: 
-            print(msg.data)
             json_parsed = json.loads(msg.data)
             self.state = json_parsed.get('S', None)
             self.qr_index = json_parsed.get('I', None)
@@ -206,12 +202,15 @@ class AutonomousGreenbot:
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
 
+        rospy.loginfo("Executing distance correction...")
+        self.sendToArduino(4, 0, 0, self.gb_slow_speed)
+
         rospy.loginfo("Creeping forward to find 1st QR code")
         self.sendToArduino(2, 0, 0, self.gb_slow_speed)
 
     def endOperations(self):
         """
-        TODO: End operations
+        End operations
         """
 
         rospy.loginfo("Ending operations. Switch to manual mode!")

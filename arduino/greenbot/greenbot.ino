@@ -20,6 +20,7 @@ int8_t current_speed;
 
 Command command;
 Greenbot greenbot;
+Range_Sensors range_sensors;
 
 void setup() {
 
@@ -168,7 +169,14 @@ void HandleCommand() {
       Serial.println("Executing Distance Correction \n");
       greenbot.ExecuteDistanceCorrection();
       
+    } else if (command.x == 5) {
+      
+      Serial.println("Printing Attitude and Distance \n");
+      range_sensors.GetAttitude();
+      range_sensors.GetRoverDistance();
     }
+
+
   }
 }
 

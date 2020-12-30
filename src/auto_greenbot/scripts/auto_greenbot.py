@@ -23,10 +23,10 @@ class AutonomousGreenbot:
         self.qr_index = 0
 
         # Initialize default durations
-        self.drive_forward_duration = 5.0
+        self.drive_forward_duration = 6.0
         self.imaging_duration = 7.0
-        self.turn_maneuver_forward_duration = 6.0
-        self.turn_maneuver_turn_duration = 7.0
+        self.turn_maneuver_forward_duration = 7.0
+        self.turn_maneuver_turn_duration = 7.2
         self.turn_around_duration = 14.0
 
         # Define forward and slow speeds    
@@ -183,6 +183,10 @@ class AutonomousGreenbot:
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
+        rospy.loginfo("Entering row to execute distance correction")
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        rospy.sleep(self.turn_maneuver_forward_duration)
+
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)
 
@@ -201,6 +205,10 @@ class AutonomousGreenbot:
 
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
+
+        rospy.loginfo("Entering row to execute distance correction")
+        self.sendToArduino(1, 0, 0, self.gb_slow_speed)
+        rospy.sleep(self.turn_maneuver_forward_duration)
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)

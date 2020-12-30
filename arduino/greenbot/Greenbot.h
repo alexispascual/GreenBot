@@ -26,7 +26,7 @@ class Greenbot {
 
         unsigned char hero_message[3];
         unsigned char speed;
-        unsigned char turning_speed = 40;
+        unsigned char turning_speed = 42;
         int16_t mast_extension_pulse_width = 1600;
         int16_t mast_neutral_pulse_width = 1500;
         int16_t mast_retraction_pulse_width = 1400;
@@ -51,8 +51,8 @@ class Greenbot {
         float attitude_ceil = 0.10;
         float attitude_floor = -0.10;
         float neutral_attitude = 0.0;
-        float rover_distance_ceil = 50;
-        float rover_distance_floor = 45;
+        float rover_distance_ceil = 45;
+        float rover_distance_floor = 35;
   
     public:
 

@@ -161,9 +161,15 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+
         rospy.loginfo("Turning into aisle...")
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
+
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
         rospy.loginfo("Creeping forward to find red QR code...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
@@ -179,13 +185,22 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+
         rospy.loginfo("Turning into row...")
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
+
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)
@@ -203,15 +218,27 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+
         self.sendToArduino(0, -1, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
+
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
+
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)
+
+        rospy.loginfo("Stopping...")
+        self.sendToArduino(0, 0, 0, self.gb_default_speed)
 
         rospy.loginfo("Creeping forward to find 1st QR code")
         self.sendToArduino(2, 0, 0, self.gb_slow_speed)

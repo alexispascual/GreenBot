@@ -59,13 +59,15 @@ void Greenbot::DriveForwardWithSteering() {
     }
 
     if (range_sensors.GetAttitude() > this->attitude_ceil) {
-      
+        
+        this->Stop();
         this->CorrectAttitude(true);
         while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
         this->Stop();
 
     } else if (range_sensors.GetAttitude() < this->attitude_floor) {
-      
+        
+        this->Stop();
         this->CorrectAttitude(false);
         while (range_sensors.GetAttitude() < this->neutral_attitude) {;}
         this->Stop();
@@ -73,6 +75,7 @@ void Greenbot::DriveForwardWithSteering() {
     } else if (range_sensors.GetRoverDistance() > this->rover_distance_ceil ||
         range_sensors.GetRoverDistance() < this->rover_distance_floor) {
 
+        this->Stop();
         this->ExecuteDistanceCorrection();
 
     }

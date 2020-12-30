@@ -53,7 +53,7 @@ void Greenbot::DriveForward(){
 void Greenbot::DriveForwardWithSteering() {
 
     if (!this->is_moving) {
-
+        Serial.println("Driving forward");
         this->DriveForward();
 
     }
@@ -80,6 +80,8 @@ void Greenbot::DriveForwardWithSteering() {
 }
 
 void Greenbot::CorrectAttitude(bool direction) {
+
+    Serial.println("Correcting Attitude");
 
     if (direction) { // Turn clockwise
         this->hero_message[1] = this->turning_speed;

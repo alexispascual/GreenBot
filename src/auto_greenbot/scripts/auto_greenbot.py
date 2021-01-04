@@ -25,9 +25,9 @@ class AutonomousGreenbot:
         # Initialize default durations
         self.drive_forward_duration = 6.0
         self.imaging_duration = 7.0
-        self.turn_maneuver_forward_duration = 8.0
-        self.turn_maneuver_turn_duration = 2.5
-        self.turn_around_duration = 5
+        self.turn_maneuver_forward_duration = 6
+        self.turn_maneuver_turn_duration = 2.8
+        self.turn_around_duration = 5.6
 
         # Define forward and slow speeds    
         self.gb_default_speed = 12

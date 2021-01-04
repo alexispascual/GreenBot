@@ -40,7 +40,6 @@ class QRCodeScanner():
                 ret, image = cap.read()
                 view_image = cv2.resize(image, (0,0), fy=0.5, fx=0.5)
                 gray = cv2.cvtColor(view_image, cv2.COLOR_BGR2GRAY)
-                cv2.imshow("image", view_image)
                 results = self.scanner.scan(gray)
 
                 for result in results:
@@ -50,6 +49,7 @@ class QRCodeScanner():
                         json_parsed = json.loads(result.data.decode("utf-8"))
 
                         if json_parsed.get('S', None):
+                            rospy.loginfo(result.data.decode("utf-8"))
                             self.qr_code_publisher.publish(result.data.decode("utf-8"))
 
                 self.rate.sleep()

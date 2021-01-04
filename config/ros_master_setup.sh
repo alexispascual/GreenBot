@@ -1,2 +1,2 @@
-export ROS_IP=129.100.228.227
+export ROS_IP=$(hostname -I)
 

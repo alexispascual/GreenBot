@@ -1,2 +1,1 @@
-export ROS_IP=$(hostname -I)
-
+export ROS_IP=$(hostname -I | xargs)

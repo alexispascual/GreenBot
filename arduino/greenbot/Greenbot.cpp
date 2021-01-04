@@ -42,6 +42,8 @@ void Greenbot::SetSpeed(unsigned char in_speed) {
 //--------------------------------------------------------------------------//
 void Greenbot::DriveForward(){
 
+    if (this->is_turning){this->Stop();}
+
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed;
 
@@ -185,6 +187,8 @@ void Greenbot::DriveBackward(){
 
 void Greenbot::TurnCounterClockwise(){
 
+    if (this->is_moving){this->Stop();}
+
     this->hero_message[1] = this->speed + 0x80;
     this->hero_message[2] = this->speed;
 
@@ -194,6 +198,8 @@ void Greenbot::TurnCounterClockwise(){
 }
 
 void Greenbot::TurnClockwise(){
+
+    if (this->is_moving){this->Stop();}
 
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed + 0x80;
@@ -229,17 +235,23 @@ void Greenbot::RetractMast(){
 
 void Greenbot::Stop(){
 
-    Serial.println("Stopping!");
+    if (this->is_moving || this->is_turning || this->mast_retracting || this->mast_extending){
 
-    this->hero_message[1] = 0x00;
-    this->hero_message[2] = 0x00;
+        Serial.println("Stopping!");
 
-    Serial1.write(this->hero_message, MESSAGE_LENGTH);
+        this->hero_message[1] = 0x00;
+        this->hero_message[2] = 0x00;
 
-    this->mast.writeMicroseconds(this->mast_neutral_pulse_width);
+        Serial1.write(this->hero_message, MESSAGE_LENGTH);
 
-    this->is_moving = false;
-    this->is_turning = false;
-    this->mast_retracting = false;
-    this->mast_extending = false;
+        this->mast.writeMicroseconds(this->mast_neutral_pulse_width);
+
+        this->is_moving = false;
+        this->is_turning = false;
+        this->mast_retracting = false;
+        this->mast_extending = false;
+
+    }
+
+    
 }

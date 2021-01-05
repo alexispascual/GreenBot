@@ -189,6 +189,8 @@ void Greenbot::TurnCounterClockwise(){
 
     if (this->is_moving){this->Stop();}
 
+    Serial.println("Turning counter-clockwise!");
+
     this->hero_message[1] = this->speed + 0x80;
     this->hero_message[2] = this->speed;
 
@@ -198,6 +200,8 @@ void Greenbot::TurnCounterClockwise(){
 }
 
 void Greenbot::TurnClockwise(){
+
+    Serial.println("Turning clockwise!");
 
     if (this->is_moving){this->Stop();}
 

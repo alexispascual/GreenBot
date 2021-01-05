@@ -35,6 +35,9 @@ bool Greenbot::Initialize(unsigned char in_speed){
 //--------------------------------------------------------------------------//
 void Greenbot::SetSpeed(unsigned char in_speed) {
 
+    Serial.print("Updating Greenbot Speed: ");
+    Serial.println(in_speed);
+
     this->speed = in_speed;
 }
 //--------------------------------------------------------------------------//
@@ -43,6 +46,8 @@ void Greenbot::SetSpeed(unsigned char in_speed) {
 void Greenbot::DriveForward(){
 
     if (this->is_turning){this->Stop();}
+
+    Serial.println("Driving forward");
 
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed;
@@ -55,7 +60,7 @@ void Greenbot::DriveForward(){
 void Greenbot::DriveForwardWithSteering() {
 
     if (!this->is_moving) {
-        Serial.println("Driving forward");
+        Serial.println("Driving forward with steering");
         this->DriveForward();
 
     }
@@ -104,6 +109,8 @@ void Greenbot::CorrectAttitude(bool direction) {
 }
 
 void Greenbot::ExecuteDistanceCorrection() {
+
+    Serial.println("Executing Distance Correction");
 
     if (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {
 	Serial.println("Too far away from the platform");
@@ -164,9 +171,10 @@ void Greenbot::ExecuteDistanceCorrection() {
     this->Stop();
 }
 
-void Greenbot::TurnIntoRow() {
+void Greenbot::TurnIntoRow() { // **DEPRECATED**
 
     Serial.println("Executing turning command");
+
     this->hero_message[1] = this->speed + this->turning_offset_speed;
     this->hero_message[2] = this->speed;
 
@@ -176,6 +184,10 @@ void Greenbot::TurnIntoRow() {
 }
 
 void Greenbot::DriveBackward(){
+
+    if (this->is_turning){this->Stop();}
+
+    Serial.println("Reversing");
 
     this->hero_message[1] = this->speed + 0x80;
     this->hero_message[2] = this->speed + 0x80;
@@ -201,9 +213,9 @@ void Greenbot::TurnCounterClockwise(){
 
 void Greenbot::TurnClockwise(){
 
-    Serial.println("Turning clockwise!");
-
     if (this->is_moving){this->Stop();}
+
+    Serial.println("Turning clockwise!");
 
     this->hero_message[1] = this->speed;
     this->hero_message[2] = this->speed + 0x80;
@@ -217,6 +229,8 @@ void Greenbot::ExtendMast(){
 
     this->mast_retracting = false;
 
+    Serial.println("Extending mast \n");
+
     if (this->mast_extending == false) {
 
         this->mast.writeMicroseconds(this->mast_extension_pulse_width);
@@ -229,6 +243,8 @@ void Greenbot::RetractMast(){
 
     this->mast_extending = false;
 
+    Serial.println("Retracting mast \n");
+
         if (this->mast_retracting == false) {
 
         this->mast.writeMicroseconds(this->mast_retraction_pulse_width);
@@ -239,7 +255,7 @@ void Greenbot::RetractMast(){
 
 void Greenbot::Stop(){
 
-    if (this->is_moving || this->is_turning || this->mast_retracting || this->mast_extending){
+    if (this->is_moving || this->is_turning || this->mast_retracting || this->mast_extending) {
 
         Serial.println("Stopping!");
 
@@ -256,6 +272,4 @@ void Greenbot::Stop(){
         this->mast_extending = false;
 
     }
-
-    
 }

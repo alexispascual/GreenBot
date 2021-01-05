@@ -109,9 +109,6 @@ void HandleCommand() {
     
     if (command.speed != current_speed) {
 
-      Serial.print("Updating Greenbot Speed: ");
-      Serial.println(command.speed);
-      
       greenbot.SetSpeed((unsigned char)command.speed);
 
       current_speed = command.speed;
@@ -119,37 +116,30 @@ void HandleCommand() {
 
     if (command.x == 1) { // Forward
 
-      Serial.println("Moving forward \n");
       greenbot.DriveForward();
       
-    } else if (command.x < 0) { // Reverse
+    } else if (command.x == -1) { // Reverse
 
-      Serial.println("Moving backward \n");
       greenbot.DriveBackward();
       
     } else if (command.z > 0) { // Turn counter-clockwise
       
-      Serial.println("Turning counter-clockwise \n");
       greenbot.TurnCounterClockwise();
       
     } else if (command.z < 0) { // Turn Clockwise
 
-      Serial.println("Turning clockwise \n");
       greenbot.TurnClockwise();
 
     } else if (command.mast_control > 0) { // Extend mast
       
-      Serial.println("Extending mast \n");
       greenbot.ExtendMast();
       
     } else if (command.mast_control < 0) { // Retract mast
       
-      Serial.println("Retracting mast \n");
       greenbot.RetractMast();
       
     } else if (command.x == 0 && command.z == 0 && command.mast_control == 0) { // Stop
 
-      Serial.println("Stopping \n");
       greenbot.Stop();
       
     } else if (command.x == 2) {
@@ -161,19 +151,16 @@ void HandleCommand() {
 
         }
         
-    } else if (command.x == 3) {
+    } else if (command.x == 3) { // Turn into new row **DEPRECATED**
       
-      Serial.println("Turning into new row \n");
       greenbot.TurnIntoRow();
       
-    } else if (command.x == 4) {
+    } else if (command.x == 4) { // Execute distance correction
       
-      Serial.println("Executing Distance Correction \n");
       greenbot.ExecuteDistanceCorrection();
       
-    } else if (command.x == 5) {
+    } else if (command.x == 5) { // Print attitude and distance
       
-      Serial.println("Printing Attitude and Distance \n");
       range_sensors.GetAttitude();
       range_sensors.GetRoverDistance();
     }

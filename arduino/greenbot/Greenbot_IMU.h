@@ -20,7 +20,7 @@ class Greenbot_IMU {
 	private:
 
 		MPU6050 mpu;
-		#define INTERRUPT_PIN 2
+		#define INTERRUPT_PIN 7
 
 		bool dmpReady = false;  // set true if DMP init was successful
 		uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU

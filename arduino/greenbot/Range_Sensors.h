@@ -15,10 +15,10 @@ class Range_Sensors {
 
         #define NUM_SENSORS 2
 
-        #define TRIGGER_PIN_FRONT 7
+        #define TRIGGER_PIN_FRONT 9
         #define TRIGGER_PIN_REAR 5
 
-        #define ECHO_PIN_FRONT 6
+        #define ECHO_PIN_FRONT 8
         #define ECHO_PIN_REAR 4
 
         uint8_t trigger_pins[NUM_SENSORS] = {TRIGGER_PIN_FRONT, TRIGGER_PIN_REAR};

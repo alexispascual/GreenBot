@@ -4,7 +4,6 @@
 
 #include "Arduino.h"
 #include "Greenbot.h"
-#include "Greenbot_IMU.h"
 //--------------------------------------------------------------------------//
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
@@ -172,16 +171,11 @@ void Greenbot::ExecuteDistanceCorrection() {
     this->Stop();
 }
 
-void Greenbot::TurnIntoRow() { // **DEPRECATED**
+void Greenbot::Turn90Degrees() { 
 
-    Serial.println("Executing turning command");
+    Serial.println("Turning 90 Degrees!");
 
-    this->hero_message[1] = this->speed + this->turning_offset_speed;
-    this->hero_message[2] = this->speed;
-
-    Serial1.write(this->hero_message, MESSAGE_LENGTH);
-
-    this->is_moving = true;
+    this->is_turning = true;
 }
 
 void Greenbot::DriveBackward(){

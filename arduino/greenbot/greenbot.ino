@@ -151,9 +151,9 @@ void HandleCommand() {
 
         }
         
-    } else if (command.x == 3) { // Turn into new row **DEPRECATED**
+    } else if (command.x == 3) { // Turn 90 Degrees clockwise
       
-      greenbot.TurnIntoRow();
+      greenbot.Turn90Degrees();
       
     } else if (command.x == 4) { // Execute distance correction
       

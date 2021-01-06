@@ -136,3 +136,8 @@ float Greenbot_IMU::GetYaw() {
     }
 }
 
+uint8_t Greenbot_IMU::GetDeviceStatus() {
+
+    return devStatus;
+}
+

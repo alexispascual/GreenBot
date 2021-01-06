@@ -46,6 +46,7 @@ class Greenbot_IMU {
 
 	public:
 		Greenbot_IMU();
+		uint8_t GetDeviceStatus();
 		float GetYaw();
 	
 };

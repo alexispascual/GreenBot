@@ -7,6 +7,7 @@
 
 #include "Arduino.h"
 #include "Range_Sensors.h"
+#include "Greenbot_IMU.h"
 #include <Servo.h>
 #include <math.h>
 #include <SoftwareSerial.h>
@@ -37,6 +38,7 @@ class Greenbot {
         bool mast_retracting;
 
         Range_Sensors range_sensors;
+        Greenbot_IMU greenbot_IMU;
 
         float front_distance;
         float rear_distance;
@@ -63,7 +65,7 @@ class Greenbot {
         void DriveForwardWithSteering();
         void CorrectAttitude(bool direction);
         void ExecuteDistanceCorrection();
-        void TurnIntoRow();
+        void Turn90Degrees();
         void DriveBackward();
         void TurnCounterClockwise();
         void TurnClockwise();

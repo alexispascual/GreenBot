@@ -173,9 +173,23 @@ void Greenbot::ExecuteDistanceCorrection() {
 
 void Greenbot::Turn90Degrees() { 
 
-    Serial.println("Turning 90 Degrees!");
+    if (greenbot_IMU.GetDeviceStatus() == 0) { // Device successfully initialized
 
-    this->is_turning = true;
+        Serial.println("Turning 90 Degrees!");
+
+        Serial.print("Current yaw: ");
+        this->current_yaw_deg = greenbot_IMU.GetYaw();
+
+        this->TurnClockwise();
+
+        while(!(greenbot_IMU.GetYaw() < this->current_yaw_deg + 90));
+        
+        this->Stop();
+
+    } else {
+
+        Serial.println("Device initialization failed. Can't turn 90 degrees.");
+    }
 }
 
 void Greenbot::DriveBackward(){

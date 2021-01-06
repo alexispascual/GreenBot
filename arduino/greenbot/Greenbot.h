@@ -55,6 +55,8 @@ class Greenbot {
         float neutral_attitude = 0.0;
         float rover_distance_ceil = 45;
         float rover_distance_floor = 35;
+
+        float current_yaw_deg = 0;
   
     public:
 

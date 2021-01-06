@@ -4,6 +4,7 @@
 //--------------------------------------------------------------------------//
 
 #include "Greenbot_IMU.h"
+#include "Arduino.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
 //--------------------------------------------------------------------------//
@@ -132,6 +133,7 @@ float Greenbot_IMU::GetYaw() {
     mpu.dmpGetGravity(&gravity, &q);
     mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
+    Serial.println(ypr[0]);
     return ypr[0]; // Return just the yaw
     }
 }

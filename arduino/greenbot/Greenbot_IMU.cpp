@@ -11,7 +11,7 @@
 //                              Constructor                                 //
 //--------------------------------------------------------------------------//
 
-Greenbot_IMU::Greenbot_IMU(){
+Greenbot_IMU::Initialize(){
 
     // join I2C bus (I2Cdev library doesn't do this automatically)
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE

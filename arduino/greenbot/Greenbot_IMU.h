@@ -45,7 +45,7 @@ class Greenbot_IMU {
 		void dmpDataReady();
 
 	public:
-		Greenbot_IMU();
+		Initialize();
 		uint8_t GetDeviceStatus();
 		float GetYaw();
 	

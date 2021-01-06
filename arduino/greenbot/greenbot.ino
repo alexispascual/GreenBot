@@ -142,7 +142,7 @@ void HandleCommand() {
 
       greenbot.Stop();
       
-    } else if (command.x == 2) {
+    } else if (command.x == 2) { // Drive with steering
       
       while (!new_data){
 
@@ -163,9 +163,8 @@ void HandleCommand() {
       
       range_sensors.GetAttitude();
       range_sensors.GetRoverDistance();
+
     }
-
-
   }
 }
 

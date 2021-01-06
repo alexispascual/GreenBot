@@ -27,6 +27,8 @@ bool Greenbot::Initialize(unsigned char in_speed){
 
     // Somehow, Arduino does not allow try catch exception handling.
     // This will have to do.
+    //greenbot_IMU.Initialize();
+
     return true;
 }
 
@@ -183,7 +185,7 @@ void Greenbot::Turn90Degrees() {
         this->TurnClockwise();
 
         while(!(greenbot_IMU.GetYaw() < this->current_yaw_deg + 90));
-        
+
         this->Stop();
 
     } else {

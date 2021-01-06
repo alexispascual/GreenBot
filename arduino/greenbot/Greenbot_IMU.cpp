@@ -11,7 +11,7 @@
 //                              Constructor                                 //
 //--------------------------------------------------------------------------//
 
-Greenbot_IMU::Initialize(){
+bool Greenbot_IMU::Initialize(){
 
     // join I2C bus (I2Cdev library doesn't do this automatically)
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
@@ -51,7 +51,6 @@ Greenbot_IMU::Initialize(){
         mpu.setDMPEnabled(true);
 
         //enable Arduino interrupt detection
-        this_instance = this;
         Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
         Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
         Serial.println(F(")..."));
@@ -64,6 +63,9 @@ Greenbot_IMU::Initialize(){
 
         // get expected DMP packet size for later comparison
         packetSize = mpu.dmpGetFIFOPacketSize();
+
+        return true;
+        
     } else {
         // ERROR!
         // 1 = initial memory load failed
@@ -72,6 +74,8 @@ Greenbot_IMU::Initialize(){
         Serial.print(F("DMP Initialization failed (code "));
         Serial.print(devStatus);
         Serial.println(F(")"));
+
+        return false;
     }
 }
 
@@ -79,13 +83,8 @@ Greenbot_IMU::Initialize(){
 // //                        Interrupt Handler                                 //
 // //--------------------------------------------------------------------------//
 
-void Greenbot_IMU::dmpDataReady() {
-    this->mpuInterrupt = true;
-}
-
-static void Greenbot_IMU::ISR_Handler() { // Forward to non static member function
-    this_instance->dmpDataReady();
-}
+// Empty ISR for now. Should raise mpuInterrupt to `true` once interrupt is triggered
+static void Greenbot_IMU::ISR_Handler() { }
 
 //--------------------------------------------------------------------------//
 //                              Functions                                   //

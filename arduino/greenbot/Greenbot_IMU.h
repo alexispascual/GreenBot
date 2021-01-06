@@ -20,7 +20,6 @@ class Greenbot_IMU {
 	private:
 
 		MPU6050 mpu;
-		static Greenbot_IMU *this_instance;
 		#define INTERRUPT_PIN 2
 
 		bool dmpReady = false;  // set true if DMP init was successful
@@ -39,13 +38,11 @@ class Greenbot_IMU {
 		float euler[3];         // [psi, theta, phi]    Euler angle container
 		float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
-		volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
-
 		static void ISR_Handler();
-		void dmpDataReady();
+		volatile bool mpuInterrupt = true;
 
 	public:
-		Initialize();
+		bool Initialize();
 		uint8_t GetDeviceStatus();
 		float GetYaw();
 	

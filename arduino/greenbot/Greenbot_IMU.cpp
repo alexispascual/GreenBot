@@ -138,9 +138,9 @@ float Greenbot_IMU::GetYaw() {
         mpu.dmpGetGravity(&gravity, &q);
         mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
-        Serial.println(ypr[0] * 180/M_PI); // Print yaw for debugging
+        Serial.println((ypr[0] * 180/M_PI) + 180); // Print yaw for debugging
 
-        return ypr[0] * 180/M_PI; // Return just the yaw
+        return (ypr[0] * 180/M_PI) + 180; // Return just the yaw offset by 180
         }
     }
 }

@@ -191,16 +191,10 @@ void Greenbot::Turn90Degrees() {
         Serial.print("Current yaw: ");
         this->current_yaw_deg = greenbot_IMU.GetYaw();
 
-        if (this->current_yaw_deg > 90) {
+        if (this->current_yaw_deg > 270) {
 
             this->TurnClockwise();
-            while(greenbot_IMU.GetYaw() > 0);
-            this->Stop();
-
-            delay(5000);
-
-            this->TurnClockwise();
-            while(greenbot_IMU.GetYaw() < (this->current_yaw_deg - 270))
+            while((greenbot_IMU.GetYaw() - 360) > (this->current_yaw_deg - 270));
             this->Stop();
 
         } else {

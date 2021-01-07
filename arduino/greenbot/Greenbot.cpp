@@ -38,9 +38,7 @@ bool Greenbot::Initialize(unsigned char in_speed){
     Serial.println(F(")..."));
     attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), this->ISR_Handler, RISING);
 
-    if (greenbot_IMU.Initialize()) return true;
-    else return false;
-    
+    return greenbot_IMU.Initialize();    
 }
 
 //--------------------------------------------------------------------------//

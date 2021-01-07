@@ -95,47 +95,54 @@ void Greenbot_IMU::ISR_Handler() {
 float Greenbot_IMU::GetYaw() {
 
      // wait for MPU interrupt or extra packet(s) available
-    while (!mpuInterrupt && fifoCount < packetSize) {
-        if (mpuInterrupt && fifoCount < packetSize) {
-          // try to get out of the infinite loop 
-          fifoCount = mpu.getFIFOCount();
-        }  
-    }
+    while (true) {
 
-    // reset interrupt flag and get INT_STATUS byte
-    mpuInterrupt = false;
-    mpuIntStatus = mpu.getIntStatus();
+        while (!mpuInterrupt && fifoCount < packetSize) {
+            if (mpuInterrupt && fifoCount < packetSize) {
+              // try to get out of the infinite loop 
+              fifoCount = mpu.getFIFOCount();
+            }  
+        }
 
-    // get current FIFO count
-    fifoCount = mpu.getFIFOCount();
-    if(fifoCount < packetSize){
-            //Lets go back and wait for another interrupt. We shouldn't be here, we got an interrupt from another event
-            // This is blocking so don't do it   while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
-    }
-    // check for overflow (this should never happen unless our code is too inefficient)
-    else if ((mpuIntStatus & (0x01 << MPU6050_INTERRUPT_FIFO_OFLOW_BIT)) || fifoCount >= 1024) {
-        // reset so we can continue cleanly
-        mpu.resetFIFO();
-        Serial.println(F("FIFO overflow!"));
+        // reset interrupt flag and get INT_STATUS byte
+        mpuInterrupt = false;
+        mpuIntStatus = mpu.getIntStatus();
 
-    // otherwise, check for DMP data ready interrupt (this should happen frequently)
-    } else if (mpuIntStatus & (0x01 << MPU6050_INTERRUPT_DMP_INT_BIT)) {
+        // get current FIFO count
+        fifoCount = mpu.getFIFOCount();
+        if(fifoCount < packetSize){
+                //Lets go back and wait for another interrupt. We shouldn't be here, we got an interrupt from another event
+                // This is blocking so don't do it   while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
+            continue;
+        }
+        // check for overflow (this should never happen unless our code is too inefficient)
+        else if ((mpuIntStatus & (0x01 << MPU6050_INTERRUPT_FIFO_OFLOW_BIT)) || fifoCount >= 1024) {
+            // reset so we can continue cleanly
+            mpu.resetFIFO();
+            Serial.println(F("FIFO overflow!"));
+
+            continue;
+
+        // otherwise, check for DMP data ready interrupt (this should happen frequently)
+        } else if (mpuIntStatus & (0x01 << MPU6050_INTERRUPT_DMP_INT_BIT)) {
 
         // read a packet from FIFO
-    while(fifoCount >= packetSize){ // Lets catch up to NOW, someone is using the dreaded delay()!
-        mpu.getFIFOBytes(fifoBuffer, packetSize);
-        // track FIFO count here in case there is > 1 packet available
-        // (this lets us immediately read more without waiting for an interrupt)
-        fifoCount -= packetSize;
-    }
+        while(fifoCount >= packetSize){ // Lets catch up to NOW, someone is using the dreaded delay()!
+            mpu.getFIFOBytes(fifoBuffer, packetSize);
+            // track FIFO count here in case there is > 1 packet available
+            // (this lets us immediately read more without waiting for an interrupt)
+            fifoCount -= packetSize;
+        }
 
-    // Get Euler angles in degrees
-    mpu.dmpGetQuaternion(&q, fifoBuffer);
-    mpu.dmpGetGravity(&gravity, &q);
-    mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+        // Get Euler angles in degrees
+        mpu.dmpGetQuaternion(&q, fifoBuffer);
+        mpu.dmpGetGravity(&gravity, &q);
+        mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
-    Serial.println(ypr[0]);
-    return ypr[0]; // Return just the yaw
+        Serial.println(ypr[0]); // Print yaw for debugging
+
+        return ypr[0]; // Return just the yaw
+        }
     }
 }
 

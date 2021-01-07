@@ -50,11 +50,11 @@ bool Greenbot_IMU::Initialize(){
         Serial.println(F("Enabling DMP..."));
         mpu.setDMPEnabled(true);
 
-        //enable Arduino interrupt detection
-        Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
-        Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
-        Serial.println(F(")..."));
-        attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), ISR_Handler, RISING);
+        // //enable Arduino interrupt detection
+        // Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
+        // Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
+        // Serial.println(F(")..."));
+        // attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), ISR_Handler, RISING);
         mpuIntStatus = mpu.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
@@ -79,12 +79,14 @@ bool Greenbot_IMU::Initialize(){
     }
 }
 
-// //--------------------------------------------------------------------------//
-// //                        Interrupt Handler                                 //
-// //--------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+//                        Interrupt Handler                                 //
+//--------------------------------------------------------------------------//
 
 // Empty ISR for now. Should raise mpuInterrupt to `true` once interrupt is triggered
-static void Greenbot_IMU::ISR_Handler() { }
+void Greenbot_IMU::ISR_Handler() { 
+    mpuInterrupt = true;
+}
 
 //--------------------------------------------------------------------------//
 //                              Functions                                   //

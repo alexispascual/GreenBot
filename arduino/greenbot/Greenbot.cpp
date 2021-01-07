@@ -8,6 +8,8 @@
 //                    Pseudo-constructor                                    //
 //--------------------------------------------------------------------------//
 
+Greenbot_IMU *temp_greenbot_IMU; //defining global for the interrupt handler trick.
+
 bool Greenbot::Initialize(unsigned char in_speed){
 
     
@@ -27,6 +29,15 @@ bool Greenbot::Initialize(unsigned char in_speed){
 
     // Somehow, Arduino does not allow try catch exception handling.
     // This will have to do.
+
+    //enable Arduino interrupt detection
+    temp_greenbot_IMU = &greenbot_IMU;
+
+    Serial.print(F("Enabling interrupt detection -- Arduino external interrupt "));
+    Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
+    Serial.println(F(")..."));
+    attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), this->ISR_Handler, RISING);
+
     greenbot_IMU.Initialize();
 
     return true;
@@ -283,4 +294,14 @@ void Greenbot::Stop(){
         this->mast_extending = false;
 
     }
+}
+
+//--------------------------------------------------------------------------//
+//                        Interrupt Handler                                 //
+//--------------------------------------------------------------------------//
+
+static void Greenbot::ISR_Handler() {
+
+    temp_greenbot_IMU->ISR_Handler();
+
 }

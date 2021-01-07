@@ -22,6 +22,7 @@ class Greenbot {
         #define START_FLAG 0x80
         #define MESSAGE_LENGTH 3
         #define MAST_PWM_PIN 10
+        #define INTERRUPT_PIN 7
 
         Servo mast;
 
@@ -57,6 +58,8 @@ class Greenbot {
         float rover_distance_floor = 35;
 
         float current_yaw_deg = 0;
+
+        static void ISR_Handler();
   
     public:
 

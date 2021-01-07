@@ -38,13 +38,13 @@ class Greenbot_IMU {
 		float euler[3];         // [psi, theta, phi]    Euler angle container
 		float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
-		static void ISR_Handler();
-		volatile bool mpuInterrupt = true;
+		volatile bool mpuInterrupt = false;
 
 	public:
 		bool Initialize();
 		uint8_t GetDeviceStatus();
 		float GetYaw();
+		void ISR_Handler();
 	
 };
 

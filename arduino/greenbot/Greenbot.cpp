@@ -191,12 +191,18 @@ void Greenbot::Turn90Degrees() {
         Serial.print("Current yaw: ");
         this->current_yaw_deg = greenbot_IMU.GetYaw();
 
-        this->TurnClockwise();
+        if (this->current_yaw_deg > 90) {
+            this->TurnClockwise();
+            while(greenbot_IMU.GetYaw() > 0);
+            while(greenbot_IMU.GetYaw() < (this->current_yaw_deg - 270))
+            this->Stop();
 
-        while(greenbot_IMU.GetYaw() < this->current_yaw_deg + 90);
+        } else {
 
-        this->Stop();
-
+            this->TurnClockwise();
+            while(greenbot_IMU.GetYaw() < this->current_yaw_deg + 90);
+            this->Stop();
+        }
     } else {
 
         Serial.println("Device initialization failed. Can't turn 90 degrees.");

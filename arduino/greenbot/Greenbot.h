@@ -58,6 +58,7 @@ class Greenbot {
         float rover_distance_floor = 35;
 
         float current_yaw_deg = 0;
+        float target_yaw_deg = 0;
 
         static void ISR_Handler();
   

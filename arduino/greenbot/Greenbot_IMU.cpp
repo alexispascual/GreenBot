@@ -119,7 +119,6 @@ float Greenbot_IMU::GetYaw() {
         else if ((mpuIntStatus & (0x01 << MPU6050_INTERRUPT_FIFO_OFLOW_BIT)) || fifoCount >= 1024) {
             // reset so we can continue cleanly
             mpu.resetFIFO();
-            Serial.println(F("FIFO overflow!"));
 
             continue;
 

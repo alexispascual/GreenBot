@@ -28,7 +28,7 @@ class Greenbot {
 
         unsigned char hero_message[3];
         unsigned char speed;
-        unsigned char turning_speed = 42;
+        unsigned char turning_speed = 36;
         int16_t mast_extension_pulse_width = 1600;
         int16_t mast_neutral_pulse_width = 1500;
         int16_t mast_retraction_pulse_width = 1400;

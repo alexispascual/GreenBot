@@ -31,7 +31,7 @@ class AutonomousGreenbot:
         # Define forward and slow speeds    
         self.gb_default_speed = 12
         self.gb_slow_speed = 10
-        self.gb_turning_speed = 40
+        self.gb_turning_speed = 36
 
         # Initialize qr_subscriber object
         self.qr_subscriber = None

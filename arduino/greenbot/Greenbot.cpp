@@ -197,9 +197,9 @@ void Greenbot::Turn90Degrees() {
             while(greenbot_IMU.GetYaw() > 0);
             this->Stop();
 
-            delay(1000);
+            delay(5000);
+
             this->TurnClockwise();
-            
             while(greenbot_IMU.GetYaw() < (this->current_yaw_deg - 270))
             this->Stop();
 

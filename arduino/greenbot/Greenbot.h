@@ -47,7 +47,6 @@ class Greenbot {
         float delta_d = 0;
         float delta_speed;
         float sensor_gap = 100.0;
-        float platform_distance = 45.0;
         float turning_offset_speed = 32.0;
 
         float turning_angle = 0.15;
@@ -56,6 +55,7 @@ class Greenbot {
         float neutral_attitude = 0.0;
         float rover_distance_ceil = 45;
         float rover_distance_floor = 35;
+        float platform_distance = 40.0;
 
         float current_yaw_deg = 0;
 

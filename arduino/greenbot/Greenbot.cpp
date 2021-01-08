@@ -167,7 +167,7 @@ void Greenbot::ExecuteDistanceCorrection() {
         Serial.println("Moving forward");
         this->DriveForward();
 
-        while (range_sensors.GetRoverDistance() > this->rover_distance_ceil) {;}
+        while (range_sensors.GetRoverDistance() > this->platform_distance) {;}
 
         this->Stop();
         delay(1000);
@@ -194,7 +194,7 @@ void Greenbot::ExecuteDistanceCorrection() {
         Serial.println("Moving forward");
         this->DriveForward();
 
-        while (range_sensors.GetRoverDistance() < this->rover_distance_floor) {;}
+        while (range_sensors.GetRoverDistance() < this->platform_distance) {;}
 
         this->Stop();
         delay(1000);

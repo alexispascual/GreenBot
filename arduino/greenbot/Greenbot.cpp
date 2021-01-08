@@ -210,6 +210,8 @@ void Greenbot::ExecuteDistanceCorrection() {
 
 void Greenbot::Turn90Degrees() { 
 
+    if (this->is_moving) this->Stop();
+
     float temp_yaw = 0;
 
     if (greenbot_IMU.GetDeviceStatus() == 0) { // Device successfully initialized

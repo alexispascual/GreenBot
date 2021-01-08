@@ -76,6 +76,36 @@ void Greenbot::DriveForwardWithSteering() {
 
     }
 
+    // This looks janky but what it does is it makes sure that the 
+    // attitude/distance is off by two measurements before doing
+    // corrections. It's simply a way to minimize the sensitivity to
+    // noise. Trust me.
+    if ((range_sensors.GetAttitude() > this->attitude_ceil) ||
+        (range_sensors.GetAttitude() < this->attitude_floor) ||
+        (range_sensors.GetRoverDistance() > this->rover_distance_ceil) ||
+        (range_sensors.GetRoverDistance() < this->rover_distance_floor)) {
+
+        if (range_sensors.GetAttitude() > this->attitude_ceil) {
+        
+        this->CorrectAttitude(true);
+        while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
+        this->Stop();
+
+        } else if (range_sensors.GetAttitude() < this->attitude_floor) {
+            
+            this->CorrectAttitude(false);
+            while (range_sensors.GetAttitude() < this->neutral_attitude) {;}
+            this->Stop();
+
+        } else if (range_sensors.GetRoverDistance() > this->rover_distance_ceil ||
+            range_sensors.GetRoverDistance() < this->rover_distance_floor) {
+
+            this->Stop();
+            this->ExecuteDistanceCorrection();
+
+        }
+    }
+
     if (range_sensors.GetAttitude() > this->attitude_ceil) {
         
         this->CorrectAttitude(true);

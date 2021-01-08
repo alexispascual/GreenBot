@@ -144,7 +144,7 @@ class TeleopMaster:
 
         while self.master_cmd_publisher.get_num_connections() and (self.control_status == 2):
             # TODO: Figure out what master does when rover is autonomous
-            rospy.loginfo("Currently in autonomous mode...")
+            rospy.loginfo_once("Currently in autonomous mode...")
             rospy.sleep(1)
         else:
             rospy.loginfo("Exiting autonomous mode...")
@@ -152,8 +152,8 @@ class TeleopMaster:
     def standByMode(self):
 
         while self.master_cmd_publisher.get_num_connections() and (self.control_status == 0):
-            rospy.loginfo("Greenbot is in Standby mode. Press 'Start' to begin teleop mode.")
-            rospy.loginfo("To begin Autonomous mode, line up the rover to the first QR code and press 'Back'")
+            rospy.loginfo_once("Greenbot is in Standby mode. Press 'Start' to begin teleop mode.")
+            rospy.loginfo_once("To begin Autonomous mode, line up the rover to the first QR code and press 'Back'")
             rospy.sleep(1)
 
         else:
@@ -189,7 +189,7 @@ class TeleopMaster:
 
             # Wait for subscribers
             if self.master_cmd_publisher.get_num_connections() == 0:
-                rospy.loginfo("Waiting for Geenbot to subscribe...")
+                rospy.loginfo_once("Waiting for Geenbot to subscribe...")
                 rospy.sleep(1)
             
             else:

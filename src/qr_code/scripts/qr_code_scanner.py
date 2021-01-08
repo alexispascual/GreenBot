@@ -76,7 +76,7 @@ class QRCodeScanner():
         while not rospy.is_shutdown():
             # Wait for subscribers
             if self.qr_code_publisher.get_num_connections() == 0:
-                rospy.loginfo("Waiting for subscribers...")
+                rospy.loginfo_once("Waiting for subscribers...")
                 rospy.sleep(1)
 
             # Start video capture

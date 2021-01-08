@@ -56,7 +56,7 @@ void Greenbot::SetSpeed(unsigned char in_speed) {
 //--------------------------------------------------------------------------//
 void Greenbot::DriveForward(){
 
-    if (this->is_turning){this->Stop();}
+    if (this->is_turning) this->Stop();
 
     Serial.println("Driving forward");
 
@@ -78,14 +78,12 @@ void Greenbot::DriveForwardWithSteering() {
 
     if (range_sensors.GetAttitude() > this->attitude_ceil) {
         
-        this->Stop();
         this->CorrectAttitude(true);
         while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
         this->Stop();
 
     } else if (range_sensors.GetAttitude() < this->attitude_floor) {
         
-        this->Stop();
         this->CorrectAttitude(false);
         while (range_sensors.GetAttitude() < this->neutral_attitude) {;}
         this->Stop();
@@ -101,6 +99,8 @@ void Greenbot::DriveForwardWithSteering() {
 }
 
 void Greenbot::CorrectAttitude(bool direction) {
+
+    if (this->is_moving) this->Stop();
 
     Serial.println("Correcting Attitude");
 
@@ -120,6 +120,23 @@ void Greenbot::CorrectAttitude(bool direction) {
 }
 
 void Greenbot::ExecuteDistanceCorrection() {
+
+    Serial.println("Executing Attitude Correction");
+    if (this->is_moving) this->Stop();
+
+    if (range_sensors.GetAttitude() > this->attitude_ceil) {
+        
+        this->CorrectAttitude(true);
+        while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
+        this->Stop();
+
+    } else if (range_sensors.GetAttitude() < this->attitude_floor) {
+        
+        this->CorrectAttitude(false);
+        while (range_sensors.GetAttitude() < this->neutral_attitude) {;}
+        this->Stop();
+
+    }
 
     Serial.println("Executing Distance Correction");
 
@@ -189,7 +206,6 @@ void Greenbot::Turn90Degrees() {
     if (greenbot_IMU.GetDeviceStatus() == 0) { // Device successfully initialized
 
         Serial.println("Turning 90 Degrees!");
-
         Serial.print("Current yaw: ");
         this->current_yaw_deg = greenbot_IMU.GetYaw();
 
@@ -220,7 +236,7 @@ void Greenbot::Turn90Degrees() {
 
 void Greenbot::DriveBackward(){
 
-    if (this->is_turning){this->Stop();}
+    if (this->is_turning) this->Stop();
 
     Serial.println("Reversing");
 
@@ -234,7 +250,7 @@ void Greenbot::DriveBackward(){
 
 void Greenbot::TurnCounterClockwise(){
 
-    if (this->is_moving){this->Stop();}
+    if (this->is_moving) this->Stop();
 
     Serial.println("Turning counter-clockwise!");
 
@@ -248,7 +264,7 @@ void Greenbot::TurnCounterClockwise(){
 
 void Greenbot::TurnClockwise(){
 
-    if (this->is_moving){this->Stop();}
+    if (this->is_moving) this->Stop();
 
     Serial.println("Turning clockwise!");
 

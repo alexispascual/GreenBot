@@ -184,7 +184,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 4)
+        rospy.sleep(self.turn_maneuver_forward_duration + 6)
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)

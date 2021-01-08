@@ -106,26 +106,6 @@ void Greenbot::DriveForwardWithSteering() {
         }
     }
 
-    if (range_sensors.GetAttitude() > this->attitude_ceil) {
-        
-        this->CorrectAttitude(true);
-        while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
-        this->Stop();
-
-    } else if (range_sensors.GetAttitude() < this->attitude_floor) {
-        
-        this->CorrectAttitude(false);
-        while (range_sensors.GetAttitude() < this->neutral_attitude) {;}
-        this->Stop();
-
-    } else if (range_sensors.GetRoverDistance() > this->rover_distance_ceil ||
-        range_sensors.GetRoverDistance() < this->rover_distance_floor) {
-
-        this->Stop();
-        this->ExecuteDistanceCorrection();
-
-    }
-
 }
 
 void Greenbot::CorrectAttitude(bool direction) {
@@ -154,13 +134,13 @@ void Greenbot::ExecuteDistanceCorrection() {
     Serial.println("Executing Attitude Correction");
     if (this->is_moving) this->Stop();
 
-    if (range_sensors.GetAttitude() > this->attitude_ceil) {
+    if (range_sensors.GetAttitude() >= this->attitude_ceil) {
         
         this->CorrectAttitude(true);
         while (range_sensors.GetAttitude() > this->neutral_attitude) {;}
         this->Stop();
 
-    } else if (range_sensors.GetAttitude() < this->attitude_floor) {
+    } else if (range_sensors.GetAttitude() <= this->attitude_floor) {
         
         this->CorrectAttitude(false);
         while (range_sensors.GetAttitude() < this->neutral_attitude) {;}

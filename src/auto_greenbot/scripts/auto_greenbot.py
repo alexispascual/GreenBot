@@ -178,13 +178,15 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration - 4) # Offset to align to new row
 
+        # The turning duration doesn't matter. It simply gives time for the rover 
+        # to do its maneuver before sending the next command
         rospy.loginfo("Turning into row...")
         self.sendToArduino(3, 0, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_maneuver_turn_duration)
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 8) # Offset to enter new row
+        rospy.sleep(self.turn_maneuver_forward_duration + 7) # Offset to enter new row
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)
@@ -202,12 +204,16 @@ class AutonomousGreenbot:
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
         rospy.sleep(self.turn_maneuver_forward_duration)
 
-        self.sendToArduino(0, -1, 0, self.gb_turning_speed)
+        # Turn 90 degrees twice
+        # The turning duration doesn't matter. It simply gives time for the rover 
+        # to do its maneuver before sending the next command
+        self.sendToArduino(3, 0, 0, self.gb_turning_speed)
+        self.sendToArduino(3, 0, 0, self.gb_turning_speed)
         rospy.sleep(self.turn_around_duration)
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration)
+        rospy.sleep(self.turn_maneuver_forward_duration + 7)
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)

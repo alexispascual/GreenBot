@@ -202,7 +202,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Found pink QR code! Turning around...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration)
+        rospy.sleep(self.turn_maneuver_forward_duration + 7)
 
         # Turn 90 degrees twice
         # The turning duration doesn't matter. It simply gives time for the rover 

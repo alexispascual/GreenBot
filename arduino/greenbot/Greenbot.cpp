@@ -166,7 +166,6 @@ void Greenbot::ExecuteDistanceCorrection() {
         this->CorrectAttitude(false);
 
         while (range_sensors.GetAttitude() < this->neutral_attitude){;}
-        this->Stop();
 
     } else if (range_sensors.GetRoverDistance() < this->rover_distance_floor) {
 

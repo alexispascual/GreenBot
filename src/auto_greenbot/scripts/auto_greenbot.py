@@ -176,7 +176,7 @@ class AutonomousGreenbot:
         rospy.loginfo("Found red QR code! Turning into row...")
         rospy.loginfo("Clearing platform...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration - 4)
+        rospy.sleep(self.turn_maneuver_forward_duration - 4) # Offset to align to new row
 
         rospy.loginfo("Turning into row...")
         self.sendToArduino(3, 0, 0, self.gb_turning_speed)
@@ -184,7 +184,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 6)
+        rospy.sleep(self.turn_maneuver_forward_duration + 8) # Offset to enter new row
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)

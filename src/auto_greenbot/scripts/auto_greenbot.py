@@ -186,7 +186,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 7) # Offset to enter new row
+        rospy.sleep(self.turn_maneuver_forward_duration + 5) # Offset to enter new row
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)
@@ -202,7 +202,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Found pink QR code! Turning around...")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 7)
+        rospy.sleep(self.turn_maneuver_forward_duration + 5)
 
         # Turn 90 degrees twice
         # The turning duration doesn't matter. It simply gives time for the rover 
@@ -213,7 +213,7 @@ class AutonomousGreenbot:
 
         rospy.loginfo("Entering row to execute distance correction")
         self.sendToArduino(1, 0, 0, self.gb_slow_speed)
-        rospy.sleep(self.turn_maneuver_forward_duration + 7)
+        rospy.sleep(self.turn_maneuver_forward_duration + 5)
 
         rospy.loginfo("Executing distance correction...")
         self.sendToArduino(4, 0, 0, self.gb_slow_speed)

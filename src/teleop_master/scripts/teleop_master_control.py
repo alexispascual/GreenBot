@@ -3,7 +3,6 @@ import roslib; roslib.load_manifest('teleop_master')
 import rospy
 import serial
 import time
-import yaml
 from teleop_master.msg import MotionCommand
 from std_msgs.msg import Int8
 from sensor_msgs.msg import Joy
